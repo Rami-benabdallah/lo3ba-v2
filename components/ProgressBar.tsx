@@ -74,10 +74,10 @@ export default function ProgressBar({
       {(leftText || rightText) && (
         <View className="flex-row justify-between items-center mb-2">
           {leftText && (
-            <Text className="text-white text-sm font-medium">{leftText}</Text>
+            <Text className="text-white text-xs">{leftText}</Text>
           )}
           {rightText && (
-            <Text className="text-white/80 text-sm">{rightText}</Text>
+            <Text className="text-white/80 text-xs">{rightText}</Text>
           )}
         </View>
       )}
