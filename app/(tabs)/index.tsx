@@ -1,15 +1,21 @@
 import { View, ScrollView, Text, StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useIsFocused } from '@react-navigation/native';
 import ExploreScreenTopBar from '../../components/ExploreScreenTopBar';
 import Daily from '../../components/Daily';
 import RecommendedGames from '../../components/RecommendedGames';
 
 export default function ExploreScreen() {
   const router = useRouter();
+  const isFocused = useIsFocused();
 
   const handleViewAllPress = () => {
     router.push('/(tabs)/games' as any);
   };
+
+  if (!isFocused) {
+    return null;  // Don't render when not focused to prevent stacking
+  }
 
   return (
     <View style={styles.container}>

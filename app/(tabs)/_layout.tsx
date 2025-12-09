@@ -12,6 +12,7 @@ export default function TabsLayout() {
         tabBar={(props) => <CustomTabBar {...props} />}
         screenOptions={{
           headerShown: false,
+          lazy: true,  // Only mount screens when they're focused
 
           sceneStyle: {
             backgroundColor: "transparent",  // ← REQUIRED FOR TRANSPARENT PAGES
@@ -40,5 +41,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "transparent",
+    overflow: "hidden",  // Prevent screens from stacking visually
   },
 });
