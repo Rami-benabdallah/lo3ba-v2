@@ -3,3 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Make Stack container transparent to show gradient background */
+/* Target React Native Web Stack container divs */
+div[class*="r-flex"][class*="r-position"][class*="r-top"] {
+  background-color: transparent !important;
+}
+
