@@ -97,17 +97,18 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   rankIcon: {
+    color: COLORS.gray[400],
     marginRight: 4,
   },
   rankText: {
-    color: 'rgba(0, 0, 0, 0.7)',
+    color: COLORS.gray[400],
     fontSize: 12,
     fontWeight: '500',
   },
   bottomRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'end',
+    alignItems: 'flex-end',
   },
   playersRow: {
     flexDirection: 'row',
