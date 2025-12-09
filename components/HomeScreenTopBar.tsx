@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import UserAvatarHeader from './UserAvatarHeader';
+import UserXpHeader from './UserXpHeader';
 
 export interface HomeScreenTopBarProps {
   name: string;
   subtitle?: string;
   imgUrl?: string;
   size?: 'sm' | 'md' | 'lg';
+  xp?: number | string;
 }
 
 export default function HomeScreenTopBar({
@@ -14,6 +16,7 @@ export default function HomeScreenTopBar({
   subtitle,
   imgUrl,
   size = 'md',
+  xp = 1200,
 }: HomeScreenTopBarProps) {
   return (
     <View style={styles.container}>
@@ -23,7 +26,7 @@ export default function HomeScreenTopBar({
         imgUrl={imgUrl}
         size={size}
       />
-      <Text style={styles.xpText}>XP</Text>
+      <UserXpHeader xp={xp} />
     </View>
   );
 }
@@ -37,9 +40,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: 'transparent',
-  },
-  xpText: {
-    color: '#ffffff',
   },
 });
 

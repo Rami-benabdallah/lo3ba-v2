@@ -3,6 +3,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Platform } from "react-native";
 import { useEffect } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GRADIENT_COLORS } from "../constants/colors";
 
 export default function RootLayout() {
@@ -67,34 +68,36 @@ export default function RootLayout() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={[
-          GRADIENT_COLORS.SECONDARY,
-          GRADIENT_COLORS.SECONDARY_LIGHT,
-          GRADIENT_COLORS.SECONDARY_LIGHTEST,
-        ]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.gradient}
-      />
-      <View style={styles.content}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: {
-              backgroundColor: "transparent",
-            },
-            // Ensure the Stack container itself is transparent on Web
-            presentation: "card",
-            animation: "default",
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style="light" />
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={[
+            GRADIENT_COLORS.SECONDARY,
+            GRADIENT_COLORS.SECONDARY_LIGHT,
+            GRADIENT_COLORS.SECONDARY_LIGHTEST,
+          ]}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <View style={styles.content}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: {
+                backgroundColor: "transparent",
+              },
+              // Ensure the Stack container itself is transparent on Web
+              presentation: "card",
+              animation: "default",
+            }}
+          >
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+          <StatusBar style="light" />
+        </View>
       </View>
-    </View>
+    </SafeAreaProvider>
   );
 }
 
