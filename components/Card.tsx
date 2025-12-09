@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export interface CardProps {
   children: React.ReactNode;
   padding?: 'sm' | 'md' | 'lg';
-  variant?: 'solid' | 'liquid';
+  variant?: 'solid' | 'liquid' | 'transparentBlur';
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
@@ -25,13 +25,12 @@ export default function Card({
   style,
 }: CardProps) {
   const paddingClass = paddingClasses[padding];
-  const radius = 24; // Tailwind rounded-3xl ≈ 24px
-
+  const radius = 24; // rounded-3xl
   const baseClasses = `rounded-3xl ${paddingClass} ${className}`.trim();
 
-  // --------------------------
-  // LIQUID (APPLE GLASS) CARD
-  // --------------------------
+  // ---------------------------------------------------
+  // LIQUID VARIANT (Apple glass)
+  // ---------------------------------------------------
   if (variant === 'liquid') {
     return (
       <View
@@ -45,70 +44,100 @@ export default function Card({
           style,
         ]}
       >
-        {/* Blur Layer */}
         <BlurView
-          intensity={85}
-          tint="light"
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            borderRadius: radius,
-          }}
+          intensity={10}
+          tint="default"
+          style={{ ...StyleSheet.absoluteFillObject, borderRadius: radius }}
         />
 
-        {/* Frosted translucency */}
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
-            backgroundColor: 'rgba(255, 255, 255, 0.12)',
+            backgroundColor: 'rgba(255,255,255,0.08)',
             borderRadius: radius,
             borderWidth: 1,
-            borderColor: 'rgba(255,255,255,0.28)',
+            borderColor: 'rgba(255,255,255,0.18)',
           }}
         />
 
-        {/* Apple inner highlight */}
         <LinearGradient
           colors={[
-            'rgba(255,255,255,0.45)',
-            'rgba(255,255,255,0.12)',
-            'rgba(255,255,255,0.02)',
+            'rgba(255,255,255,0.28)',
+            'rgba(255,255,255,0.06)',
+            'rgba(255,255,255,0.01)',
           ]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            borderRadius: radius,
-          }}
+          style={{ ...StyleSheet.absoluteFillObject, borderRadius: radius }}
         />
 
-        {/* Content */}
-        <View style={{ position: 'relative', zIndex: 1 }}>
-          {children}
-        </View>
+        <View style={{ position: 'relative', zIndex: 10 }}>{children}</View>
       </View>
     );
   }
 
-  // --------------------------
-  // SOLID WHITE CARD
-  // --------------------------
+  // ---------------------------------------------------
+  // NEW VARIANT: TRANSPARENT BLUR (floating glass)
+  // ---------------------------------------------------
+  if (variant === 'transparentBlur') {
+    return (
+      <View
+        className={baseClasses}
+        style={[
+          {
+            overflow: 'hidden',
+            position: 'relative',
+            borderRadius: radius,
+          },
+          style,
+        ]}
+      >
+        {/* CLEAR blur, no white wash */}
+        <BlurView
+          intensity={100}
+          tint="default"
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            borderRadius: radius,
+          }}
+        />
+
+        {/* Right-side soft white gradient */}
+        <LinearGradient
+          colors={[
+            'rgba(255,255,255,0.02)',
+            'rgba(255,255,255,0.12)', // stronger on right
+          ]}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            borderRadius: radius,
+          }}
+        />
+
+        {/* Very thin Apple-style rim */}
+        <View
+          style={{
+            ...StyleSheet.absoluteFillObject,
+            borderRadius: radius,
+            borderWidth: 1,
+            borderColor: 'rgba(255,255,255,0.15)',
+          }}
+        />
+
+        <View style={{ position: 'relative', zIndex: 10 }}>{children}</View>
+      </View>
+    );
+  }
+
+  // ---------------------------------------------------
+  // SOLID VARIANT
+  // ---------------------------------------------------
   return (
     <View
       className={`${baseClasses} bg-white`}
-      style={[
-        {
-          borderRadius: radius,
-        },
-        style,
-      ]}
+      style={[{ borderRadius: radius }, style]}
     >
       {children}
     </View>
