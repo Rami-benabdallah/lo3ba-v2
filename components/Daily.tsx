@@ -32,47 +32,47 @@ export default function Daily({
   return (
     <Pressable onPress={handlePress}>
       <Card
-        variant="transparentBlur"
+        variant="liquid"
         padding="md"
         style={style}
       >
-      <View style={styles.row}>
-        {/* SECTION 1: LEFT SIDE (1/3 width) */}
-        <View style={styles.leftSection}>
-          <View
-            style={[
-              styles.iconContainer,
-              {
-                backgroundColor: "#fff",
-                opacity: 0.4,
-                aspectRatio: 1,
-              },
-            ]}
-          >
-            <Ionicons name="analytics-outline" size={40} color="#8669fd" />
+        <View style={styles.row}>
+          {/* SECTION 1: LEFT SIDE (1/3 width) */}
+          <View style={styles.leftSection}>
+            <View
+              style={[
+                styles.iconContainer,
+                {
+                  backgroundColor: "#fff",
+                  opacity: 0.4,
+                  aspectRatio: 1,
+                },
+              ]}
+            >
+              <Ionicons name="analytics-outline" size={40} color="#8669fd" />
+            </View>
+          </View>
+
+          {/* SECTION 2: RIGHT SIDE (2/3 width) */}
+          <View style={styles.rightSection}>
+              <View style={styles.textContainer}>
+                  {/* Title */}
+                  <Text style={styles.title}>Daily</Text>
+
+                  {/* Description */}
+                  <Text style={styles.description}>{description}</Text>
+              </View>
+
+              {/* ProgressBar */}
+              <ProgressBar
+                  value={progress}
+                  leftText="Progress"
+                  rightText={progressText}
+                  style={styles.progressBar}
+              />
           </View>
         </View>
-
-        {/* SECTION 2: RIGHT SIDE (2/3 width) */}
-        <View style={styles.rightSection}>
-            <View style={styles.textContainer}>
-                {/* Title */}
-                <Text style={styles.title}>Daily</Text>
-
-                {/* Description */}
-                <Text style={styles.description}>{description}</Text>
-            </View>
-
-            {/* ProgressBar */}
-            <ProgressBar
-                value={progress}
-                leftText="Progress"
-                rightText={progressText}
-                style={styles.progressBar}
-            />
-        </View>
-      </View>
-    </Card>
+      </Card>
     </Pressable>
   );
 }
