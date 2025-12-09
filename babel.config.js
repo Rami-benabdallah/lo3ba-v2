@@ -1,4 +1,4 @@
-module.exports = function (api) {
+mcodule.exports = function (api) {
   api.cache(true);
   return {
     presets: [
