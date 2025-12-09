@@ -5,13 +5,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export interface CardProps {
   children: React.ReactNode;
-  padding?: 'sm' | 'md' | 'lg';
+  padding?: 'xs' | 'sm' | 'md' | 'lg';
   variant?: 'solid' | 'liquid' | 'transparentBlur';
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
 
 const paddingValues = {
+  xs: 8, // p-2 = 8px
   sm: 12, // p-3 = 12px
   md: 20, // p-5 = 20px
   lg: 32, // p-8 = 32px

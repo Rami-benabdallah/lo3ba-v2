@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../constants/colors';
-import HomeScreen from '../screens/HomeScreen';
-import GamesScreen from '../screens/GamesScreen';
-import MultiplayerScreen from '../screens/MultiplayerScreen';
-import LeaderboardScreen from '../screens/LeaderboardScreen';
+import ExploreScreen from '../../app/(tabs)/index';
+import GamesScreen from '../../app/(tabs)/games';
+import MultiplayerScreen from '../../app/(tabs)/multiplayer';
+import LeaderboardScreen from '../../app/(tabs)/leaderboard';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,8 +37,8 @@ export default function AppNavigator() {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Explore"
+        component={ExploreScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons

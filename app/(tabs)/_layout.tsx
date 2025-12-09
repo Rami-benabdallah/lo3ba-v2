@@ -27,7 +27,7 @@ export default function TabsLayout() {
           tabBarBackground: () => null,
         }}
       >
-        <Tabs.Screen name="index" options={{ title: "Home" }} />
+        <Tabs.Screen name="index" options={{ title: "Explore" }} />
         <Tabs.Screen name="games" options={{ title: "Games" }} />
         <Tabs.Screen name="multiplayer" options={{ title: "Multiplayer" }} />
         <Tabs.Screen name="leaderboard" options={{ title: "Leaderboard" }} />

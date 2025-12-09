@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import UserAvatarHeader from './UserAvatarHeader';
 import UserXpHeader from './UserXpHeader';
 
-export interface HomeScreenTopBarProps {
+export interface ExploreScreenTopBarProps {
   name: string;
   subtitle?: string;
   imgUrl?: string;
@@ -11,13 +11,13 @@ export interface HomeScreenTopBarProps {
   xp?: number | string;
 }
 
-export default function HomeScreenTopBar({
+export default function ExploreScreenTopBar({
   name,
   subtitle,
   imgUrl,
   size = 'md',
   xp = 1200,
-}: HomeScreenTopBarProps) {
+}: ExploreScreenTopBarProps) {
   return (
     <View style={styles.container}>
       <UserAvatarHeader
