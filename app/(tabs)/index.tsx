@@ -1,9 +1,16 @@
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import ExploreScreenTopBar from '@/components/ExploreScreenTopBar';
+import { View, ScrollView, Text, StyleSheet, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
+import ExploreScreenTopBar from '../../components/ExploreScreenTopBar';
 import Daily from '../../components/Daily';
 import RecommendedGames from '../../components/RecommendedGames';
 
 export default function ExploreScreen() {
+  const router = useRouter();
+
+  const handleViewAllPress = () => {
+    router.push('/(tabs)/games' as any);
+  };
+
   return (
     <View style={styles.container}>
       <ExploreScreenTopBar
@@ -14,7 +21,12 @@ export default function ExploreScreen() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <Daily progress={40} tasksRemaining={13} style={styles.dailyCard} />
         
-        <Text style={styles.sectionTitle}>Recommended games</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Recommended games</Text>
+          <Pressable onPress={handleViewAllPress}>
+            <Text style={styles.sectionSecondaryTitle}>View all</Text>
+          </Pressable>
+        </View>
         <RecommendedGames style={styles.recommendedGames} />
       </ScrollView>
     </View>
@@ -36,12 +48,21 @@ const styles = StyleSheet.create({
   dailyCard: {
     marginBottom: 16,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 40,
+    marginBottom: 16,
+  },
   sectionTitle: {
     color: '#ffffff',
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 40,
-    marginBottom: 16,
+  },
+  sectionSecondaryTitle: {
+    color: '#ffffff',
+    fontSize: 12,
   },
   recommendedGames: {
     marginBottom: 16,
