@@ -11,10 +11,10 @@ export interface CardProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const paddingClasses = {
-  sm: 'p-3',
-  md: 'p-5',
-  lg: 'p-8',
+const paddingValues = {
+  sm: 12, // p-3 = 12px
+  md: 20, // p-5 = 20px
+  lg: 32, // p-8 = 32px
 };
 
 export default function Card({
@@ -24,9 +24,8 @@ export default function Card({
   className = '',
   style,
 }: CardProps) {
-  const paddingClass = paddingClasses[padding];
+  const paddingValue = paddingValues[padding];
   const radius = 24; // rounded-3xl
-  const baseClasses = `rounded-3xl ${paddingClass} ${className}`.trim();
 
   // ---------------------------------------------------
   // LIQUID VARIANT (Apple glass)
@@ -34,12 +33,11 @@ export default function Card({
   if (variant === 'liquid') {
     return (
       <View
-        className={baseClasses}
         style={[
+          styles.base,
           {
-            overflow: 'hidden',
-            position: 'relative',
             borderRadius: radius,
+            padding: paddingValue,
           },
           style,
         ]}
@@ -71,7 +69,7 @@ export default function Card({
           style={{ ...StyleSheet.absoluteFillObject, borderRadius: radius }}
         />
 
-        <View style={{ position: 'relative', zIndex: 10 }}>{children}</View>
+        <View style={styles.content}>{children}</View>
       </View>
     );
   }
@@ -82,12 +80,11 @@ export default function Card({
   if (variant === 'transparentBlur') {
     return (
       <View
-        className={baseClasses}
         style={[
+          styles.base,
           {
-            overflow: 'hidden',
-            position: 'relative',
             borderRadius: radius,
+            padding: paddingValue,
           },
           style,
         ]}
@@ -126,7 +123,7 @@ export default function Card({
           }}
         />
 
-        <View style={{ position: 'relative', zIndex: 10 }}>{children}</View>
+        <View style={styles.content}>{children}</View>
       </View>
     );
   }
@@ -136,10 +133,31 @@ export default function Card({
   // ---------------------------------------------------
   return (
     <View
-      className={`${baseClasses} bg-white`}
-      style={[{ borderRadius: radius }, style]}
+      style={[
+        styles.base,
+        styles.solid,
+        {
+          borderRadius: radius,
+          padding: paddingValue,
+        },
+        style,
+      ]}
     >
       {children}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  base: {
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  solid: {
+    backgroundColor: '#ffffff',
+  },
+  content: {
+    position: 'relative',
+    zIndex: 10,
+  },
+});

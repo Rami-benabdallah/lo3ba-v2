@@ -1,9 +1,5 @@
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import Avatar from '../../components/Avatar';
-import UserAvatarHeader from '../../components/UserAvatarHeader';
 import HomeScreenTopBar from '../../components/HomeScreenTopBar';
-import Card from '../../components/Card';
-import ProgressBar from '../../components/ProgressBar';
 import Daily from '../../components/Daily';
 
 export default function HomeScreen() {
