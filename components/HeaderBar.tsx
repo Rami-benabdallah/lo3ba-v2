@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, StyleProp, ViewStyle } from 'react-native';
+import { View, Text, Pressable, StyleProp, ViewStyle, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 
@@ -27,18 +27,15 @@ export default function HeaderBar({
   };
 
   return (
-    <View
-      className={`w-full flex-row items-center justify-between px-4 py-3 bg-transparent ${className}`.trim()}
-      style={style}
-    >
+    <View style={[styles.container, style]}>
       {/* Left: Back button or spacer */}
-      <View className="w-10 items-start">
+      <View style={styles.leftContainer}>
         {showBack ? (
           <Pressable
             onPress={handleBackPress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <View className="w-10 h-10 rounded-full bg-white items-center justify-center">
+            <View style={styles.iconButton}>
               <Ionicons name="chevron-back" size={20} color="#000000" />
             </View>
           </Pressable>
@@ -46,20 +43,20 @@ export default function HeaderBar({
       </View>
 
       {/* Center: Title */}
-      <View className="flex-1 items-center">
+      <View style={styles.centerContainer}>
         {title && (
-          <Text className="text-white text-lg font-semibold">{title}</Text>
+          <Text style={styles.title}>{title}</Text>
         )}
       </View>
 
       {/* Right: Right icon or spacer */}
-      <View className="w-10 items-end">
+      <View style={styles.rightContainer}>
         {rightIcon ? (
           <Pressable
             onPress={onRightPress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <View className="w-10 h-10 rounded-full bg-white items-center justify-center">
+            <View style={styles.iconButton}>
               {rightIcon}
             </View>
           </Pressable>
@@ -68,4 +65,41 @@ export default function HeaderBar({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: 'transparent',
+  },
+  leftContainer: {
+    width: 40,
+    alignItems: 'flex-start',
+  },
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  rightContainer: {
+    width: 40,
+    alignItems: 'flex-end',
+  },
+  iconButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+});
 

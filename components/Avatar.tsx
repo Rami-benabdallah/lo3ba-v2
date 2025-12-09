@@ -15,20 +15,14 @@ const sizeConfig = {
   sm: {
     size: 32,
     fontSize: 12,
-    container: 'w-8 h-8',
-    text: 'text-xs',
   },
   md: {
     size: 48,
     fontSize: 14,
-    container: 'w-12 h-12',
-    text: 'text-sm',
   },
   lg: {
     size: 64,
     fontSize: 18,
-    container: 'w-16 h-16',
-    text: 'text-lg',
   },
 };
 
@@ -57,9 +51,6 @@ export default function Avatar({
 
   const avatarContent = (
     <View
-      className={`${config.container} rounded-full items-center justify-center bg-secondary-light ${
-        showBorder ? 'border-2 border-white' : ''
-      }`}
       style={[
         styles.container,
         {
@@ -75,17 +66,18 @@ export default function Avatar({
       {imgUrl ? (
         <Image
           source={{ uri: imgUrl }}
-          className={`${config.container} rounded-full`}
-          style={{
-            width: config.size,
-            height: config.size,
-            borderRadius: config.size / 2,
-          }}
+          style={[
+            styles.image,
+            {
+              width: config.size,
+              height: config.size,
+              borderRadius: config.size / 2,
+            },
+          ]}
           resizeMode="cover"
         />
       ) : (
         <Text
-          className={`${config.text} font-bold text-secondary`}
           style={[
             styles.initials,
             {
@@ -113,6 +105,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
   },
   initials: {
     textAlign: 'center',

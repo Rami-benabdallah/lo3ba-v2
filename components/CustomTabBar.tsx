@@ -68,7 +68,7 @@ export default function CustomTabBar({
             <View
               style={[
                 isFocused ? styles.activeIconContainer : styles.inactiveIconContainer,
-                { marginBottom: isFocused ? 2 : 2 },
+                styles.iconContainer,
               ]}
             >
               <Ionicons
@@ -108,6 +108,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     flex: 1,
+  },
+  iconContainer: {
+    marginBottom: 2,
   },
   inactiveIconContainer: {
     // Default icon container - no background
