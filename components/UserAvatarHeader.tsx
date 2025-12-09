@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: '600',
   },
   subtitle: {
     color: 'rgba(255, 255, 255, 0.7)',
-    fontSize: 18,
+    fontSize: 10,
     fontWeight: '500',
     marginTop: 2,
   },
