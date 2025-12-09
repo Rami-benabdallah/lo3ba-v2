@@ -11,23 +11,22 @@ export default function HomeScreen() {
           <Avatar id="1" name="Alex Johnson" size="lg" showBorder={true} />
         </View>
 
-        {/* Example #2 - UserAvatarHeader with title only */}
+        {/* Example #2 - UserAvatarHeader with subtitle only */}
         <View className="mb-8">
           <UserAvatarHeader
             name="Sarah Mills"
             size="md"
             showBorder={true}
-            title="Welcome back!"
+            subtitle="Welcome back!"
           />
         </View>
 
-        {/* Example #3 - UserAvatarHeader with title and subtitle */}
+        {/* Example #3 - UserAvatarHeader with subtitle */}
         <View className="mb-8">
           <UserAvatarHeader
             name="David Brown"
             size="sm"
             showBorder={false}
-            title="Good evening"
             subtitle="You have 3 new messages"
           />
         </View>
@@ -64,7 +63,6 @@ export default function HomeScreen() {
             imgUrl="https://i.pravatar.cc/150?img=3"
             size="md"
             showBorder={true}
-            title="Jennifer Lopez"
             subtitle="Online now"
           />
         </View>
@@ -89,7 +87,6 @@ export default function HomeScreen() {
             imgUrl="https://i.pravatar.cc/150?img=5"
             size="lg"
             showBorder={false}
-            title="Robert Downey"
             subtitle="Last seen 2 hours ago"
           />
         </View>

@@ -3,23 +3,23 @@ import { View, Text } from 'react-native';
 import Avatar, { AvatarProps } from './Avatar';
 
 export interface UserAvatarHeaderProps extends AvatarProps {
-  title?: string;
   subtitle?: string;
 }
 
 export default function UserAvatarHeader({
-  title,
   subtitle,
   ...avatarProps
 }: UserAvatarHeaderProps) {
+  const { name } = avatarProps;
+  
   return (
     <View className="flex-row items-center justify-center">
       <Avatar {...avatarProps} />
-      {(title || subtitle) && (
+      {(name || subtitle) && (
         <View className="ml-3 justify-center">
-          {title && (
+          {name && (
             <Text className="text-white text-base font-semibold">
-              {title}
+              {name}
             </Text>
           )}
           {subtitle && (
