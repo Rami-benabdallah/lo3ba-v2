@@ -16,20 +16,7 @@ export default function RootLayout() {
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={styles.gradient}
-      >
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: {
-            backgroundColor: "transparent",
-          },
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-
-        <StatusBar style="light" />
-      </LinearGradient>
+      />
       <View style={styles.content}>
         <Stack
           screenOptions={{
@@ -41,6 +28,7 @@ export default function RootLayout() {
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
+        <StatusBar style="light" />
       </View>
     </View>
   );
