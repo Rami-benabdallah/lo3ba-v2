@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleProp, ViewStyle } from 'react-native';
+import { View, Text, StyleProp, ViewStyle, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import Card from './Card';
 import ProgressBar from './ProgressBar';
 import { GRADIENT_COLORS } from '../constants/colors';
@@ -8,6 +9,7 @@ import { GRADIENT_COLORS } from '../constants/colors';
 export interface DailyProps {
   tasksRemaining?: number; // default: 13
   progress?: number; // default: 40
+  href?: string; // default: "/achievements"
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
@@ -15,19 +17,26 @@ export interface DailyProps {
 export default function Daily({
   tasksRemaining = 13,
   progress = 40,
+  href = '/achievements',
   className = '',
   style,
 }: DailyProps) {
+  const router = useRouter();
   const description = `${tasksRemaining} tasks not finished yet`;
   const progressText = `${progress}%`;
 
+  const handlePress = () => {
+    router.push(href as any);
+  };
+
   return (
-    <Card
-      variant="transparentBlur"
-      padding="md"
-      className={`rounded-3xl bg-transparent ${className}`.trim()}
-      style={style}
-    >
+    <Pressable onPress={handlePress}>
+      <Card
+        variant="transparentBlur"
+        padding="md"
+        className={`rounded-3xl bg-transparent ${className}`.trim()}
+        style={style}
+      >
       <View className="flex-row items-center">
         {/* SECTION 1: LEFT SIDE (1/3 width) */}
         <View className="w-1/3 pr-3">
@@ -63,6 +72,7 @@ export default function Daily({
         </View>
       </View>
     </Card>
+    </Pressable>
   );
 }
 
