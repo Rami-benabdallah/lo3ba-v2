@@ -1,10 +1,6 @@
-export default function HomeScreen() {
-  return (
-    <div className="flex-1 flex items-center justify-center min-h-screen">
-      <p className="text-2xl font-bold bg-secondary text-primary px-4 py-2 rounded-lg">
-        Hello World
-      </p>
-    </div>
-  );
+import { Redirect } from 'expo-router';
+
+export default function Index() {
+  return <Redirect href="/(tabs)" />;
 }
 

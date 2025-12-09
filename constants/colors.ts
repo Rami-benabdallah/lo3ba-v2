@@ -1,6 +1,6 @@
 // Primary and secondary colors
 export const COLORS = {
-  PRIMARY: '#f66728',
+  PRIMARY: '#F97316', // Orange primary color
   SECONDARY: '#8669fd',
 } as const;
 

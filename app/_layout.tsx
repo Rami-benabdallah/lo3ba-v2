@@ -18,7 +18,8 @@ export default function RootLayout() {
       end={{ x: 0, y: 1 }}
       style={styles.gradient}
     >
-      <Stack>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
