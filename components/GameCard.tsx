@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   bottomRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'end',
   },
   playersRow: {
     flexDirection: 'row',

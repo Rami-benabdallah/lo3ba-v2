@@ -46,17 +46,11 @@ export default function Card({
         <BlurView
           intensity={10}
           tint="default"
-          style={{ ...StyleSheet.absoluteFillObject, borderRadius: radius }}
+          style={[styles.absoluteFill, { borderRadius: radius }]}
         />
 
         <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            backgroundColor: 'rgba(255,255,255,0.08)',
-            borderRadius: radius,
-            borderWidth: 1,
-            borderColor: 'rgba(255,255,255,0.18)',
-          }}
+          style={[styles.absoluteFill, styles.liquidOverlay, { borderRadius: radius }]}
         />
 
         <LinearGradient
@@ -67,7 +61,7 @@ export default function Card({
           ]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={{ ...StyleSheet.absoluteFillObject, borderRadius: radius }}
+          style={[styles.absoluteFill, { borderRadius: radius }]}
         />
 
         <View style={styles.content}>{children}</View>
@@ -94,10 +88,7 @@ export default function Card({
         <BlurView
           intensity={100}
           tint="default"
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            borderRadius: radius,
-          }}
+          style={[styles.absoluteFill, { borderRadius: radius }]}
         />
 
         {/* Right-side soft white gradient */}
@@ -108,20 +99,12 @@ export default function Card({
           ]}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            borderRadius: radius,
-          }}
+          style={[styles.absoluteFill, { borderRadius: radius }]}
         />
 
         {/* Very thin Apple-style rim */}
         <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            borderRadius: radius,
-            borderWidth: 1,
-            borderColor: 'rgba(255,255,255,0.15)',
-          }}
+          style={[styles.absoluteFill, styles.transparentBlurBorder, { borderRadius: radius }]}
         />
 
         <View style={styles.content}>{children}</View>
@@ -160,5 +143,17 @@ const styles = StyleSheet.create({
   content: {
     position: 'relative',
     zIndex: 10,
+  },
+  absoluteFill: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  liquidOverlay: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.18)',
+  },
+  transparentBlurBorder: {
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)',
   },
 });

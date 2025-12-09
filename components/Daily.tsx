@@ -80,7 +80,7 @@ export default function Daily({
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   leftSection: {
     width: '33.333%',
@@ -93,11 +93,10 @@ const styles = StyleSheet.create({
   },
   rightSection: {
     flex: 1,
-    height: '100%',
     justifyContent: 'space-between',
   },
   textContainer: {
-    flex: 1,
+    // Removed flex: 1 to prevent expansion
   },
   title: {
     color: '#ffffff',

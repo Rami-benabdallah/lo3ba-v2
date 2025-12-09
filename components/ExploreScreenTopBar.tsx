@@ -25,6 +25,7 @@ export default function ExploreScreenTopBar({
         subtitle={subtitle}
         imgUrl={imgUrl}
         size={size}
+        showBorder={true}
       />
       <UserXpHeader xp={xp} />
     </View>
