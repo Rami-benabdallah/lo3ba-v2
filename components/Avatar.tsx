@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 
 export interface AvatarProps {
   id?: string | number;
@@ -7,6 +8,7 @@ export interface AvatarProps {
   name: string;
   size?: 'sm' | 'md' | 'lg';
   showBorder?: boolean;
+  href?: string; // default: "/profile"
 }
 
 const sizeConfig = {
@@ -36,7 +38,9 @@ export default function Avatar({
   name,
   size = 'md',
   showBorder = false,
+  href = '/profile',
 }: AvatarProps) {
+  const router = useRouter();
   const config = sizeConfig[size];
   
   // Get first two letters of name (uppercase)
@@ -47,7 +51,11 @@ export default function Avatar({
     .toUpperCase()
     .slice(0, 2);
 
-  return (
+  const handlePress = () => {
+    router.push(href as any);
+  };
+
+  const avatarContent = (
     <View
       className={`${config.container} rounded-full items-center justify-center bg-secondary-light ${
         showBorder ? 'border-2 border-white' : ''
@@ -91,6 +99,12 @@ export default function Avatar({
         </Text>
       )}
     </View>
+  );
+
+  return (
+    <Pressable onPress={handlePress}>
+      {avatarContent}
+    </Pressable>
   );
 }
 
