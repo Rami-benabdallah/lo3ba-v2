@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleProp, ViewStyle, Animated } from 'react-native';
+import { View, Text, StyleProp, ViewStyle, Animated, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from '../constants/colors';
 
@@ -35,17 +35,16 @@ export default function ProgressBar({
   }, [clampedValue, animatedWidth]);
 
   return (
-    <View className={`${className}`.trim()} style={style}>
+    <View style={style}>
       {/* Progress bar container */}
       <View
-        style={{
-          height,
-          borderRadius,
-          backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          borderWidth: 1.5,
-          borderColor: 'rgba(255, 255, 255, 1)',
-          overflow: 'hidden',
-        }}
+        style={[
+          styles.progressContainer,
+          {
+            height,
+            borderRadius,
+          },
+        ]}
       >
         {/* Animated fill gradient */}
         <Animated.View
@@ -72,16 +71,39 @@ export default function ProgressBar({
 
       {/* Text row above the bar */}
       {(leftText || rightText) && (
-        <View className="flex-row justify-between items-center mb-2">
+        <View style={styles.textRow}>
           {leftText && (
-            <Text className="text-white text-xs">{leftText}</Text>
+            <Text style={styles.leftText}>{leftText}</Text>
           )}
           {rightText && (
-            <Text className="text-white/80 text-xs">{rightText}</Text>
+            <Text style={styles.rightText}>{rightText}</Text>
           )}
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  progressContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 1)',
+    overflow: 'hidden',
+  },
+  textRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  leftText: {
+    color: '#ffffff',
+    fontSize: 12,
+  },
+  rightText: {
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: 12,
+  },
+});
 

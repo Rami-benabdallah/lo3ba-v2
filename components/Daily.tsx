@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleProp, ViewStyle, Pressable } from 'react-native';
+import { View, Text, StyleProp, ViewStyle, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import Card from './Card';
@@ -34,32 +34,33 @@ export default function Daily({
       <Card
         variant="transparentBlur"
         padding="md"
-        className={`rounded-3xl bg-transparent ${className}`.trim()}
         style={style}
       >
-      <View className="flex-row items-center">
+      <View style={styles.row}>
         {/* SECTION 1: LEFT SIDE (1/3 width) */}
-        <View className="w-1/3 pr-3">
+        <View style={styles.leftSection}>
           <View
-            className="rounded-2xl items-center justify-center"
-            style={{
-              backgroundColor: "#fff",
-              opacity: 0.4,
-              aspectRatio: 1,
-            }}
+            style={[
+              styles.iconContainer,
+              {
+                backgroundColor: "#fff",
+                opacity: 0.4,
+                aspectRatio: 1,
+              },
+            ]}
           >
             <Ionicons name="analytics-outline" size={40} color="#8669fd" />
           </View>
         </View>
 
         {/* SECTION 2: RIGHT SIDE (2/3 width) */}
-        <View className="flex-1 h-full justify-between">
-            <View className="flex-1">
+        <View style={styles.rightSection}>
+            <View style={styles.textContainer}>
                 {/* Title */}
-                <Text className="text-white text-lg font-semibold">Daily</Text>
+                <Text style={styles.title}>Daily</Text>
 
                 {/* Description */}
-                <Text className="text-white/70 text-sm mt-1">{description}</Text>
+                <Text style={styles.description}>{description}</Text>
             </View>
 
             {/* ProgressBar */}
@@ -67,7 +68,7 @@ export default function Daily({
                 value={progress}
                 leftText="Progress"
                 rightText={progressText}
-                className="mt-2"
+                style={styles.progressBar}
             />
         </View>
       </View>
@@ -75,4 +76,41 @@ export default function Daily({
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  leftSection: {
+    width: '33.333%',
+    paddingRight: 12,
+  },
+  iconContainer: {
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rightSection: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'space-between',
+  },
+  textContainer: {
+    flex: 1,
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  description: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 14,
+    marginTop: 4,
+  },
+  progressBar: {
+    marginTop: 8,
+  },
+});
 
