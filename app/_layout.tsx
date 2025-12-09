@@ -5,6 +5,7 @@ import { StyleSheet, View, Platform } from "react-native";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GRADIENT_COLORS } from "../constants/colors";
+import "../global.css";
 
 export default function RootLayout() {
   // Fix the background-color issue on Web by directly manipulating the DOM
