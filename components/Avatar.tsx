@@ -78,11 +78,14 @@ export default function Avatar({
       ) : (
         <Text
           className={`${config.text} font-bold text-secondary`}
-          style={{
-            fontSize: config.fontSize,
-            fontWeight: 'bold',
-            color: '#8669fd', // secondary
-          }}
+          style={[
+            styles.initials,
+            {
+              fontSize: config.fontSize,
+              fontWeight: 'bold',
+              color: '#8669fd', // secondary
+            },
+          ]}
         >
           {initials}
         </Text>
@@ -96,6 +99,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
+  },
+  initials: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
   },
 });
 
