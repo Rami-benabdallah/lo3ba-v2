@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Sheet from '../../components/Sheet';
-import { COLORS } from '../../constants/colors';
+import Tabs, { TabItem } from './Tabs';
 
 export interface GameDetailsSheetProps {
   visible: boolean;
@@ -25,97 +25,94 @@ export interface GameDetailsSheetProps {
   } | null;
 }
 
-type TabType = 'description' | 'howToPlay' | 'rules' | 'history';
-
 export default function GameDetailsSheet({
   visible,
   onClose,
   onPlay,
   game,
 }: GameDetailsSheetProps) {
-  const [activeTab, setActiveTab] = useState<TabType>('description');
-
   if (!game) {
     return null;
   }
 
-  const tabs: { id: TabType; label: string }[] = [
-    { id: 'description', label: 'Description' },
-    { id: 'howToPlay', label: 'How to Play' },
-    { id: 'rules', label: 'Rules' },
-    { id: 'history', label: 'History' },
+  const tabs: TabItem[] = [
+    {
+      id: 'description',
+      title: 'Description',
+      content: (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+        >
+          <Text style={styles.contentText}>
+            {game.description}
+          </Text>
+        </ScrollView>
+      ),
+    },
+    {
+      id: 'howToPlay',
+      title: 'How to Play',
+      content: (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+        >
+          <Text style={styles.contentText}>
+            {game.howToPlay}
+          </Text>
+        </ScrollView>
+      ),
+    },
+    {
+      id: 'rules',
+      title: 'Rules',
+      content: (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+        >
+          <Text style={styles.contentText}>
+            {game.rules}
+          </Text>
+        </ScrollView>
+      ),
+    },
+    {
+      id: 'history',
+      title: 'History',
+      content: (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+        >
+          {game.history.length > 0 ? (
+            <View>
+              {game.history.map((entry, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.historyItem,
+                    index > 0 && styles.historyItemSpacing,
+                  ]}
+                >
+                  <Text style={styles.historyText}>
+                    {entry}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.emptyHistoryContainer}>
+              <Text style={styles.emptyHistoryText}>
+                No history available
+              </Text>
+            </View>
+          )}
+        </ScrollView>
+      ),
+    },
   ];
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'description':
-        return (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-          >
-            <Text style={styles.contentText}>
-              {game.description}
-            </Text>
-          </ScrollView>
-        );
-      case 'howToPlay':
-        return (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-          >
-            <Text style={styles.contentText}>
-              {game.howToPlay}
-            </Text>
-          </ScrollView>
-        );
-      case 'rules':
-        return (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-          >
-            <Text style={styles.contentText}>
-              {game.rules}
-            </Text>
-          </ScrollView>
-        );
-      case 'history':
-        return (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            style={styles.scrollView}
-          >
-            {game.history.length > 0 ? (
-              <View>
-                {game.history.map((entry, index) => (
-                  <View
-                    key={index}
-                    style={[
-                      styles.historyItem,
-                      index > 0 && styles.historyItemSpacing,
-                    ]}
-                  >
-                    <Text style={styles.historyText}>
-                      {entry}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            ) : (
-              <View style={styles.emptyHistoryContainer}>
-                <Text style={styles.emptyHistoryText}>
-                  No history available
-                </Text>
-              </View>
-            )}
-          </ScrollView>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <Sheet
@@ -143,39 +140,8 @@ export default function GameDetailsSheet({
           </Text>
         </View>
 
-        {/* Tab Selector */}
-        <View style={styles.tabContainer}>
-          <View style={styles.tabRow}>
-            {tabs.map((tab, index) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <TouchableOpacity
-                  key={tab.id}
-                  onPress={() => setActiveTab(tab.id)}
-                  style={[
-                    styles.tab,
-                    index > 0 && styles.tabSpacing,
-                    isActive ? styles.tabActive : styles.tabInactive,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.tabText,
-                      isActive ? styles.tabTextActive : styles.tabTextInactive,
-                    ]}
-                  >
-                    {tab.label}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-
-        {/* Scrollable Content */}
-        <View style={styles.contentContainer}>
-          {renderContent()}
-        </View>
+        {/* Tabs Component */}
+        <Tabs tabs={tabs} defaultTabId="description" />
 
         {/* Fixed Play Game Button */}
         <View style={styles.buttonContainer}>
@@ -216,45 +182,6 @@ const styles = StyleSheet.create({
     fontSize: 24, // text-2xl
     fontWeight: 'bold',
     color: '#111827', // text-gray-900
-  },
-  tabContainer: {
-    paddingHorizontal: 20, // px-5
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB', // border-gray-200
-  },
-  tabRow: {
-    flexDirection: 'row',
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 12, // py-3
-    borderBottomWidth: 2,
-  },
-  tabSpacing: {
-    marginLeft: 4, // ml-1
-  },
-  tabActive: {
-    borderBottomColor: COLORS.PRIMARY,
-  },
-  tabInactive: {
-    borderBottomColor: 'transparent',
-  },
-  tabText: {
-    textAlign: 'center',
-    fontSize: 14, // text-sm
-    fontWeight: '500', // font-medium
-  },
-  tabTextActive: {
-    color: COLORS.PRIMARY,
-  },
-  tabTextInactive: {
-    color: '#6B7280', // text-gray-500
-  },
-  contentContainer: {
-    flex: 1,
-    paddingHorizontal: 20, // px-5
-    paddingTop: 16, // pt-4
-    paddingBottom: 96, // pb-24
   },
   scrollView: {
     flex: 1,
