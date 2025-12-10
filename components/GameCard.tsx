@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 1,
     backgroundColor: COLORS.SECONDARY,
-    borderRadius: 16,
+    borderRadius: 16, 
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,

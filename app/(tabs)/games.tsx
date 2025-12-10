@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { defaultGames } from '../../components/RecommendedGames';
+import GameCard from '../../components/GameCard';
 
 export default function GamesScreen() {
   const isFocused = useIsFocused();
@@ -10,9 +12,27 @@ export default function GamesScreen() {
   
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.text}>Games</Text>
-      </View>
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.title}>All Games</Text>
+        <View style={styles.gamesGrid}>
+          {defaultGames.map((game, index) => (
+            <View key={index} style={styles.gameCardWrapper}>
+              <GameCard
+                gameName={game.gameName}
+                iconName={game.iconName}
+                players={game.players}
+                rank={game.rank}
+                rankIconName={game.rankIconName}
+                energyIconName={game.energyIconName}
+              />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -22,16 +42,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
-  content: {
+  scrollView: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
   },
-  text: {
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingTop: 24,
+    paddingBottom: 24,
+  },
+  title: {
     color: '#ffffff',
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  gamesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  gameCardWrapper: {
+    width: '48%',
+    marginBottom: 12,
   },
 });
 

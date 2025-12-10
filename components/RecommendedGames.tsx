@@ -18,7 +18,7 @@ export interface RecommendedGamesProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const defaultGames: Game[] = [
+export const defaultGames: Game[] = [
   {
     gameName: 'Space Defender',
     iconName: 'planet',
