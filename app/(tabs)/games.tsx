@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
-import { defaultGames } from '../../components/RecommendedGames';
+import { games } from '../../src/data/mockGames';
 import GameCard from '../../components/GameCard';
 import HeaderBar from '../../components/HeaderBar';
 import Sheet from '../../components/Sheet';
@@ -88,7 +88,7 @@ export default function GamesScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.gamesGrid}>
-          {defaultGames.map((game, index) => (
+          {games.map((game, index) => (
             <View key={index} style={styles.gameCardWrapper}>
               <GameCard
                 gameName={game.gameName}

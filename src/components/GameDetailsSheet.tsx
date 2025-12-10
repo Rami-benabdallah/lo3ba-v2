@@ -176,16 +176,16 @@ export default function GameDetailsSheet({
             </TouchableOpacity>
 
             {/* Play Multiplayer Local Button */}
-            <TouchableOpacity
+          <TouchableOpacity
               onPress={onPlayLocal}
               style={styles.playButtonLocal}
-              activeOpacity={0.8}
-            >
+            activeOpacity={0.8}
+          >
               <Ionicons name="phone-portrait" size={32} color="#FFFFFF" />
-              <Text style={styles.playButtonText}>
+            <Text style={styles.playButtonText}>
                 Multiplayer Local
-              </Text>
-            </TouchableOpacity>
+            </Text>
+          </TouchableOpacity>
           </View>
         </View>
       </View>

@@ -1,4 +1,5 @@
 import { Game } from '../../components/RecommendedGames';
+import { Ionicons } from '@expo/vector-icons';
 
 export interface GameDetails {
   id: string;
@@ -10,29 +11,50 @@ export interface GameDetails {
   history: string[];
 }
 
+// Games list - single source of truth for all games
+export const games: Game[] = [
+  {
+    gameName: '9 LIVES',
+    iconName: 'paw' as keyof typeof Ionicons.glyphMap,
+    players: 1560,
+    rank: 25,
+  },
+];
+
 // Mock game details data
 export const gameDetailsMap: Record<string, Omit<GameDetails, 'id' | 'name'>> = {
-  'Space Defender': {
-    description: 'Defend your space station from waves of alien invaders in this action-packed arcade game. Use your weapons strategically to survive as long as possible and achieve the highest score.',
-    howToPlay: '1. Tap to shoot at incoming enemies\n2. Swipe to move your ship left and right\n3. Collect power-ups to enhance your weapons\n4. Survive as many waves as possible',
-    rules: '• You have 3 lives\n• Each enemy destroyed gives you points\n• Power-ups appear randomly\n• Game ends when all lives are lost',
+  '9 LIVES': {
+    description: 
+      "9 Lives is a fast, chaotic fact-checking party game where players test their intuition, bluffing skills, and confidence. Each player starts with 1 life (shown as a cat paw). Every round, one player reads a surprising fact aloud, and the others must decide if it's TRUE or FALSE. Guess correctly to earn a paw. The first to reach 9 paws wins! But be careful—if you bet too confidently and get it wrong, you can lose paws quickly. Perfect for parties, groups, and quick-thinking fun.",
+
+    howToPlay: 
+      "1. Players join the game (max 6), each starting with 1 paw.\n\n" +
+      "2. The first player reads a fact aloud. Only the reader sees whether the fact is true or false.\n\n" +
+      "3. All other players vote TRUE or FALSE at the same time.\n\n" +
+      "4. Players who guess correctly earn +1 paw.\n\n" +
+      "5. Players with more than 1 paw may use a Claw bet: if they are correct, they gain +2 paws; if wrong, they lose 1 paw.\n\n" +
+      "6. The next player becomes the reader, and the game continues.\n\n" +
+      "7. The first player to reach 9 paws wins. If multiple players reach 9 in the same round, all are winners.",
+
+    rules: 
+      "• Each player starts with 1 paw.\n\n" +
+      "• Up to 6 players can join a match.\n\n" +
+      "• The reader must read the displayed fact exactly as written.\n\n" +
+      "• Players submit their TRUE/FALSE answers simultaneously.\n\n" +
+      "• Correct answer → +1 paw.\n" +
+      "• Wrong answer → no paws.\n\n" +
+      "• Claw Bet: Available only if the player has 2 or more paws.\n" +
+      "   – Correct → +2 paws.\n" +
+      "   – Incorrect → -1 paw.\n\n" +
+      "• A player wins immediately upon reaching 9 paws.\n\n" +
+      "• If multiple players reach 9 in the same round, they all win and each receives a point.\n\n" +
+      "• No hinting or revealing the answer while reading facts.",
     history: [
       'Dec 15, 2024 - Score: 12,450',
       'Dec 10, 2024 - Score: 10,200',
       'Dec 5, 2024 - Score: 8,900',
     ],
     image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800',
-  },
-  'Pirate Quest': {
-    description: 'Embark on an epic adventure as a pirate captain searching for hidden treasures across the seven seas. Battle rival pirates, solve puzzles, and build your crew.',
-    howToPlay: '1. Navigate your ship by tapping on the map\n2. Engage in battles by matching cards\n3. Collect treasure chests to earn rewards\n4. Upgrade your ship and crew',
-    rules: '• Each battle costs energy\n• Win battles to progress the story\n• Collect resources to upgrade\n• Complete quests for bonus rewards',
-    history: [
-      'Dec 14, 2024 - Level 15 reached',
-      'Dec 8, 2024 - Level 12 reached',
-      'Dec 1, 2024 - Level 8 reached',
-    ],
-    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800',
   },
 };
 

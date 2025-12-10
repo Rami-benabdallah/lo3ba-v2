@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleProp, ViewStyle, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import GameCard from './GameCard';
+import { games } from '../src/data/mockGames';
 
 export interface Game {
   gameName: string;
@@ -19,23 +20,8 @@ export interface RecommendedGamesProps {
   onGamePress?: (game: Game) => void;
 }
 
-export const defaultGames: Game[] = [
-  {
-    gameName: 'Space Defender',
-    iconName: 'planet',
-    players: 1240,
-    rank: 42,
-  },
-  {
-    gameName: 'Pirate Quest',
-    iconName: 'skull',
-    players: 820,
-    rank: 128,
-  },
-];
-
 export default function RecommendedGames({
-  recommendedGames = defaultGames,
+  recommendedGames = games,
   className = '',
   style,
   onGamePress,
