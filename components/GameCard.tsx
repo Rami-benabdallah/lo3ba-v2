@@ -97,11 +97,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   rankIcon: {
-    color: COLORS.gray[400],
+    color: COLORS.gray[800],
     marginRight: 4,
   },
   rankText: {
-    color: COLORS.gray[400],
+    color: COLORS.gray[800],
     fontSize: 12,
     fontWeight: '500',
   },

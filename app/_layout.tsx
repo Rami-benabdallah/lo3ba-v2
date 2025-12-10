@@ -133,9 +133,31 @@ export default function RootLayout() {
               // Ensure the Stack container itself is transparent on Web
               presentation: "card",
               animation: "default",
+              animationDuration: 150, // Faster transition for smoother feel
+              gestureEnabled: true,
+              gestureDirection: "horizontal",
             }}
           >
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen 
+              name="(tabs)" 
+              options={{ 
+                headerShown: false,
+                animation: "default",
+              }} 
+            />
+            <Stack.Screen 
+              name="profile" 
+              options={{ 
+                headerShown: false,
+                animation: "slide_from_right",
+                animationDuration: 150,
+                gestureEnabled: true,
+                gestureDirection: "horizontal",
+                contentStyle: {
+                  backgroundColor: "transparent",
+                },
+              }} 
+            />
           </Stack>
           <StatusBar style="light" />
         </View>
