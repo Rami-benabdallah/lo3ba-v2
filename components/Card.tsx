@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export interface CardProps {
   children: React.ReactNode;
   padding?: 'xs' | 'sm' | 'md' | 'lg';
-  variant?: 'solid' | 'liquid' | 'transparentBlur';
+  variant?: 'solid' | 'liquid' | 'liquidWhite';
   className?: string;
   style?: StyleProp<ViewStyle>;
 }
@@ -70,9 +70,9 @@ export default function Card({
   }
 
   // ---------------------------------------------------
-  // NEW VARIANT: TRANSPARENT BLUR (floating glass)
+  // LIQUID WHITE VARIANT (whiter liquid glass)
   // ---------------------------------------------------
-  if (variant === 'transparentBlur') {
+  if (variant === 'liquidWhite') {
     return (
       <View
         style={[
@@ -84,27 +84,25 @@ export default function Card({
           style,
         ]}
       >
-        {/* CLEAR blur, no white wash */}
         <BlurView
-          intensity={100}
+          intensity={10}
           tint="default"
           style={[styles.absoluteFill, { borderRadius: radius }]}
         />
 
-        {/* Right-side soft white gradient */}
-        <LinearGradient
-          colors={[
-            'rgba(255,255,255,0.02)',
-            'rgba(255,255,255,0.12)', // stronger on right
-          ]}
-          start={{ x: 0, y: 0.5 }}
-          end={{ x: 1, y: 0.5 }}
-          style={[styles.absoluteFill, { borderRadius: radius }]}
+        <View
+          style={[styles.absoluteFill, styles.liquidWhiteOverlay, { borderRadius: radius }]}
         />
 
-        {/* Very thin Apple-style rim */}
-        <View
-          style={[styles.absoluteFill, styles.transparentBlurBorder, { borderRadius: radius }]}
+        <LinearGradient
+          colors={[
+            'rgba(255,255,255,0.45)',
+            'rgba(255,255,255,0.15)',
+            'rgba(255,255,255,0.05)',
+          ]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={[styles.absoluteFill, { borderRadius: radius }]}
         />
 
         <View style={styles.content}>{children}</View>
@@ -148,12 +146,13 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   liquidOverlay: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: 'rgba(255,255,255,0.07)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.18)',
   },
-  transparentBlurBorder: {
+  liquidWhiteOverlay: {
+    backgroundColor: 'rgba(255,255,255,0.20)',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.15)',
+    borderColor: 'rgba(255,255,255,0.35)',
   },
 });
