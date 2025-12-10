@@ -32,7 +32,7 @@ export default function GameCard({
       <View style={styles.container}>
         {/* TOP: Square icon box */}
         <View style={styles.iconBox}>
-          <Ionicons name={iconName} size={60} color="#ffffff" />
+          <Ionicons name={iconName} size={60} color={COLORS.SECONDARY} />
         </View>
 
         {/* Game name */}
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   iconBox: {
     width: '100%',
     aspectRatio: 1,
-    backgroundColor: COLORS.SECONDARY,
+    backgroundColor: COLORS.gray[200],
     borderRadius: 16, 
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/colors';
 import Card from './Card';
@@ -26,36 +26,29 @@ export default function GameItem({
   className = '',
 }: GameItemProps) {
   return (
-    <Pressable onPress={onPress} className={className}>
+    <Pressable onPress={onPress}>
       <Card variant="liquid" padding="sm">
-        <View className="flex-row items-center">
+        <View style={styles.container}>
           {/* Left: Rounded secondary-colored box with icon */}
-          <View
-            className="rounded-xl items-center justify-center"
-            style={{
-              width: 48,
-              height: 48,
-              backgroundColor: COLORS.SECONDARY,
-            }}
-          >
+          <View style={styles.iconContainer}>
             <Ionicons name={iconName} size={24} color="#ffffff" />
           </View>
 
           {/* Middle: Vertical column with game name and metadata */}
-          <View className="flex-1 ml-3">
-            <Text className="text-white font-semibold">{name}</Text>
-            <View className="flex-row items-center mt-1 gap-x-2">
+          <View style={styles.middleSection}>
+            <Text style={styles.gameName}>{name}</Text>
+            <View style={styles.metadataRow}>
               {lastPlayed && (
-                <Text className="text-white/60 text-xs">{lastPlayed}</Text>
+                <Text style={styles.metadataText}>{lastPlayed}</Text>
               )}
               {gameType && (
-                <View className="flex-row items-center">
+                <View style={styles.gameTypeContainer}>
                   <Ionicons
                     name={gameType === 'multiplayer' ? 'people' : 'person'}
                     size={12}
                     color="rgba(255, 255, 255, 0.6)"
                   />
-                  <Text className="text-white/60 text-xs ml-1">
+                  <Text style={[styles.metadataText, styles.gameTypeText]}>
                     {gameType === 'multiplayer' ? 'Multiplayer' : 'Single'}
                   </Text>
                 </View>
@@ -65,11 +58,9 @@ export default function GameItem({
 
           {/* Right: Experience gained */}
           {experienceGained !== undefined && (
-            <View className="flex-row items-center ml-2">
+            <View style={styles.experienceContainer}>
               <Ionicons name="star" size={16} color={COLORS.PRIMARY} />
-              <Text className="text-white font-semibold ml-1">
-                +{experienceGained}
-              </Text>
+              <Text style={styles.experienceText}>+{experienceGained}</Text>
             </View>
           )}
         </View>
@@ -77,3 +68,53 @@ export default function GameItem({
     </Pressable>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: COLORS.SECONDARY,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  middleSection: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  gameName: {
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  metadataRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  metadataText: {
+    color: 'rgba(255, 255, 255, 0.6)',
+    fontSize: 12,
+  },
+  gameTypeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  gameTypeText: {
+    marginLeft: 4,
+  },
+  experienceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  experienceText: {
+    color: '#ffffff',
+    fontWeight: '600',
+    marginLeft: 4,
+  },
+});

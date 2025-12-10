@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import GameItem, { GameType } from './GameItem';
 
@@ -54,7 +54,7 @@ export default function RecentlyPlayed({
   return (
     <View className={className}>
       {/* Vertical list of GameItem components */}
-      <View className="gap-y-3">
+      <View style={styles.container}>
         {items.map((item, index) => (
           <GameItem
             key={index}
@@ -69,3 +69,9 @@ export default function RecentlyPlayed({
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 12,
+  },
+});
