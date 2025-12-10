@@ -191,21 +191,29 @@ export default function Sheet({
           style={[
             styles.sheet,
             {
-              backgroundColor,
-              padding,
-              paddingBottom: Math.max(padding, insets.bottom),
               transform: [{ translateY }],
-              height: expandable ? sheetHeight : defaultSheetHeight,
             },
           ]}
-          {...(expandable ? panResponder.panHandlers : {})}
         >
-          {expandable && (
-            <View style={styles.grabHandleContainer}>
-              <View style={styles.grabHandle} />
-            </View>
-          )}
-          <View style={styles.sheetContent}>{children}</View>
+          <Animated.View
+            style={[
+              styles.sheetInner,
+              {
+                backgroundColor,
+                padding,
+                paddingBottom: Math.max(padding, insets.bottom),
+                height: expandable ? sheetHeight : defaultSheetHeight,
+              },
+            ]}
+            {...(expandable ? panResponder.panHandlers : {})}
+          >
+            {expandable && (
+              <View style={styles.grabHandleContainer}>
+                <View style={styles.grabHandle} />
+              </View>
+            )}
+            <View style={styles.sheetContent}>{children}</View>
+          </Animated.View>
         </Animated.View>
       </View>
     </Modal>
@@ -225,6 +233,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   sheet: {
+    width: '100%',
+  },
+  sheetInner: {
     width: '100%',
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
