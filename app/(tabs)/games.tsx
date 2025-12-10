@@ -1,4 +1,4 @@
-import { View, ScrollView, Text, StyleSheet, Switch } from 'react-native';
+import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
 import { defaultGames } from '../../components/RecommendedGames';
@@ -6,7 +6,7 @@ import GameCard from '../../components/GameCard';
 import HeaderBar from '../../components/HeaderBar';
 import Sheet from '../../components/Sheet';
 import Button from '../../components/Button';
-import { COLORS } from '../../constants/colors';
+import Switch from '../../components/Switch';
 
 export default function GamesScreen() {
   const isFocused = useIsFocused();
@@ -113,9 +113,7 @@ export default function GamesScreen() {
             <Switch
               value={playedBefore}
               onValueChange={setPlayedBefore}
-              trackColor={{ false: '#E5E7EB', true: COLORS.PRIMARY }}
-              thumbColor="#ffffff"
-              ios_backgroundColor="#E5E7EB"
+              size="md"
             />
           </View>
           
@@ -127,9 +125,7 @@ export default function GamesScreen() {
             <Switch
               value={showOnlyNew}
               onValueChange={setShowOnlyNew}
-              trackColor={{ false: '#E5E7EB', true: '#3B82F6' }}
-              thumbColor="#ffffff"
-              ios_backgroundColor="#E5E7EB"
+              size="md"
             />
           </View>
           
@@ -141,9 +137,7 @@ export default function GamesScreen() {
             <Switch
               value={multiplayerOnly}
               onValueChange={setMultiplayerOnly}
-              trackColor={{ false: '#E5E7EB', true: '#3B82F6' }}
-              thumbColor="#ffffff"
-              ios_backgroundColor="#E5E7EB"
+              size="md"
             />
           </View>
           
@@ -155,9 +149,7 @@ export default function GamesScreen() {
             <Switch
               value={recommendedForYou}
               onValueChange={setRecommendedForYou}
-              trackColor={{ false: '#E5E7EB', true: '#3B82F6' }}
-              thumbColor="#ffffff"
-              ios_backgroundColor="#E5E7EB"
+              size="md"
             />
           </View>
           
