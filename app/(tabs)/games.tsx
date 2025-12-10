@@ -1,12 +1,13 @@
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect, useRef } from 'react';
-import { defaultGames } from '../../components/RecommendedGames';
+import { defaultGames, Game } from '../../components/RecommendedGames';
 import GameCard from '../../components/GameCard';
 import HeaderBar from '../../components/HeaderBar';
 import Sheet from '../../components/Sheet';
 import Button from '../../components/Button';
 import Switch from '../../components/Switch';
+import GameDetailsSheet from '../../src/components/GameDetailsSheet';
 
 export default function GamesScreen() {
   const isFocused = useIsFocused();
@@ -15,6 +16,8 @@ export default function GamesScreen() {
   const [showOnlyNew, setShowOnlyNew] = useState(false);
   const [multiplayerOnly, setMultiplayerOnly] = useState(false);
   const [recommendedForYou, setRecommendedForYou] = useState(false);
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   
   // Store initial filter values when sheet opens
   const initialFiltersRef = useRef({
@@ -61,6 +64,59 @@ export default function GamesScreen() {
     };
     setFilterVisible(false);
   };
+
+  // Helper function to convert Game to GameDetailsSheet format
+  const getGameDetails = (game: Game) => {
+    // Mock data - replace with actual game data from your API/database
+    const gameDetailsMap: Record<string, {
+      description: string;
+      howToPlay: string;
+      rules: string;
+      history: string[];
+      image: string;
+    }> = {
+      'Space Defender': {
+        description: 'Defend your space station from waves of alien invaders in this action-packed arcade game. Use your weapons strategically to survive as long as possible and achieve the highest score.',
+        howToPlay: '1. Tap to shoot at incoming enemies\n2. Swipe to move your ship left and right\n3. Collect power-ups to enhance your weapons\n4. Survive as many waves as possible',
+        rules: '• You have 3 lives\n• Each enemy destroyed gives you points\n• Power-ups appear randomly\n• Game ends when all lives are lost',
+        history: [
+          'Dec 15, 2024 - Score: 12,450',
+          'Dec 10, 2024 - Score: 10,200',
+          'Dec 5, 2024 - Score: 8,900',
+        ],
+        image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=800',
+      },
+      'Pirate Quest': {
+        description: 'Embark on an epic adventure as a pirate captain searching for hidden treasures across the seven seas. Battle rival pirates, solve puzzles, and build your crew.',
+        howToPlay: '1. Navigate your ship by tapping on the map\n2. Engage in battles by matching cards\n3. Collect treasure chests to earn rewards\n4. Upgrade your ship and crew',
+        rules: '• Each battle costs energy\n• Win battles to progress the story\n• Collect resources to upgrade\n• Complete quests for bonus rewards',
+        history: [
+          'Dec 14, 2024 - Level 15 reached',
+          'Dec 8, 2024 - Level 12 reached',
+          'Dec 1, 2024 - Level 8 reached',
+        ],
+        image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800',
+      },
+    };
+
+    const details = gameDetailsMap[game.gameName] || {
+      description: `Experience the exciting world of ${game.gameName}. Join ${game.players.toLocaleString()} players in this thrilling adventure!`,
+      howToPlay: 'Tap to interact and follow the on-screen instructions to play.',
+      rules: 'Follow the game guidelines and have fun!',
+      history: [],
+      image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800',
+    };
+
+    return {
+      id: game.gameName.toLowerCase().replace(/\s+/g, '-'),
+      name: game.gameName,
+      image: details.image,
+      description: details.description,
+      howToPlay: details.howToPlay,
+      rules: details.rules,
+      history: details.history,
+    };
+  };
   
   return (
     <View style={styles.container}>
@@ -85,6 +141,11 @@ export default function GamesScreen() {
                 rank={game.rank}
                 rankIconName={game.rankIconName}
                 energyIconName={game.energyIconName}
+                onPress={() => {
+                  console.log('GameCard pressed:', game.gameName);
+                  setSelectedGame(game);
+                  setIsDetailsOpen(true);
+                }}
               />
             </View>
           ))}
@@ -164,6 +225,17 @@ export default function GamesScreen() {
           </View>
         </ScrollView>
       </Sheet>
+
+      {/* Game Details Sheet */}
+      <GameDetailsSheet
+        visible={isDetailsOpen}
+        game={selectedGame ? getGameDetails(selectedGame) : null}
+        onClose={() => setIsDetailsOpen(false)}
+        onPlay={() => {
+          setIsDetailsOpen(false);
+          // TODO: navigate to game screen in the future
+        }}
+      />
     </View>
   );
 }
