@@ -9,6 +9,7 @@ export interface HeaderBarProps {
   leftIcon?: React.ReactNode; // Custom left icon (overrides default back button)
   onLeftPress?: () => void; // Custom left icon handler (defaults to router.back())
   rightIcon?: React.ReactNode;
+  rightIconName?: string; // Ionicons icon name (e.g., "filter")
   onRightPress?: () => void;
   className?: string;
   style?: StyleProp<ViewStyle>;
@@ -20,6 +21,7 @@ export default function HeaderBar({
   leftIcon,
   onLeftPress,
   rightIcon,
+  rightIconName,
   onRightPress,
   className = '',
   style,
@@ -63,13 +65,17 @@ export default function HeaderBar({
 
       {/* Right: Right icon or spacer */}
       <View style={styles.rightContainer}>
-        {rightIcon ? (
+        {rightIcon || rightIconName ? (
           <Pressable
             onPress={onRightPress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <View style={styles.iconButton}>
-              {rightIcon}
+            <View style={styles.rightIconButton}>
+              {rightIcon ? (
+                rightIcon
+              ) : rightIconName ? (
+                <Ionicons name={rightIconName as any} size={24} color="#ffffff" />
+              ) : null}
             </View>
           </Pressable>
         ) : null}
@@ -105,6 +111,14 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rightIconButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
