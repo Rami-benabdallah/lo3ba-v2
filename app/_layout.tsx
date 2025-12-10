@@ -2,12 +2,52 @@ import { Stack } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Platform } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { GRADIENT_COLORS } from "../constants/colors";
 import "../global.css";
 
 export default function RootLayout() {
+  // Animate gradient movement with circular rotation
+  const [gradientAngle, setGradientAngle] = useState(0);
+  const animationFrameRef = useRef<number | null>(null);
+  const startTimeRef = useRef<number>(Date.now());
+
+  useEffect(() => {
+    const animate = () => {
+      const now = Date.now();
+      const elapsed = now - startTimeRef.current;
+      // Much slower: 90 seconds for full rotation (was 20 seconds)
+      const duration = 5000;
+      // Continuous angle that keeps increasing (no modulo jump)
+      const angle = (elapsed / duration) * Math.PI * 2;
+      
+      setGradientAngle(angle);
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  // Calculate animated gradient positions in a circular pattern
+  // This creates a rotating gradient effect
+  const radius = 0.6; // How far from center the gradient points move
+  const centerX = 0.5;
+  const centerY = 0.5;
+  
+  // Clamp values between 0 and 1 for gradient coordinates
+  const startX = Math.max(0, Math.min(1, centerX + Math.cos(gradientAngle) * radius));
+  const startY = Math.max(0, Math.min(1, centerY + Math.sin(gradientAngle) * radius));
+  const endX = Math.max(0, Math.min(1, centerX + Math.cos(gradientAngle + Math.PI) * radius));
+  const endY = Math.max(0, Math.min(1, centerY + Math.sin(gradientAngle + Math.PI) * radius));
+
   // Fix the background-color issue on Web by directly manipulating the DOM
   useEffect(() => {
     if (Platform.OS === "web" && typeof document !== "undefined") {
@@ -73,14 +113,16 @@ export default function RootLayout() {
       <View style={styles.container}>
         <LinearGradient
           colors={[
+            GRADIENT_COLORS.SECONDARY_LIGHT,
+            GRADIENT_COLORS.SECONDARY_MEDIUM,
             GRADIENT_COLORS.SECONDARY,
             GRADIENT_COLORS.SECONDARY_MEDIUM,
             GRADIENT_COLORS.SECONDARY_LIGHT,
             GRADIENT_COLORS.SECONDARY_LIGHTER,
             GRADIENT_COLORS.SECONDARY_LIGHTEST,
           ]}
-          start={{ x: 1, y: 0 }}
-          end={{ x: 0, y: 1 }}
+          start={{ x: startX, y: startY }}
+          end={{ x: endX, y: endY }}
           style={styles.gradient}
         />
         <View style={styles.content}>
