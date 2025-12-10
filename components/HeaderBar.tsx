@@ -6,6 +6,8 @@ import { useRouter } from 'expo-router';
 export interface HeaderBarProps {
   title?: string;
   showBack?: boolean; // default true
+  leftIcon?: React.ReactNode; // Custom left icon (overrides default back button)
+  onLeftPress?: () => void; // Custom left icon handler (defaults to router.back())
   rightIcon?: React.ReactNode;
   onRightPress?: () => void;
   className?: string;
@@ -15,6 +17,8 @@ export interface HeaderBarProps {
 export default function HeaderBar({
   title,
   showBack = true,
+  leftIcon,
+  onLeftPress,
   rightIcon,
   onRightPress,
   className = '',
@@ -22,21 +26,29 @@ export default function HeaderBar({
 }: HeaderBarProps) {
   const router = useRouter();
 
-  const handleBackPress = () => {
-    router.back();
+  const handleLeftPress = () => {
+    if (onLeftPress) {
+      onLeftPress();
+    } else {
+      router.back();
+    }
   };
 
   return (
     <View style={[styles.container, style]}>
-      {/* Left: Back button or spacer */}
+      {/* Left: Back button, custom icon, or spacer */}
       <View style={styles.leftContainer}>
         {showBack ? (
           <Pressable
-            onPress={handleBackPress}
+            onPress={handleLeftPress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
             <View style={styles.iconButton}>
-              <Ionicons name="chevron-back" size={20} color="#000000" />
+              {leftIcon ? (
+                leftIcon
+              ) : (
+                <Ionicons name="chevron-back" size={20} color="#000000" />
+              )}
             </View>
           </Pressable>
         ) : null}

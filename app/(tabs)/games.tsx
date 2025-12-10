@@ -2,6 +2,7 @@ import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { defaultGames } from '../../components/RecommendedGames';
 import GameCard from '../../components/GameCard';
+import HeaderBar from '../../components/HeaderBar';
 
 export default function GamesScreen() {
   const isFocused = useIsFocused();
@@ -12,12 +13,12 @@ export default function GamesScreen() {
   
   return (
     <View style={styles.container}>
+      <HeaderBar showBack={false} />
       <ScrollView 
         style={styles.scrollView} 
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>All Games</Text>
         <View style={styles.gamesGrid}>
           {defaultGames.map((game, index) => (
             <View key={index} style={styles.gameCardWrapper}>
