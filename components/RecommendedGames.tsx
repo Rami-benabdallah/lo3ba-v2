@@ -16,6 +16,7 @@ export interface RecommendedGamesProps {
   recommendedGames?: Game[];
   className?: string;
   style?: StyleProp<ViewStyle>;
+  onGamePress?: (game: Game) => void;
 }
 
 export const defaultGames: Game[] = [
@@ -37,6 +38,7 @@ export default function RecommendedGames({
   recommendedGames = defaultGames,
   className = '',
   style,
+  onGamePress,
 }: RecommendedGamesProps) {
   return (
     <View style={[styles.container, style]}>
@@ -50,6 +52,7 @@ export default function RecommendedGames({
             rank={game.rank}
             rankIconName={game.rankIconName}
             energyIconName={game.energyIconName}
+            onPress={onGamePress ? () => onGamePress(game) : undefined}
             style={[
               styles.gameCard,
               index < recommendedGames.length - 1 && styles.gameCardSpacing,

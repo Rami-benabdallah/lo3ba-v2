@@ -28,7 +28,7 @@ export default function GameCard({
   style,
 }: GameCardProps) {
   const cardContent = (
-    <Card variant="liquid" padding="xs" style={[styles.card, style]}>
+    <Card variant="liquid" padding="xs" style={styles.card}>
       <View style={styles.container}>
         {/* TOP: Square icon box */}
         <View style={styles.iconBox}>
@@ -60,13 +60,13 @@ export default function GameCard({
 
   if (onPress) {
     return (
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPress} style={style}>
         {cardContent}
       </Pressable>
     );
   }
 
-  return cardContent;
+  return <View style={style}>{cardContent}</View>;
 }
 
 const styles = StyleSheet.create({

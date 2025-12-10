@@ -5,10 +5,21 @@ import ExploreScreenTopBar from '../../components/ExploreScreenTopBar';
 import Daily from '../../components/Daily';
 import RecommendedGames from '../../components/RecommendedGames';
 import RecentlyPlayed from '../../components/RecentlyPlayed';
+import GameDetailsSheet from '../../src/components/GameDetailsSheet';
+import { useGameDetailsSheet } from '../../src/hooks/useGameDetailsSheet';
 
 export default function ExploreScreen() {
   const router = useRouter();
   const isFocused = useIsFocused();
+
+  // Use the reusable hook for game details sheet
+  const {
+    isDetailsOpen,
+    gameDetails,
+    openGameDetails,
+    closeGameDetails,
+    handlePlayGame,
+  } = useGameDetailsSheet();
 
   const handleViewAllPress = () => {
     router.push('/(tabs)/games' as any);
@@ -34,7 +45,10 @@ export default function ExploreScreen() {
             <Text style={styles.sectionSecondaryTitle}>View all</Text>
           </Pressable>
         </View>
-        <RecommendedGames style={styles.recommendedGames} />
+        <RecommendedGames 
+          style={styles.recommendedGames}
+          onGamePress={openGameDetails}
+        />
 
         <View style={styles.secondarySectionHeader}>
           <Text style={styles.sectionTitle}>Recently played</Text>
@@ -44,6 +58,14 @@ export default function ExploreScreen() {
         </View>
         <RecentlyPlayed />
       </ScrollView>
+
+      {/* Game Details Sheet */}
+      <GameDetailsSheet
+        visible={isDetailsOpen}
+        game={gameDetails}
+        onClose={closeGameDetails}
+        onPlay={handlePlayGame}
+      />
     </View>
   );
 }
