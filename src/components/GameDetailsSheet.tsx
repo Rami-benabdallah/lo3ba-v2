@@ -7,13 +7,16 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Sheet from '../../components/Sheet';
 import Tabs, { TabItem } from './Tabs';
 
 export interface GameDetailsSheetProps {
   visible: boolean;
   onClose: () => void;
-  onPlay: () => void;
+  onPlaySolo?: () => void;
+  onPlayOnline?: () => void;
+  onPlayLocal?: () => void;
   game: {
     id: string;
     name: string;
@@ -28,7 +31,9 @@ export interface GameDetailsSheetProps {
 export default function GameDetailsSheet({
   visible,
   onClose,
-  onPlay,
+  onPlaySolo,
+  onPlayOnline,
+  onPlayLocal,
   game,
 }: GameDetailsSheetProps) {
   if (!game) {
@@ -143,17 +148,45 @@ export default function GameDetailsSheet({
         {/* Tabs Component */}
         <Tabs tabs={tabs} defaultTabId="description" />
 
-        {/* Fixed Play Game Button */}
+        {/* Fixed Play Game Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={onPlay}
-            style={styles.playButton}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.playButtonText}>
-              Play Game
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.buttonsRow}>
+            {/* Play Solo Button */}
+            <TouchableOpacity
+              onPress={onPlaySolo}
+              style={styles.playButtonSolo}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="person" size={32} color="#FFFFFF" />
+              <Text style={styles.playButtonText}>
+                Solo
+              </Text>
+            </TouchableOpacity>
+
+            {/* Play Multiplayer Online Button */}
+            <TouchableOpacity
+              onPress={onPlayOnline}
+              style={styles.playButtonOnline}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="people" size={32} color="#FFFFFF" />
+              <Text style={styles.playButtonText}>
+                Multiplayer Online
+              </Text>
+            </TouchableOpacity>
+
+            {/* Play Multiplayer Local Button */}
+            <TouchableOpacity
+              onPress={onPlayLocal}
+              style={styles.playButtonLocal}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="phone-portrait" size={32} color="#FFFFFF" />
+              <Text style={styles.playButtonText}>
+                Multiplayer Local
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Sheet>
@@ -228,15 +261,39 @@ const styles = StyleSheet.create({
     borderTopColor: '#F3F4F6', // border-gray-100
     paddingTop: 16, // pt-4
   },
-  playButton: {
-    backgroundColor: '#F97316', // bg-orange-500
-    padding: 16, // p-4
+  buttonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12, // gap-3
+  },
+  playButtonSolo: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#3B82F6', // blue-500
     borderRadius: 12, // rounded-xl
+    padding: 16, // p-4
+  },
+  playButtonOnline: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#10B981', // green-500
+    borderRadius: 12, // rounded-xl
+    padding: 16, // p-4
+  },
+  playButtonLocal: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F97316', // orange-500
+    borderRadius: 12, // rounded-xl
+    padding: 16, // p-4
   },
   playButtonText: {
     color: '#FFFFFF', // text-white
+    fontSize: 8, // text-sm
+    marginTop: 4, // reduced spacing
     textAlign: 'center',
-    fontWeight: '600', // font-semibold
-    fontSize: 16, // text-base
   },
 });

@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   tabActive: {
-    borderBottomColor: COLORS.PRIMARY,
+    borderBottomColor: COLORS.SECONDARY,
   },
   tabInactive: {
     borderBottomColor: 'transparent',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   tabTextActive: {
-    color: COLORS.PRIMARY,
+    color: COLORS.SECONDARY,
   },
   tabTextInactive: {
     color: '#6B7280',

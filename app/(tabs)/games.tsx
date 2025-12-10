@@ -183,7 +183,9 @@ export default function GamesScreen() {
         visible={isDetailsOpen}
         game={gameDetails}
         onClose={closeGameDetails}
-        onPlay={handlePlayGame}
+        onPlaySolo={handlePlayGame}
+        onPlayOnline={handlePlayGame}
+        onPlayLocal={handlePlayGame}
       />
     </View>
   );

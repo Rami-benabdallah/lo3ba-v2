@@ -64,7 +64,9 @@ export default function ExploreScreen() {
         visible={isDetailsOpen}
         game={gameDetails}
         onClose={closeGameDetails}
-        onPlay={handlePlayGame}
+        onPlaySolo={handlePlayGame}
+        onPlayOnline={handlePlayGame}
+        onPlayLocal={handlePlayGame}
       />
     </View>
   );
