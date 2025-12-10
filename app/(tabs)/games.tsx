@@ -4,11 +4,9 @@ import { useState } from 'react';
 import { defaultGames } from '../../components/RecommendedGames';
 import GameCard from '../../components/GameCard';
 import HeaderBar from '../../components/HeaderBar';
-import FilterSheet from '../../components/FilterSheet';
 
 export default function GamesScreen() {
   const isFocused = useIsFocused();
-  const [filterVisible, setFilterVisible] = useState(false);
   
   if (!isFocused) {
     return null;  // Don't render when not focused to prevent stacking
@@ -20,7 +18,6 @@ export default function GamesScreen() {
         title="Games"
         showBack={false} 
         rightIconName="filter"
-        onRightPress={() => setFilterVisible(true)}
       />
       <ScrollView 
         style={styles.scrollView} 
@@ -42,12 +39,6 @@ export default function GamesScreen() {
           ))}
         </View>
       </ScrollView>
-      
-      {/* Filter Sheet Component */}
-      <FilterSheet 
-        visible={filterVisible} 
-        onClose={() => setFilterVisible(false)} 
-      />
     </View>
   );
 }
