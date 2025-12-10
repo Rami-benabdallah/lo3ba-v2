@@ -18,7 +18,10 @@ export const COLORS = {
 
 // Gradient colors based on secondary color
 export const GRADIENT_COLORS = {
-  SECONDARY_LIGHTEST: '#e8e1ff', // Very light shade
-  SECONDARY_LIGHT: '#b8a7fd', // Light shade
-  SECONDARY: COLORS.SECONDARY, // Base secondary color
+  SECONDARY_LIGHTEST: '#e8e1ff', // 1. Very light lavender
+  SECONDARY_LIGHTER:  '#d4c8ff', // 2. Added - soft lavender transition
+  SECONDARY_LIGHT:    '#b8a7fd', // 3. Original light shade
+  SECONDARY_MEDIUM:   '#9a88fa', // 4. Added - medium shade
+  SECONDARY:          COLORS.SECONDARY, // 5. Primary secondary color
+  
 } as const;

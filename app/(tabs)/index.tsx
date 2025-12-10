@@ -4,6 +4,7 @@ import { useIsFocused } from '@react-navigation/native';
 import ExploreScreenTopBar from '../../components/ExploreScreenTopBar';
 import Daily from '../../components/Daily';
 import RecommendedGames from '../../components/RecommendedGames';
+import RecentlyPlayed from '../../components/RecentlyPlayed';
 
 export default function ExploreScreen() {
   const router = useRouter();
@@ -27,13 +28,21 @@ export default function ExploreScreen() {
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         <Daily progress={40} tasksRemaining={13} style={styles.dailyCard} />
         
-        <View style={styles.sectionHeader}>
+        <View style={styles.secondarySectionHeader}>
           <Text style={styles.sectionTitle}>Recommended games</Text>
           <Pressable onPress={handleViewAllPress}>
             <Text style={styles.sectionSecondaryTitle}>View all</Text>
           </Pressable>
         </View>
         <RecommendedGames style={styles.recommendedGames} />
+
+        <View style={styles.secondarySectionHeader}>
+          <Text style={styles.sectionTitle}>Recently played</Text>
+          <Pressable onPress={handleViewAllPress}>
+            <Text style={styles.sectionSecondaryTitle}>View all</Text>
+          </Pressable>
+        </View>
+        <RecentlyPlayed />
       </ScrollView>
     </View>
   );
@@ -59,6 +68,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 40,
+    marginBottom: 16,
+  },
+  secondarySectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
     marginBottom: 16,
   },
   sectionTitle: {
