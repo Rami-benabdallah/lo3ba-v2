@@ -113,8 +113,6 @@ export default function RootLayout() {
       <View style={styles.container}>
         <LinearGradient
           colors={[
-            GRADIENT_COLORS.SECONDARY_LIGHT,
-            GRADIENT_COLORS.SECONDARY_MEDIUM,
             GRADIENT_COLORS.SECONDARY,
             GRADIENT_COLORS.SECONDARY_MEDIUM,
             GRADIENT_COLORS.SECONDARY_LIGHT,

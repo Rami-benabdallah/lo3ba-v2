@@ -28,7 +28,7 @@ export default function GameCard({
   style,
 }: GameCardProps) {
   const cardContent = (
-    <Card variant="liquidWhite" padding="xs" style={[styles.card, style]}>
+    <Card variant="liquid" padding="xs" style={[styles.card, style]}>
       <View style={styles.container}>
         {/* TOP: Square icon box */}
         <View style={styles.iconBox}>
