@@ -6,10 +6,10 @@ import { COLORS } from '../../../constants/colors';
 import Card from '../../../components/Card';
 import ProgressBar from '../../../components/ProgressBar';
 import UserAvatarHeader from '../../../components/UserAvatarHeader';
-import PlayButton from '../../../components/PlayButton';
 import FactContainer from './FactContainer';
 import AnswerButtons from './AnswerButtons';
 import FactExplanationModal from './FactExplanationModal';
+import ActionButtons from './ActionButtons';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -341,38 +341,14 @@ export default function SoloNineLivesScreen() {
           </View>
 
           {/* Action buttons */}
-          <View style={styles.actionButtonsContainer}>
-            <PlayButton
-              onPress={handleSkip}
-              icon={showResult ? 'arrow-forward' : 'play-skip-forward'}
-              label={showResult ? 'Next' : 'Skip'}
-              backgroundColor={COLORS.PRIMARY}
-              border={{ width: 2, color: COLORS.PRIMARY_DARK }}
-            />
-
-            <PlayButton
-              onPress={handleSurrender}
-              icon="flag-outline"
-              label="Surrender"
-              backgroundColor={COLORS.ERROR}
-              iconColor="#FFFFFF"
-              border={{ width: 2, color: COLORS.ERROR_DARK }}
-            />
-            <PlayButton
-                onPress={handlePaw}
-                icon="paw-outline"
-                label="Paw"
-                backgroundColor={COLORS.SECONDARY }
-                iconColor="#FFFFFF"
-                border={{ width: 2, color: COLORS.SECONDARY_DARK }}
-                disabled={lives <= 1 || showResult}
-            />
-            {isPawActive && (
-              <View style={styles.pawIndicator}>
-                <Text style={styles.pawEmoji}>🐾</Text>
-              </View>
-            )}
-          </View>
+          <ActionButtons
+            onSkip={handleSkip}
+            onSurrender={handleSurrender}
+            onPaw={handlePaw}
+            showResult={showResult}
+            lives={lives}
+            isPawActive={isPawActive}
+          />
         </View>
       </Card>
     </View>
@@ -455,25 +431,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
-  pawIndicator: {
-    position: 'absolute',
-    top: -17,
-    right: -8,
-  },
-  pawEmoji: {
-    fontSize: 44,
-  },
   progressSection: {
     marginBottom: 12,
-  },
-  actionButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 10,
-  },
-  pawButtonContainer: {
-    position: 'relative',
-    flex: 1,
   },
   actionButton: {
     paddingVertical: 16,
