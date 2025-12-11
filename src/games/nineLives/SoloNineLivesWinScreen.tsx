@@ -107,13 +107,11 @@ const styles = StyleSheet.create({
   },
   statsLabel: {
     color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 10,
   },
   statsValue: {
     color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 10,
   },
   solidCard: {
     width: '100%',
