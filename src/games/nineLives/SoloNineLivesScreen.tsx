@@ -271,6 +271,7 @@ export default function SoloNineLivesScreen() {
                 leftText="Time left"
                 rightText={`${Math.ceil(timeLeft)}s`}
                 height={12}
+                reverse={true}
               />
             </View>
 
@@ -319,12 +320,9 @@ export default function SoloNineLivesScreen() {
             {showResult && !isCorrect && (
               <View style={styles.explanationModal}>
                 <Card variant="liquid" padding="sm">
-                  <View style={styles.explanationContainer}>
-                    <Text style={styles.explanationLabel}>Explanation:</Text>
-                    <Text style={styles.explanationText}>
-                      {currentFact.correctFact}
-                    </Text>
-                  </View>
+                  <Text style={styles.explanationText}>
+                    {currentFact.correctFact}
+                  </Text>
                 </Card>
               </View>
             )}
@@ -480,15 +478,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 12,
-  },
-  explanationContainer: {
-    marginTop: 8,
-  },
-  explanationLabel: {
-    color: '#000000',
-    fontSize: 12,
-    fontWeight: '600',
-    marginBottom: 2,
   },
   explanationText: {
     color: '#000000',

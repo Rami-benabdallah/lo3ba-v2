@@ -11,6 +11,7 @@ export interface ProgressBarProps {
   style?: StyleProp<ViewStyle>;
   height?: number; // default 12
   borderRadius?: number; // default 999 (fully rounded)
+  reverse?: boolean; // if true, starts full and empties (for countdown timers)
 }
 
 export default function ProgressBar({
@@ -21,18 +22,35 @@ export default function ProgressBar({
   style,
   height = 12,
   borderRadius = 999,
+  reverse = false,
 }: ProgressBarProps) {
   // Clamp value between 0 and 100
   const clampedValue = Math.max(0, Math.min(100, value));
-  const animatedWidth = useRef(new Animated.Value(0)).current;
+  // Initialize animated value - for reverse mode, start at 100 (full), for normal mode start at 0 (empty)
+  const animatedWidth = useRef(new Animated.Value(reverse ? 100 : 0)).current;
+  const isInitialized = useRef(false);
 
   useEffect(() => {
+    // On first render, set the value immediately
+    if (!isInitialized.current) {
+      // For reverse mode, the animated value is already initialized to 100
+      // Just ensure it matches the clampedValue (which should be 100 for countdown start)
+      animatedWidth.setValue(clampedValue);
+      isInitialized.current = true;
+      return;
+    }
+    
+    // For reverse mode (countdown), use shorter duration for smoother real-time updates
+    // For normal mode, use longer duration for smoother fill animation
+    const duration = reverse ? 50 : 500;
+    
+    // Animate to the new value
     Animated.timing(animatedWidth, {
       toValue: clampedValue,
-      duration: 500,
+      duration,
       useNativeDriver: false,
     }).start();
-  }, [clampedValue, animatedWidth]);
+  }, [clampedValue, animatedWidth, reverse]);
 
   return (
     <View style={style}>
