@@ -206,120 +206,118 @@ export default function SoloNineLivesScreen() {
       </View>
 
       {/* Main content */}
-      <View
-        style={styles.content}
-      >
         {/* Card with solid variant */}
         <Card variant="liquid" padding="lg" style={styles.mainCard}>
           <View style={styles.cardContent}>
-            {/* Liquid card with fact text */}
-          <Card variant="liquidWhite" padding="md" style={styles.factCard}>
-            <Text style={styles.factText}>{currentFact.text}</Text>
-          </Card>
+            <View style={styles.factContent}>
+              {/* Liquid card with fact text */}
+              <Card variant="liquidWhite" padding="md" style={styles.factCard}>
+                <Text style={styles.factText}>{currentFact.text}</Text>
+              </Card>
 
-          {/* Progress bar with countdown */}
-          <View style={styles.progressSection}>
-            <ProgressBar
-              value={progress}
-              leftText="Time left"
-              rightText={`${Math.ceil(timeLeft)}s`}
-              height={12}
-            />
-          </View>
-
-          {/* Answer buttons */}
-          {!showResult && (
-            <View style={styles.answerButtonsContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.answerButton,
-                  selectedAnswer === true && isCorrect && styles.correctOverlay,
-                  selectedAnswer === true && !isCorrect && styles.wrongOverlay,
-                ]}
-                onPress={() => handleAnswer(true)}
-                disabled={selectedAnswer !== null}
-              >
-                <Text
-                  style={[
-                    styles.answerButtonText,
-                    selectedAnswer === true && styles.answerButtonTextSelected,
-                  ]}
-                >
-                  TRUE
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.answerButton,
-                  selectedAnswer === false && isCorrect && styles.correctOverlay,
-                  selectedAnswer === false && !isCorrect && styles.wrongOverlay,
-                ]}
-                onPress={() => handleAnswer(false)}
-                disabled={selectedAnswer !== null}
-              >
-                <Text
-                  style={[
-                    styles.answerButtonText,
-                    selectedAnswer === false && styles.answerButtonTextSelected,
-                  ]}
-                >
-                  FALSE
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {/* Result display */}
-          {showResult && (
-            <View style={styles.resultContainer}>
-              <View
-                style={[
-                  styles.resultCard,
-                  isCorrect ? styles.correctCard : styles.wrongCard,
-                ]}
-              >
-                <Text style={styles.resultTitle}>
-                  {isCorrect ? '✅ Correct!' : '❌ Wrong!'}
-                </Text>
-                {!isCorrect && (
-                  <View style={styles.explanationContainer}>
-                    <Text style={styles.explanationLabel}>Explanation:</Text>
-                    <Text style={styles.explanationText}>
-                      {currentFact.correctFact}
-                    </Text>
-                  </View>
-                )}
-                {isCorrect && (
-                  <Text style={styles.correctMessage}>
-                    You earned +1 paw! 🐾
-                  </Text>
-                )}
+              {/* Progress bar with countdown */}
+              <View style={styles.progressSection}>
+                <ProgressBar
+                  value={progress}
+                  leftText="Time left"
+                  rightText={`${Math.ceil(timeLeft)}s`}
+                  height={12}
+                />
               </View>
+
+              {/* Answer buttons */}
+              {!showResult && (
+                <View style={styles.answerButtonsContainer}>
+                  <TouchableOpacity
+                    style={[
+                      styles.answerButton,
+                      selectedAnswer === true && isCorrect && styles.correctOverlay,
+                      selectedAnswer === true && !isCorrect && styles.wrongOverlay,
+                    ]}
+                    onPress={() => handleAnswer(true)}
+                    disabled={selectedAnswer !== null}
+                  >
+                    <Text
+                      style={[
+                        styles.answerButtonText,
+                        selectedAnswer === true && styles.answerButtonTextSelected,
+                      ]}
+                    >
+                      TRUE
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={[
+                      styles.answerButton,
+                      selectedAnswer === false && isCorrect && styles.correctOverlay,
+                      selectedAnswer === false && !isCorrect && styles.wrongOverlay,
+                    ]}
+                    onPress={() => handleAnswer(false)}
+                    disabled={selectedAnswer !== null}
+                  >
+                    <Text
+                      style={[
+                        styles.answerButtonText,
+                        selectedAnswer === false && styles.answerButtonTextSelected,
+                      ]}
+                    >
+                      FALSE
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {/* Result display */}
+              {showResult && (
+                <View style={styles.resultContainer}>
+                  <View
+                    style={[
+                      styles.resultCard,
+                      isCorrect ? styles.correctCard : styles.wrongCard,
+                    ]}
+                  >
+                    <Text style={styles.resultTitle}>
+                      {isCorrect ? '✅ Correct!' : '❌ Wrong!'}
+                    </Text>
+                    {!isCorrect && (
+                      <View style={styles.explanationContainer}>
+                        <Text style={styles.explanationLabel}>Explanation:</Text>
+                        <Text style={styles.explanationText}>
+                          {currentFact.correctFact}
+                        </Text>
+                      </View>
+                    )}
+                    {isCorrect && (
+                      <Text style={styles.correctMessage}>
+                        You earned +1 paw! 🐾
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              )}
             </View>
-          )}
 
-          {/* Action buttons */}
-          <View style={styles.actionButtonsContainer}>
-            <TouchableOpacity
-              style={styles.skipButton}
-              onPress={handleSkip}
-            >
-              <Text style={styles.skipButtonText}>
-                {showResult ? 'Next Fact' : 'Skip'}
-              </Text>
-            </TouchableOpacity>
+            {/* Action buttons */}
+            <View style={styles.actionButtonsContainer}>
+              <TouchableOpacity
+                style={styles.skipButton}
+                onPress={handleSkip}
+              >
+                <Text style={styles.skipButtonText}>
+                  {showResult ? 'Next Fact' : 'Skip'}
+                </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.surrenderButton}
-              onPress={handleSurrender}
-            >
-              <Text style={styles.surrenderButtonText}>Surrender</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                style={styles.surrenderButton}
+                onPress={handleSurrender}
+              >
+                <Text style={styles.surrenderButtonText}>Surrender</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </Card>
-      </View>
     </View>
   );
 }
@@ -327,9 +325,9 @@ export default function SoloNineLivesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
   },
   topSection: {
-    paddingHorizontal: 20,
     paddingTop: 60,
     paddingBottom: 16,
   },
@@ -369,11 +367,16 @@ const styles = StyleSheet.create({
   },
   mainCard: {
     marginTop: 16,
-    height: 600, // Fixed height to prevent expansion/contraction
   },
   cardContent: {
-    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'space-between',
+    height: 550,
+  },
+  factContent: {
+    display: 'flex',
+    flexDirection: 'column',
   },
   factCard: {
     marginBottom: 24,
