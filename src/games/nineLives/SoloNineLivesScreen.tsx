@@ -269,7 +269,7 @@ export default function SoloNineLivesScreen() {
             {/* Explanation modal - only show when wrong */}
             {showResult && !isCorrect && (
               <View style={styles.explanationModal}>
-                <Card variant="liquid" padding="md">
+                <Card variant="liquid" padding="sm">
                   <View style={styles.explanationContainer}>
                     <Text style={styles.explanationLabel}>Explanation:</Text>
                     <Text style={styles.explanationText}>
@@ -312,10 +312,11 @@ const styles = StyleSheet.create({
   },
   topSection: {
     paddingTop: 60,
-    paddingBottom: 16,
   },
   cubesContainer: {
     marginTop: 16,
+    height: 48,   // or whatever height fits 1 row of cubes
+    overflow: 'visible',
   },
   cubesContent: {
     flexDirection: 'row',
