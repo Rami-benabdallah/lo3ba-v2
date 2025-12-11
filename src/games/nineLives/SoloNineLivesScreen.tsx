@@ -58,7 +58,7 @@ export default function SoloNineLivesScreen() {
       setTimeLeft((prev) => {
         const newTime = Math.max(0, prev - 0.1);
         setProgress((newTime / 5) * 100);
-        
+
         if (newTime <= 0) {
           // Time's up - auto skip
           if (timerRef.current) {
@@ -206,101 +206,101 @@ export default function SoloNineLivesScreen() {
       </View>
 
       {/* Main content */}
-        {/* Card with solid variant */}
-        <Card variant="liquid" padding="md" style={styles.mainCard}>
-          <View style={styles.cardContent}>
-            <View style={styles.factContent}>
-              {/* Liquid card with fact text */}
-              <Card variant="liquidWhite" padding="md" style={styles.factCard}>
-                <Text style={styles.factText}>{currentFact.text}</Text>
-              </Card>
+      {/* Card with solid variant */}
+      <Card variant="liquid" padding="md" style={styles.mainCard}>
+        <View style={styles.cardContent}>
+          <View style={styles.factContent}>
+            {/* Liquid card with fact text */}
+            <Card variant="liquidWhite" padding="md" style={styles.factCard}>
+              <Text style={styles.factText}>{currentFact.text}</Text>
+            </Card>
 
-              {/* Progress bar with countdown */}
-              <View style={styles.progressSection}>
-                <ProgressBar
-                  value={progress}
-                  leftText="Time left"
-                  rightText={`${Math.ceil(timeLeft)}s`}
-                  height={12}
-                />
-              </View>
-
-              {/* Answer buttons - always visible */}
-              <View style={styles.answerButtonsContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.answerButton,
-                    selectedAnswer === true && isCorrect && styles.correctOverlay,
-                    selectedAnswer === true && !isCorrect && styles.wrongOverlay,
-                  ]}
-                  onPress={() => handleAnswer(true)}
-                  disabled={selectedAnswer !== null}
-                >
-                  <Text
-                    style={[
-                      styles.answerButtonText,
-                      selectedAnswer === true && styles.answerButtonTextSelected,
-                    ]}
-                  >
-                    True
-                  </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[
-                    styles.answerButton,
-                    selectedAnswer === false && isCorrect && styles.correctOverlay,
-                    selectedAnswer === false && !isCorrect && styles.wrongOverlay,
-                  ]}
-                  onPress={() => handleAnswer(false)}
-                  disabled={selectedAnswer !== null}
-                >
-                  <Text
-                    style={[
-                      styles.answerButtonText,
-                      selectedAnswer === false && styles.answerButtonTextSelected,
-                    ]}
-                  >
-                    False
-                  </Text>
-                </TouchableOpacity>
-              </View>
-
-              {/* Explanation modal - only show when wrong */}
-              {showResult && !isCorrect && (
-                <View style={styles.explanationModal}>
-                  <Card variant="liquid" padding="md">
-                    <View style={styles.explanationContainer}>
-                      <Text style={styles.explanationLabel}>Explanation:</Text>
-                      <Text style={styles.explanationText}>
-                        {currentFact.correctFact}
-                      </Text>
-                    </View>
-                  </Card>
-                </View>
-              )}
+            {/* Progress bar with countdown */}
+            <View style={styles.progressSection}>
+              <ProgressBar
+                value={progress}
+                leftText="Time left"
+                rightText={`${Math.ceil(timeLeft)}s`}
+                height={12}
+              />
             </View>
 
-            {/* Action buttons */}
-            <View style={styles.actionButtonsContainer}>
+            {/* Answer buttons - always visible */}
+            <View style={styles.answerButtonsContainer}>
               <TouchableOpacity
-                style={styles.skipButton}
-                onPress={handleSkip}
+                style={[
+                  styles.answerButton,
+                  selectedAnswer === true && isCorrect && styles.correctOverlay,
+                  selectedAnswer === true && !isCorrect && styles.wrongOverlay,
+                ]}
+                onPress={() => handleAnswer(true)}
+                disabled={selectedAnswer !== null}
               >
-                <Text style={styles.skipButtonText}>
-                  {showResult ? 'Next Fact' : 'Skip'}
+                <Text
+                  style={[
+                    styles.answerButtonText,
+                    selectedAnswer === true && styles.answerButtonTextSelected,
+                  ]}
+                >
+                  True
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles.surrenderButton}
-                onPress={handleSurrender}
+                style={[
+                  styles.answerButton,
+                  selectedAnswer === false && isCorrect && styles.correctOverlay,
+                  selectedAnswer === false && !isCorrect && styles.wrongOverlay,
+                ]}
+                onPress={() => handleAnswer(false)}
+                disabled={selectedAnswer !== null}
               >
-                <Text style={styles.surrenderButtonText}>Surrender</Text>
+                <Text
+                  style={[
+                    styles.answerButtonText,
+                    selectedAnswer === false && styles.answerButtonTextSelected,
+                  ]}
+                >
+                  False
+                </Text>
               </TouchableOpacity>
             </View>
+
+            {/* Explanation modal - only show when wrong */}
+            {showResult && !isCorrect && (
+              <View style={styles.explanationModal}>
+                <Card variant="liquid" padding="md">
+                  <View style={styles.explanationContainer}>
+                    <Text style={styles.explanationLabel}>Explanation:</Text>
+                    <Text style={styles.explanationText}>
+                      {currentFact.correctFact}
+                    </Text>
+                  </View>
+                </Card>
+              </View>
+            )}
           </View>
-        </Card>
+
+          {/* Action buttons */}
+          <View style={styles.actionButtonsContainer}>
+            <TouchableOpacity
+              style={styles.skipButton}
+              onPress={handleSkip}
+            >
+              <Text style={styles.skipButtonText}>
+                {showResult ? 'Next Fact' : 'Skip'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.surrenderButton}
+              onPress={handleSurrender}
+            >
+              <Text style={styles.surrenderButtonText}>Surrender</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Card>
     </View>
   );
 }
