@@ -37,14 +37,7 @@ export function useGameHandlers() {
   };
 
   const handlePlayLocal = (gameId: string, gameName: string) => {
-    router.push({
-      pathname: '/game-loading',
-      params: {
-        gameId,
-        gameName,
-        mode: 'local',
-      },
-    });
+    router.push('/local-multiplayer-hub');
   };
 
   return {
