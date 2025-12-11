@@ -1,7 +1,19 @@
 // Primary and secondary colors
 export const COLORS = {
-  PRIMARY: '#F97316', // Orange primary color
-  SECONDARY: '#8669fd',
+  PRIMARY:         '#F97316', // default
+  PRIMARY_LIGHT:   '#FDBA74', // lighter (orange-300)
+  PRIMARY_SOFT:    '#FFEDD5', // very light (orange-100)
+  PRIMARY_DARK:    '#EA580C', // darker (orange-600)
+  PRIMARY_DEEP:    '#C2410C', // even darker (orange-700)
+  PRIMARY_SHADOW:  '#9A3412', // shadow / border dark (orange-800)
+  PRIMARY_TEXT:    '#7C2D12', // darkest variant (orange-900)
+  SECONDARY:         '#8669FD', // default
+  SECONDARY_LIGHT:   '#BBA5FF', // lighter
+  SECONDARY_SOFT:    '#EDE5FF', // very light
+  SECONDARY_DARK:    '#6C4EF7', // darker
+  SECONDARY_DEEP:    '#5433E3', // even darker
+  SECONDARY_SHADOW:  '#3A20B5', // strong shadow/border color
+  SECONDARY_TEXT:    '#27157A', // darkest variant for text on light purple
   gray: {
     50: '#FAFAFA',
     100: '#F4F4F5',
@@ -14,6 +26,13 @@ export const COLORS = {
     800: '#27272A',
     900: '#18181B',
   },
+ERROR: '#EF4444',
+ERROR_LIGHT: '#F87171',
+ERROR_SOFT: '#FEE2E2',
+ERROR_DARK: '#DC2626',
+ERROR_DEEP: '#B91C1C',
+ERROR_SHADOW: '#991B1B',
+ERROR_TEXT: '#7F1D1D',
 } as const;
 
 // Gradient colors based on secondary color

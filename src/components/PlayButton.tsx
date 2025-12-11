@@ -12,6 +12,11 @@ export interface PlayButtonProps {
   textStyle?: TextStyle;
   iconSize?: number;
   iconColor?: string;
+  border?: {
+    width?: number;
+    color?: string;
+    style?: 'solid' | 'dashed' | 'dotted';
+  };
 }
 
 export default function PlayButton({
@@ -24,13 +29,28 @@ export default function PlayButton({
   textStyle,
   iconSize = 32,
   iconColor = '#FFFFFF',
+  border,
 }: PlayButtonProps) {
+  const borderStyles: ViewStyle = {};
+  if (border) {
+    if (border.width !== undefined) {
+      borderStyles.borderWidth = border.width;
+    }
+    if (border.color) {
+      borderStyles.borderColor = border.color;
+    }
+    if (border.style) {
+      borderStyles.borderStyle = border.style;
+    }
+  }
+
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[
         styles.button,
         { backgroundColor },
+        borderStyles,
         style,
       ]}
       activeOpacity={activeOpacity}
