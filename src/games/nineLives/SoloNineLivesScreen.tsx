@@ -364,6 +364,9 @@ const styles = StyleSheet.create({
   },
   factCard: {
     marginBottom: 12,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   factText: {
     color: '#FFFFFF',
