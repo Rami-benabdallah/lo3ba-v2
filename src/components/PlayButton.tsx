@@ -7,6 +7,7 @@ export interface PlayButtonProps {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   backgroundColor: string;
+  flex1?: boolean;
   activeOpacity?: number;
   style?: ViewStyle;
   textStyle?: TextStyle;
@@ -24,6 +25,7 @@ export default function PlayButton({
   icon,
   label,
   backgroundColor,
+  flex1 = true,
   activeOpacity = 0.8,
   style,
   textStyle,
@@ -51,6 +53,7 @@ export default function PlayButton({
         styles.button,
         { backgroundColor },
         borderStyles,
+        flex1 && { flex: 1 },
         style,
       ]}
       activeOpacity={activeOpacity}
@@ -65,11 +68,11 @@ export default function PlayButton({
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12, // rounded-xl
     padding: 16, // p-4
+    flexGrow: 1,
   },
   text: {
     color: '#FFFFFF', // text-white

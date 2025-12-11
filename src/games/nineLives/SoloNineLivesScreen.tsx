@@ -34,6 +34,7 @@ export default function SoloNineLivesScreen() {
   const [answerHistory, setAnswerHistory] = useState<AnswerHistory[]>([]);
   const [timeLeft, setTimeLeft] = useState(5);
   const [progress, setProgress] = useState(100);
+  const [isPawActive, setIsPawActive] = useState(false);
   const timerRef = useRef<number | null>(null);
   const questionNumberRef = useRef(1);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -155,7 +156,13 @@ export default function SoloNineLivesScreen() {
     ]);
 
     if (correct) {
-      setLives((prev) => Math.min(prev + 1, 9)); // Cap at 9
+      // If paw is active, give 2 points, otherwise 1 point
+      const pointsToAdd = isPawActive ? 2 : 1;
+      setLives((prev) => Math.min(prev + pointsToAdd, 9)); // Cap at 9
+      // Paw stays active after correct answer (can be used again)
+    } else {
+      // If answer is wrong, deactivate paw
+      setIsPawActive(false);
     }
   };
 
@@ -196,6 +203,11 @@ export default function SoloNineLivesScreen() {
   const handleSurrender = () => {
     // Navigate to games tab - this is always safe and makes sense after surrendering
     router.push('/(tabs)/games');
+  };
+
+  const handlePaw = () => {
+    // Toggle paw activation
+    setIsPawActive((prev) => !prev);
   };
 
   const handleQuit = () => {
@@ -354,15 +366,19 @@ export default function SoloNineLivesScreen() {
               iconColor="#FFFFFF"
               border={{ width: 2, color: COLORS.ERROR_DARK }}
             />
-
             <PlayButton
-              onPress={handleSurrender}
-              icon="paw-outline"
-              label="Paw"
-              backgroundColor={COLORS.SECONDARY}
-              iconColor="#FFFFFF"
-              border={{ width: 2, color: COLORS.SECONDARY_DARK }}
+                onPress={handlePaw}
+                icon="paw-outline"
+                label="Paw"
+                backgroundColor={COLORS.SECONDARY }
+                iconColor="#FFFFFF"
+                border={{ width: 2, color: COLORS.SECONDARY_DARK }}
             />
+            {isPawActive && (
+              <View style={styles.pawIndicator}>
+                <Text style={styles.pawEmoji}>🐾</Text>
+              </View>
+            )}
           </View>
         </View>
       </Card>
@@ -451,6 +467,16 @@ const styles = StyleSheet.create({
     height: 150,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+  },
+  pawIndicator: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    transform: [{ rotate: '45deg' }],
+  },
+  pawEmoji: {
+    fontSize: 24,
   },
   factText: {
     color: '#FFFFFF',
@@ -524,7 +550,12 @@ const styles = StyleSheet.create({
   },
   actionButtonsContainer: {
     flexDirection: 'row',
-    gap: 12,
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  pawButtonContainer: {
+    position: 'relative',
+    flex: 1,
   },
   actionButton: {
     paddingVertical: 16,
