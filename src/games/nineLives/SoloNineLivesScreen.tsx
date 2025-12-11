@@ -344,18 +344,24 @@ export default function SoloNineLivesScreen() {
               icon={showResult ? 'arrow-forward' : 'play-skip-forward'}
               label={showResult ? 'Next' : 'Skip'}
               backgroundColor={COLORS.PRIMARY}
-              textStyle={styles.actionButtonText}
-              style={styles.actionButton}
             />
 
             <PlayButton
               onPress={handleSurrender}
               icon="flag-outline"
               label="Surrender"
-              backgroundColor="transparent"
+              backgroundColor="#EF4444"
               iconColor="#FFFFFF"
-              textStyle={styles.surrenderButtonText}
               style={styles.surrenderButton}
+            />
+
+            <PlayButton
+              onPress={handleSurrender}
+              icon="flag-outline"
+              label="Paw"
+              backgroundColor={COLORS.SECONDARY}
+              iconColor="#FFFFFF"
+              
             />
           </View>
         </View>
@@ -532,7 +538,7 @@ const styles = StyleSheet.create({
   },
   surrenderButton: {
     borderWidth: 2,
-    borderColor: '#6B7280',
+    borderColor: '#DC2626',
     paddingVertical: 16,
     paddingHorizontal: 24,
   },
