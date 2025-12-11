@@ -7,7 +7,7 @@ import HeaderBar from '../../components/HeaderBar';
 import Sheet from '../../components/Sheet';
 import Button from '../../components/Button';
 import Switch from '../../components/Switch';
-import GameDetailsSheet from '../../src/components/GameDetailsSheet';
+import GameDetailsSheet from '../../components/GameDetailsSheet';
 import { useGameDetailsSheet } from '../../src/hooks/useGameDetailsSheet';
 
 export default function GamesScreen() {

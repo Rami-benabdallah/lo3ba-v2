@@ -6,7 +6,7 @@ import { COLORS } from '../../../constants/colors';
 import Card from '../../../components/Card';
 import ProgressBar from '../../../components/ProgressBar';
 import UserAvatarHeader from '../../../components/UserAvatarHeader';
-import PlayButton from '../../components/PlayButton';
+import PlayButton from '../../../components/PlayButton';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {

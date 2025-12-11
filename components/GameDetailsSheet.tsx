@@ -6,7 +6,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import Sheet from '../../components/Sheet';
+import Sheet from './Sheet';
 import Tabs, { TabItem } from './Tabs';
 import PlayButton from './PlayButton';
 

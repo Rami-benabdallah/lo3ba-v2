@@ -5,7 +5,7 @@ import ExploreScreenTopBar from '../../components/ExploreScreenTopBar';
 import Daily from '../../components/Daily';
 import RecommendedGames from '../../components/RecommendedGames';
 import RecentlyPlayed from '../../components/RecentlyPlayed';
-import GameDetailsSheet from '../../src/components/GameDetailsSheet';
+import GameDetailsSheet from '../../components/GameDetailsSheet';
 import { useGameDetailsSheet } from '../../src/hooks/useGameDetailsSheet';
 
 export default function ExploreScreen() {
