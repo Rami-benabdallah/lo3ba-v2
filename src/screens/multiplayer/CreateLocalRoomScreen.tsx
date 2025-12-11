@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import HeaderBar from '../../../components/HeaderBar';
 
 const ANSWER_TIME_OPTIONS = [10, 15, 20];
 
@@ -32,23 +33,13 @@ export default function CreateLocalRoomScreen() {
 
   return (
     <View className="flex-1">
-      {/* Back Button */}
-      <Pressable
-        onPress={() => router.back()}
-        className="absolute top-12 left-6 z-10 w-10 h-10 items-center justify-center bg-white/20 rounded-full"
-      >
-        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
-      </Pressable>
+      <HeaderBar title="Create Room" showBack={true} />
 
       <ScrollView 
         className="flex-1"
         contentContainerStyle={{ flex: 1, justifyContent: 'center', paddingHorizontal: 24, paddingVertical: 32 }}
       >
         <View className="flex-1 justify-center">
-        {/* Title */}
-        <Text className="text-3xl font-bold text-white mb-8 text-center">
-          Create Room
-        </Text>
 
         {/* Room Name Input */}
         <View className="mb-6">

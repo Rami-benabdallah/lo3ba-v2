@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, ScrollView } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import HeaderBar from '../../../components/HeaderBar';
 
 interface Player {
   name: string;
@@ -44,13 +45,7 @@ export default function LocalRoomLobbyScreen() {
 
   return (
     <View className="flex-1">
-      {/* Back Button */}
-      <Pressable
-        onPress={() => router.back()}
-        className="absolute top-12 left-6 z-10 w-10 h-10 items-center justify-center bg-white/20 rounded-full"
-      >
-        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
-      </Pressable>
+      <HeaderBar title={room.name} showBack={true} />
 
       <ScrollView 
         className="flex-1"
@@ -59,9 +54,6 @@ export default function LocalRoomLobbyScreen() {
       <View className="flex-1">
         {/* Room Info */}
         <View className="items-center mb-8">
-          <Text className="text-3xl font-bold text-white mb-2">
-            {room.name}
-          </Text>
           <Text className="text-orange-500 text-xl font-semibold">
             {room.id}
           </Text>
