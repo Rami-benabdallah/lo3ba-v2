@@ -101,9 +101,19 @@ export default function SoloNineLivesScreen() {
   // Check if player won
   useEffect(() => {
     if (lives >= 9) {
-      router.push('/solo-nine-lives-win');
+      const correctAnswers = answerHistory.filter((answer) => answer.isCorrect).length;
+      const totalQuestions = answerHistory.length;
+      router.push({
+        pathname: '/solo-nine-lives-win',
+        params: {
+          correctAnswers: correctAnswers.toString(),
+          totalQuestions: totalQuestions.toString(),
+          userName: 'Alex Johnson',
+          userImageUrl: 'https://i.pravatar.cc/150?img=2',
+        },
+      });
     }
-  }, [lives, router]);
+  }, [lives, router, answerHistory]);
 
   // Deactivate paw if lives drop to 1 or below
   useEffect(() => {

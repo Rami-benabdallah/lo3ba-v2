@@ -1,41 +1,79 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { COLORS } from '../../../constants/colors';
+import Card from '../../../components/Card';
+import Avatar from '../../../components/Avatar';
+import PlayButton from '../../../components/PlayButton';
 
 export default function SoloNineLivesWinScreen() {
   const router = useRouter();
+  const params = useLocalSearchParams();
+  
+  // Get stats from params or use defaults
+  const correctAnswers = params.correctAnswers ? parseInt(params.correctAnswers as string) : 0;
+  const totalQuestions = params.totalQuestions ? parseInt(params.totalQuestions as string) : 0;
+  const userName = (params.userName as string) || 'Alex Johnson';
+  const userImageUrl = (params.userImageUrl as string) || 'https://i.pravatar.cc/150?img=2';
 
-  const handlePlayAgain = () => {
+  const handleNextRound = () => {
     router.replace('/solo-nine-lives');
   };
 
-  const handleBackToGames = () => {
+  const handleEndHere = () => {
     router.push('/(tabs)/games');
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.emoji}>🎉</Text>
-        <Text style={styles.title}>You Reached 9 Lives!</Text>
-        <Text style={styles.subtitle}>Congratulations on mastering the facts!</Text>
+        {/* Correct answers card */}
+        <Card variant="liquid" padding="none" style={styles.statsCard}>
+          <Text style={styles.statsLabel}>Correct answers</Text>
+          <Text style={styles.statsValue}>
+            {correctAnswers} / {totalQuestions}
+          </Text>
+          {/* Solid card with avatar and buttons */}
+          <Card variant="solid" padding="md" style={styles.solidCard}>
+            <View style={styles.avatarSection}>
+              <Avatar
+                name={userName}
+                imgUrl={userImageUrl}
+                size="lg"
+                showBorder={true}
+              />
+              <Text style={styles.winText}>You've won this round</Text>
+            </View>
 
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={styles.playAgainButton}
-            onPress={handlePlayAgain}
-          >
-            <Text style={styles.playAgainButtonText}>Play Again</Text>
-          </TouchableOpacity>
+            {/* Action buttons */}
+            <View style={styles.buttonsContainer}>
+              <PlayButton
+                onPress={handleNextRound}
+                icon="arrow-forward"
+                label="Continue Next Round"
+                backgroundColor={COLORS.PRIMARY}
+                border={{ width: 2, color: COLORS.PRIMARY_DARK }}
+                flex1={false}
+                textStyle={styles.buttonText}
+                style={styles.button}
+              />
 
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={handleBackToGames}
-          >
-            <Text style={styles.backButtonText}>Back to Games</Text>
-          </TouchableOpacity>
-        </View>
+              <PlayButton
+                onPress={handleEndHere}
+                icon="close-circle-outline"
+                label="End Here"
+                backgroundColor="transparent"
+                iconColor="#1F2937"
+                border={{ width: 2, color: '#6B7280' }}
+                flex1={false}
+                textStyle={styles.buttonTextSecondary}
+                style={styles.button}
+              />
+            </View>
+          </Card>
+        </Card>
+
+        
       </View>
     </View>
   );
@@ -44,7 +82,6 @@ export default function SoloNineLivesWinScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
@@ -54,57 +91,57 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     maxWidth: 400,
+    gap: 16,
   },
-  emoji: {
-    fontSize: 120,
-    marginBottom: 24,
+  statsCard: {
   },
-  title: {
+  statsLabel: {
     color: '#FFFFFF',
-    fontSize: 36,
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  statsValue: {
+    color: '#FFFFFF',
+    fontSize: 32,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 12,
   },
-  subtitle: {
-    color: '#9CA3AF',
-    fontSize: 18,
+  solidCard: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarSection: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 16,
+    marginBottom: 24,
+  },
+  winText: {
+    color: '#1F2937',
+    fontSize: 20,
+    fontWeight: '600',
     textAlign: 'center',
-    marginBottom: 48,
-    lineHeight: 26,
   },
   buttonsContainer: {
     width: '100%',
-    gap: 16,
+    gap: 12,
   },
-  playAgainButton: {
-    backgroundColor: COLORS.PRIMARY,
-    paddingVertical: 18,
-    paddingHorizontal: 32,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
+  button: {
     width: '100%',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
   },
-  playAgainButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  buttonText: {
+    fontSize: 16,
     fontWeight: 'bold',
+    marginTop: 4,
   },
-  backButton: {
-    backgroundColor: 'transparent',
-    paddingVertical: 18,
-    paddingHorizontal: 32,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    borderWidth: 2,
-    borderColor: '#374151',
-  },
-  backButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  buttonTextSecondary: {
+    fontSize: 16,
     fontWeight: '600',
+    marginTop: 4,
   },
 });
