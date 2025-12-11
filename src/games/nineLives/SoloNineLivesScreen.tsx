@@ -7,6 +7,7 @@ import { COLORS } from '../../../constants/colors';
 import Card from '../../../components/Card';
 import ProgressBar from '../../../components/ProgressBar';
 import UserAvatarHeader from '../../../components/UserAvatarHeader';
+import PlayButton from '../../components/PlayButton';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -338,21 +339,24 @@ export default function SoloNineLivesScreen() {
 
           {/* Action buttons */}
           <View style={styles.actionButtonsContainer}>
-            <TouchableOpacity
-              style={styles.skipButton}
+            <PlayButton
               onPress={handleSkip}
-            >
-              <Text style={styles.skipButtonText}>
-                {showResult ? 'Next Fact' : 'Skip'}
-              </Text>
-            </TouchableOpacity>
+              icon={showResult ? 'arrow-forward' : 'play-skip-forward'}
+              label={showResult ? 'Next' : 'Skip'}
+              backgroundColor={COLORS.PRIMARY}
+              textStyle={styles.actionButtonText}
+              style={styles.actionButton}
+            />
 
-            <TouchableOpacity
-              style={styles.surrenderButton}
+            <PlayButton
               onPress={handleSurrender}
-            >
-              <Text style={styles.surrenderButtonText}>Surrender</Text>
-            </TouchableOpacity>
+              icon="flag-outline"
+              label="Surrender"
+              backgroundColor="transparent"
+              iconColor="#FFFFFF"
+              textStyle={styles.surrenderButtonText}
+              style={styles.surrenderButton}
+            />
           </View>
         </View>
       </Card>
@@ -516,34 +520,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
   },
-  skipButton: {
-    flex: 1,
-    backgroundColor: COLORS.PRIMARY,
+  actionButton: {
     paddingVertical: 16,
     paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  skipButtonText: {
+  actionButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
+    marginTop: 4,
   },
   surrenderButton: {
-    flex: 1,
-    backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: '#6B7280',
     paddingVertical: 16,
     paddingHorizontal: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   surrenderButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+    marginTop: 4,
   },
 });
