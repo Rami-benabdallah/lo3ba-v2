@@ -228,7 +228,15 @@ export default function SoloNineLivesScreen() {
           size="md"
         />
 
-        {/* Answer cubes - scrollable */}
+        {/* Paw counter - right side */}
+        <View style={styles.pawCounter}>
+        <Text style={styles.pawCount}>{lives} x</Text>
+          <Text style={styles.pawIcon}>🐾</Text>
+        </View>
+      </View>
+
+      {/* Answer cubes - scrollable */}
+      <View style={styles.cubesSection}>
         <ScrollView
           ref={scrollViewRef}
           horizontal
@@ -317,7 +325,7 @@ export default function SoloNineLivesScreen() {
             </View>
 
             {/* Explanation modal - only show when wrong */}
-            {showResult && !isCorrect && (
+            {showResult && (
               <View style={styles.explanationModal}>
                 <Card variant="liquid" padding="sm">
                   <Text style={styles.explanationText}>
@@ -359,6 +367,25 @@ const styles = StyleSheet.create({
   },
   topSection: {
     paddingTop: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  pawCounter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  pawIcon: {
+    fontSize: 24,
+  },
+  pawCount: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  cubesSection: {
+    marginTop: 16,
   },
   cubesContainer: {
     marginTop: 16,
