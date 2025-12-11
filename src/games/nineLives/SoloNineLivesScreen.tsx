@@ -9,6 +9,7 @@ import UserAvatarHeader from '../../../components/UserAvatarHeader';
 import PlayButton from '../../../components/PlayButton';
 import FactContainer from './FactContainer';
 import AnswerButtons from './AnswerButtons';
+import FactExplanationModal from './FactExplanationModal';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -335,13 +336,7 @@ export default function SoloNineLivesScreen() {
 
             {/* Explanation modal - only show when wrong */}
             {showResult && (
-              <View style={styles.explanationModal}>
-                <Card variant="liquid" padding="sm">
-                  <Text style={styles.explanationText}>
-                    {currentFact.correctFact}
-                  </Text>
-                </Card>
-              </View>
+              <FactExplanationModal explanation={currentFact.correctFact} />
             )}
           </View>
 
@@ -470,23 +465,6 @@ const styles = StyleSheet.create({
   },
   progressSection: {
     marginBottom: 12,
-  },
-  explanationModal: {
-    marginTop: 16,
-    marginBottom: 16,
-  },
-  explanationTitle: {
-    color: '#000000',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  explanationText: {
-    color: '#000000',
-    fontSize: 10,
-    lineHeight: 20,
-    opacity: 0.95,
   },
   actionButtonsContainer: {
     flexDirection: 'row',
