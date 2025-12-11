@@ -36,6 +36,9 @@ export default function SoloNineLivesScreen() {
   const [progress, setProgress] = useState(100);
   const timerRef = useRef<number | null>(null);
   const questionNumberRef = useRef(1);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const contentWidthRef = useRef(0);
+  const scrollViewWidthRef = useRef(0);
 
   const currentFact = facts[currentIndex];
 
@@ -101,6 +104,31 @@ export default function SoloNineLivesScreen() {
       setCurrentIndex(0);
     }
   }, [currentIndex, facts.length]);
+
+  // Auto-scroll to end when new answer cube is added
+  useEffect(() => {
+    if (answerHistory.length > 0) {
+      // Use requestAnimationFrame to ensure layout is complete
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const scrollToEnd = () => {
+            if (contentWidthRef.current > 0 && scrollViewWidthRef.current > 0) {
+              // Calculate scroll position to show the end
+              const scrollX = Math.max(0, contentWidthRef.current - scrollViewWidthRef.current);
+              scrollViewRef.current?.scrollTo({
+                x: scrollX,
+                animated: true,
+              });
+            } else {
+              // Fallback to scrollToEnd
+              scrollViewRef.current?.scrollToEnd({ animated: true });
+            }
+          };
+          scrollToEnd();
+        }, 150);
+      });
+    }
+  }, [answerHistory.length]);
 
   const handleAnswer = (answer: boolean) => {
     if (selectedAnswer !== null || showResult) return; // Lock input
@@ -196,10 +224,29 @@ export default function SoloNineLivesScreen() {
 
         {/* Answer cubes - scrollable */}
         <ScrollView
+          ref={scrollViewRef}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.cubesContainer}
           contentContainerStyle={styles.cubesContent}
+          onLayout={(event) => {
+            // Store ScrollView width
+            scrollViewWidthRef.current = event.nativeEvent.layout.width;
+          }}
+          onContentSizeChange={(contentWidth) => {
+            // Store content width for scrolling
+            contentWidthRef.current = contentWidth;
+            // Scroll to end whenever content size changes (new cube added)
+            if (contentWidth > 0 && scrollViewWidthRef.current > 0) {
+              setTimeout(() => {
+                const scrollX = Math.max(0, contentWidth - scrollViewWidthRef.current);
+                scrollViewRef.current?.scrollTo({
+                  x: scrollX,
+                  animated: true,
+                });
+              }, 100);
+            }
+          }}
         >
           {renderAnswerCubes()}
         </ScrollView>
