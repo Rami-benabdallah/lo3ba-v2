@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleProp, ViewStyle, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface HeaderBarProps {
   title?: string;
@@ -27,6 +28,7 @@ export default function HeaderBar({
   style,
 }: HeaderBarProps) {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handleLeftPress = () => {
     if (onLeftPress) {
@@ -37,7 +39,7 @@ export default function HeaderBar({
   };
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, { paddingTop: Math.max(insets.top, 12) }, style]}>
       {/* Left: Back button, custom icon, or spacer */}
       <View style={styles.leftContainer}>
         {showBack ? (
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingBottom: 12,
     backgroundColor: 'transparent',
   },
   leftContainer: {

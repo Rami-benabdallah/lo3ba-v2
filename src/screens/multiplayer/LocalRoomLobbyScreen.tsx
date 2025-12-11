@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderBar from '../../../components/HeaderBar';
@@ -13,6 +13,109 @@ const MOCK_PLAYERS: Player[] = [
   { name: 'You' },
   { name: 'Player 2 (waiting…)' },
 ];
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  contentContainer: {
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  contentWrapper: {
+    flex: 1,
+  },
+  roomInfoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  roomId: {
+    color: '#F97316',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  qrCodeContainer: {
+    marginTop: 24,
+    marginBottom: 32,
+    alignItems: 'center',
+  },
+  playersSection: {
+    marginBottom: 32,
+  },
+  playersTitle: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 16,
+  },
+  playersList: {
+    gap: 12,
+  },
+  playerCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  playerAvatar: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#F97316',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  playerAvatarText: {
+    color: '#FFFFFF',
+    fontWeight: '700',
+    fontSize: 18,
+  },
+  playerName: {
+    color: '#111827',
+    fontSize: 16,
+    fontWeight: '500',
+    flex: 1,
+  },
+  startButton: {
+    width: '100%',
+    backgroundColor: '#9CA3AF',
+    borderRadius: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+    opacity: 0.5,
+  },
+  startButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  startButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+});
 
 export default function LocalRoomLobbyScreen() {
   const router = useRouter();
@@ -45,44 +148,44 @@ export default function LocalRoomLobbyScreen() {
   }
 
   return (
-    <View className="flex-1">
+    <View style={styles.container}>
       <HeaderBar title={room.name} showBack={true} />
 
       <ScrollView 
-        className="flex-1"
-        contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 32 }}
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
       >
-      <View className="flex-1">
+      <View style={styles.contentWrapper}>
         {/* Room Info */}
-        <View className="items-center mb-8">
-          <Text className="text-orange-500 text-xl font-semibold">
+        <View style={styles.roomInfoContainer}>
+          <Text style={styles.roomId}>
             {room.id}
           </Text>
         </View>
 
         {/* QR Code */}
-        <View className="mt-6 mb-8 items-center">
+        <View style={styles.qrCodeContainer}>
           <RoomQRCode value={room.id} />
         </View>
 
         {/* Players List */}
-        <View className="mb-8">
-          <Text className="text-white text-lg font-semibold mb-4">
+        <View style={styles.playersSection}>
+          <Text style={styles.playersTitle}>
             Players ({MOCK_PLAYERS.length})
           </Text>
           
-          <View className="gap-3">
+          <View style={styles.playersList}>
             {MOCK_PLAYERS.map((player, index) => (
               <View
                 key={index}
-                className="bg-white rounded-xl p-4 shadow-md flex-row items-center"
+                style={styles.playerCard}
               >
-                <View className="w-10 h-10 bg-orange-500 rounded-full items-center justify-center mr-3">
-                  <Text className="text-white font-bold text-lg">
+                <View style={styles.playerAvatar}>
+                  <Text style={styles.playerAvatarText}>
                     {player.name.charAt(0).toUpperCase()}
                   </Text>
                 </View>
-                <Text className="text-gray-900 text-base font-medium flex-1">
+                <Text style={styles.playerName}>
                   {player.name}
                 </Text>
                 {index === 0 && (
@@ -96,11 +199,11 @@ export default function LocalRoomLobbyScreen() {
         {/* Start Game Button */}
         <Pressable
           disabled={true}
-          className="w-full bg-gray-400 rounded-2xl py-5 px-6 shadow-lg opacity-50"
+          style={styles.startButton}
         >
-          <View className="flex-row items-center justify-center">
+          <View style={styles.startButtonContent}>
             <Ionicons name="play" size={24} color="#FFFFFF" style={{ marginRight: 8 }} />
-            <Text className="text-white text-lg font-semibold">
+            <Text style={styles.startButtonText}>
               Start Game
             </Text>
           </View>

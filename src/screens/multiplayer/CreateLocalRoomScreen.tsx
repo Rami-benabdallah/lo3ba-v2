@@ -1,10 +1,116 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderBar from '../../../components/HeaderBar';
 
 const ANSWER_TIME_OPTIONS = [10, 15, 20];
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  contentWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionLarge: {
+    marginBottom: 32,
+  },
+  label: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  inputContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  input: {
+    color: '#111827',
+    fontSize: 16,
+  },
+  answerTimeContainer: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  answerTimeButton: {
+    flex: 1,
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  answerTimeButtonActive: {
+    backgroundColor: '#F97316',
+  },
+  answerTimeButtonInactive: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  answerTimeText: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  answerTimeTextActive: {
+    color: '#FFFFFF',
+  },
+  answerTimeTextInactive: {
+    color: 'rgba(255, 255, 255, 0.7)',
+  },
+  createButton: {
+    width: '100%',
+    borderRadius: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  createButtonActive: {
+    backgroundColor: '#F97316',
+  },
+  createButtonDisabled: {
+    backgroundColor: '#9CA3AF',
+    opacity: 0.5,
+  },
+  createButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  createButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
+  },
+});
 
 export default function CreateLocalRoomScreen() {
   const router = useRouter();
@@ -32,52 +138,56 @@ export default function CreateLocalRoomScreen() {
   };
 
   return (
-    <View className="flex-1">
+    <View style={styles.container}>
       <HeaderBar title="Create Room" showBack={true} />
 
       <ScrollView 
-        className="flex-1"
-        contentContainerStyle={{ flex: 1, justifyContent: 'center', paddingHorizontal: 24, paddingVertical: 32 }}
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
       >
-        <View className="flex-1 justify-center">
+        <View style={styles.contentWrapper}>
 
         {/* Room Name Input */}
-        <View className="mb-6">
-          <Text className="text-white text-lg font-semibold mb-3">
+        <View style={styles.section}>
+          <Text style={styles.label}>
             Room Name
           </Text>
-          <View className="bg-white rounded-2xl p-4 shadow-md">
+          <View style={styles.inputContainer}>
             <TextInput
               value={roomName}
               onChangeText={setRoomName}
               placeholder="Enter room name"
               placeholderTextColor="#9CA3AF"
-              className="text-gray-900 text-base"
+              style={styles.input}
               autoCapitalize="words"
             />
           </View>
         </View>
 
         {/* Answer Time Selector */}
-        <View className="mb-8">
-          <Text className="text-white text-lg font-semibold mb-3">
+        <View style={styles.sectionLarge}>
+          <Text style={styles.label}>
             Answer Time
           </Text>
-          <View className="flex-row gap-3">
+          <View style={styles.answerTimeContainer}>
             {ANSWER_TIME_OPTIONS.map((time) => (
               <Pressable
                 key={time}
                 onPress={() => setAnswerTime(time)}
-                className={`flex-1 rounded-xl py-4 px-4 ${
+                style={[
+                  styles.answerTimeButton,
                   answerTime === time
-                    ? 'bg-orange-500'
-                    : 'bg-white/20'
-                }`}
+                    ? styles.answerTimeButtonActive
+                    : styles.answerTimeButtonInactive
+                ]}
               >
                 <Text
-                  className={`text-center text-lg font-semibold ${
-                    answerTime === time ? 'text-white' : 'text-white/70'
-                  }`}
+                  style={[
+                    styles.answerTimeText,
+                    answerTime === time
+                      ? styles.answerTimeTextActive
+                      : styles.answerTimeTextInactive
+                  ]}
                 >
                   {time}s
                 </Text>
@@ -90,15 +200,16 @@ export default function CreateLocalRoomScreen() {
         <Pressable
           onPress={handleCreateRoom}
           disabled={!roomName.trim()}
-          className={`w-full rounded-2xl py-5 px-6 shadow-lg ${
+          style={[
+            styles.createButton,
             roomName.trim()
-              ? 'bg-orange-500 active:opacity-80'
-              : 'bg-gray-400 opacity-50'
-          }`}
+              ? styles.createButtonActive
+              : styles.createButtonDisabled
+          ]}
         >
-          <View className="flex-row items-center justify-center">
+          <View style={styles.createButtonContent}>
             <Ionicons name="create" size={24} color="#FFFFFF" style={{ marginRight: 8 }} />
-            <Text className="text-white text-lg font-semibold">
+            <Text style={styles.createButtonText}>
               Create Room
             </Text>
           </View>
