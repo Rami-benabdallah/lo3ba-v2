@@ -18,6 +18,7 @@ export interface PlayButtonProps {
     color?: string;
     style?: 'solid' | 'dashed' | 'dotted';
   };
+  disabled?: boolean;
 }
 
 export default function PlayButton({
@@ -32,6 +33,7 @@ export default function PlayButton({
   iconSize = 32,
   iconColor = '#FFFFFF',
   border,
+  disabled = false,
 }: PlayButtonProps) {
   const borderStyles: ViewStyle = {};
   if (border) {
@@ -46,17 +48,26 @@ export default function PlayButton({
     }
   }
 
+  const disabledStyles: ViewStyle = disabled
+    ? {
+        opacity: 0.5,
+        backgroundColor: '#9CA3AF', // gray-400
+      }
+    : {};
+
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={disabled ? undefined : onPress}
+      disabled={disabled}
       style={[
         styles.button,
         { backgroundColor },
         borderStyles,
         flex1 && { flex: 1 },
+        disabledStyles,
         style,
       ]}
-      activeOpacity={activeOpacity}
+      activeOpacity={disabled ? 1 : activeOpacity}
     >
       <Ionicons name={icon} size={iconSize} color={iconColor} />
       <Text style={[styles.text, textStyle]}>

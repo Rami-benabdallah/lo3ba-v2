@@ -40,6 +40,7 @@ export default function SoloNineLivesScreen() {
   const scrollViewRef = useRef<ScrollView>(null);
   const contentWidthRef = useRef(0);
   const scrollViewWidthRef = useRef(0);
+  const isPawActiveRef = useRef(false);
 
   const currentFact = facts[currentIndex];
 
@@ -73,6 +74,11 @@ export default function SoloNineLivesScreen() {
           setSelectedAnswer(false);
           setIsCorrect(false);
           setShowResult(true);
+          // If paw is active, lose a point
+          if (isPawActiveRef.current) {
+            setLives((prev) => Math.max(prev - 1, 0)); // Lose 1 point, minimum 0
+          }
+          setIsPawActive(false); // Lose paw on wrong answer
           setAnswerHistory((prev) => [
             ...prev,
             { questionNumber: questionNumberRef.current, isCorrect: false },
@@ -97,6 +103,18 @@ export default function SoloNineLivesScreen() {
       router.push('/solo-nine-lives-win');
     }
   }, [lives, router]);
+
+  // Deactivate paw if lives drop to 1 or below
+  useEffect(() => {
+    if (lives <= 1 && isPawActive) {
+      setIsPawActive(false);
+    }
+  }, [lives, isPawActive]);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    isPawActiveRef.current = isPawActive;
+  }, [isPawActive]);
 
   // Reshuffle facts when reaching the end
   useEffect(() => {
@@ -161,7 +179,11 @@ export default function SoloNineLivesScreen() {
       setLives((prev) => Math.min(prev + pointsToAdd, 9)); // Cap at 9
       // Paw stays active after correct answer (can be used again)
     } else {
-      // If answer is wrong, deactivate paw
+      // If answer is wrong and paw is active, lose a point
+      if (isPawActive) {
+        setLives((prev) => Math.max(prev - 1, 0)); // Lose 1 point, minimum 0
+      }
+      // Deactivate paw
       setIsPawActive(false);
     }
   };
@@ -171,6 +193,7 @@ export default function SoloNineLivesScreen() {
     setSelectedAnswer(null);
     setShowResult(false);
     setIsCorrect(false);
+    setIsPawActive(false); // Reset paw after every question
     questionNumberRef.current += 1;
   };
 
@@ -185,6 +208,11 @@ export default function SoloNineLivesScreen() {
       setSelectedAnswer(false); // Mark as answered to prevent double skip
       setIsCorrect(false);
       setShowResult(true);
+      // If paw is active, lose a point
+      if (isPawActive) {
+        setLives((prev) => Math.max(prev - 1, 0)); // Lose 1 point, minimum 0
+      }
+      setIsPawActive(false); // Lose paw on wrong answer
 
       // Stop timer
       if (timerRef.current) {
@@ -206,8 +234,10 @@ export default function SoloNineLivesScreen() {
   };
 
   const handlePaw = () => {
-    // Toggle paw activation
-    setIsPawActive((prev) => !prev);
+    // Only allow paw activation if lives > 1
+    if (lives > 1) {
+      setIsPawActive((prev) => !prev);
+    }
   };
 
   const handleQuit = () => {
@@ -373,6 +403,7 @@ export default function SoloNineLivesScreen() {
                 backgroundColor={COLORS.SECONDARY }
                 iconColor="#FFFFFF"
                 border={{ width: 2, color: COLORS.SECONDARY_DARK }}
+                disabled={lives <= 1 || showResult}
             />
             {isPawActive && (
               <View style={styles.pawIndicator}>
