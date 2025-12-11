@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { mockFacts, Fact } from '../../data/mockFacts';
 import { COLORS } from '../../../constants/colors';
@@ -10,6 +10,7 @@ import FactContainer from './FactContainer';
 import AnswerButtons from './AnswerButtons';
 import FactExplanationModal from './FactExplanationModal';
 import ActionButtons from './ActionButtons';
+import AnswerCubes from './AnswerCubes';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -40,9 +41,6 @@ export default function SoloNineLivesScreen() {
   const [isPawActive, setIsPawActive] = useState(false);
   const timerRef = useRef<number | null>(null);
   const questionNumberRef = useRef(1);
-  const scrollViewRef = useRef<ScrollView>(null);
-  const contentWidthRef = useRef(0);
-  const scrollViewWidthRef = useRef(0);
   const isPawActiveRef = useRef(false);
 
   const currentFact = facts[currentIndex];
@@ -127,34 +125,6 @@ export default function SoloNineLivesScreen() {
     }
   }, [currentIndex, facts.length]);
 
-  // Smooth scroll to end function
-  const scrollToEndSmooth = useCallback(() => {
-    if (!scrollViewRef.current) return;
-    
-    // Use double requestAnimationFrame for smooth rendering
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (contentWidthRef.current > 0 && scrollViewWidthRef.current > 0) {
-          // Calculate scroll position to show the end
-          const scrollX = Math.max(0, contentWidthRef.current - scrollViewWidthRef.current);
-          scrollViewRef.current?.scrollTo({
-            x: scrollX,
-            animated: true,
-          });
-        } else {
-          // Fallback to scrollToEnd
-          scrollViewRef.current?.scrollToEnd({ animated: true });
-        }
-      });
-    });
-  }, []);
-
-  // Auto-scroll to end when new answer cube is added
-  useEffect(() => {
-    if (answerHistory.length > 0) {
-      scrollToEndSmooth();
-    }
-  }, [answerHistory.length, scrollToEndSmooth]);
 
   const handleAnswer = (answer: boolean) => {
     if (selectedAnswer !== null || showResult) return; // Lock input
@@ -248,20 +218,6 @@ export default function SoloNineLivesScreen() {
     router.push('/(tabs)/games');
   };
 
-  // Render cubes for answer history
-  const renderAnswerCubes = () => {
-    return answerHistory.map((answer, index) => (
-      <View
-        key={index}
-        style={[
-          styles.answerCube,
-          answer.isCorrect ? styles.correctCube : styles.wrongCube,
-        ]}
-      >
-        <Text style={styles.cubeText}>{answer.questionNumber}</Text>
-      </View>
-    ));
-  };
 
   return (
     <View style={styles.container}>
@@ -281,31 +237,7 @@ export default function SoloNineLivesScreen() {
       </View>
 
       {/* Answer cubes - scrollable */}
-      <View style={styles.cubesSection}>
-        <ScrollView
-          ref={scrollViewRef}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.cubesContainer}
-          contentContainerStyle={styles.cubesContent}
-          decelerationRate="fast"
-          scrollEventThrottle={16}
-          onLayout={(event) => {
-            // Store ScrollView width
-            scrollViewWidthRef.current = event.nativeEvent.layout.width;
-          }}
-          onContentSizeChange={(contentWidth) => {
-            // Store content width for scrolling
-            contentWidthRef.current = contentWidth;
-            // Scroll to end whenever content size changes (new cube added)
-            if (contentWidth > 0) {
-              scrollToEndSmooth();
-            }
-          }}
-        >
-          {renderAnswerCubes()}
-        </ScrollView>
-      </View>
+      <AnswerCubes answerHistory={answerHistory} />
 
       {/* Card with solid variant */}
       <Card variant="liquid" padding="md" style={styles.mainCard}>
@@ -377,40 +309,6 @@ const styles = StyleSheet.create({
   pawCount: {
     color: '#FFFFFF',
     fontSize: 20,
-    fontWeight: 'bold',
-  },
-  cubesSection: {
-    marginTop: 16,
-  },
-  cubesContainer: {
-    marginTop: 16,
-    height: 48,   // or whatever height fits 1 row of cubes
-    overflow: 'visible',
-  },
-  cubesContent: {
-    flexDirection: 'row',
-    gap: 8,
-    paddingRight: 20,
-  },
-  answerCube: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-  },
-  correctCube: {
-    backgroundColor: '#10B981',
-    borderColor: '#059669',
-  },
-  wrongCube: {
-    backgroundColor: '#EF4444',
-    borderColor: '#DC2626',
-  },
-  cubeText: {
-    color: '#FFFFFF',
-    fontSize: 16,
     fontWeight: 'bold',
   },
   content: {
