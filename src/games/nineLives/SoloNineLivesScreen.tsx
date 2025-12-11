@@ -194,11 +194,13 @@ export default function SoloNineLivesScreen() {
   };
 
   const handleSurrender = () => {
-    router.back();
+    // Navigate to games tab - this is always safe and makes sense after surrendering
+    router.push('/(tabs)/games');
   };
 
   const handleQuit = () => {
-    router.back();
+    // Navigate to games tab - this is always safe and makes sense after quitting
+    router.push('/(tabs)/games');
   };
 
   // Render cubes for answer history
@@ -403,7 +405,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 550,
+    height: 580,
   },
   factContent: {
     display: 'flex',
