@@ -212,7 +212,8 @@ export default function SoloNineLivesScreen() {
       >
         {/* Card with solid variant */}
         <Card variant="liquid" padding="lg" style={styles.mainCard}>
-          {/* Liquid card with fact text */}
+          <View style={styles.cardContent}>
+            {/* Liquid card with fact text */}
           <Card variant="liquidWhite" padding="md" style={styles.factCard}>
             <Text style={styles.factText}>{currentFact.text}</Text>
           </Card>
@@ -317,6 +318,7 @@ export default function SoloNineLivesScreen() {
               <Text style={styles.surrenderButtonText}>Surrender</Text>
             </TouchableOpacity>
           </View>
+          </View>
         </Card>
       </ScrollView>
     </View>
@@ -368,6 +370,11 @@ const styles = StyleSheet.create({
   },
   mainCard: {
     marginTop: 16,
+    height: 600, // Fixed height to prevent expansion/contraction
+  },
+  cardContent: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   factCard: {
     marginBottom: 24,
