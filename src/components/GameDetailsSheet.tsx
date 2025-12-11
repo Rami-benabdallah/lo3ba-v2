@@ -2,14 +2,13 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   ScrollView,
   Image,
   StyleSheet,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import Sheet from '../../components/Sheet';
 import Tabs, { TabItem } from './Tabs';
+import PlayButton from './PlayButton';
 
 export interface GameDetailsSheetProps {
   visible: boolean;
@@ -152,40 +151,28 @@ export default function GameDetailsSheet({
         <View style={styles.buttonContainer}>
           <View style={styles.buttonsRow}>
             {/* Play Solo Button */}
-            <TouchableOpacity
+            <PlayButton
               onPress={onPlaySolo}
-              style={styles.playButtonSolo}
-              activeOpacity={0.8}
-            >
-              <Ionicons name="person" size={32} color="#FFFFFF" />
-              <Text style={styles.playButtonText}>
-                Solo
-              </Text>
-            </TouchableOpacity>
+              icon="person"
+              label="Solo"
+              backgroundColor="#3B82F6"
+            />
 
             {/* Play Multiplayer Online Button */}
-            <TouchableOpacity
+            <PlayButton
               onPress={onPlayOnline}
-              style={styles.playButtonOnline}
-              activeOpacity={0.8}
-            >
-              <Ionicons name="people" size={32} color="#FFFFFF" />
-              <Text style={styles.playButtonText}>
-                Multiplayer Online
-              </Text>
-            </TouchableOpacity>
+              icon="people"
+              label="Multiplayer Online"
+              backgroundColor="#10B981"
+            />
 
             {/* Play Multiplayer Local Button */}
-          <TouchableOpacity
+            <PlayButton
               onPress={onPlayLocal}
-              style={styles.playButtonLocal}
-            activeOpacity={0.8}
-          >
-              <Ionicons name="phone-portrait" size={32} color="#FFFFFF" />
-            <Text style={styles.playButtonText}>
-                Multiplayer Local
-            </Text>
-          </TouchableOpacity>
+              icon="phone-portrait"
+              label="Multiplayer Local"
+              backgroundColor="#F97316"
+            />
           </View>
         </View>
       </View>
@@ -265,35 +252,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 12, // gap-3
-  },
-  playButtonSolo: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3B82F6', // blue-500
-    borderRadius: 12, // rounded-xl
-    padding: 16, // p-4
-  },
-  playButtonOnline: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#10B981', // green-500
-    borderRadius: 12, // rounded-xl
-    padding: 16, // p-4
-  },
-  playButtonLocal: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F97316', // orange-500
-    borderRadius: 12, // rounded-xl
-    padding: 16, // p-4
-  },
-  playButtonText: {
-    color: '#FFFFFF', // text-white
-    fontSize: 8, // text-sm
-    marginTop: 4, // reduced spacing
-    textAlign: 'center',
   },
 });
