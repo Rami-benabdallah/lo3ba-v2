@@ -29,10 +29,12 @@ export default function SoloNineLivesWinScreen() {
       <View style={styles.content}>
         {/* Correct answers card */}
         <Card variant="liquid" padding="none" style={styles.statsCard}>
-          <Text style={styles.statsLabel}>Correct answers</Text>
-          <Text style={styles.statsValue}>
-            {correctAnswers} / {totalQuestions}
-          </Text>
+          <View style={styles.statsRow}>
+            <Text style={styles.statsLabel}>Correct answers</Text>
+            <Text style={styles.statsValue}>
+              {correctAnswers} / {totalQuestions}
+            </Text>
+          </View>
           {/* Solid card with avatar and buttons */}
           <Card variant="solid" padding="md" style={styles.solidCard}>
             <View style={styles.avatarSection}>
@@ -94,19 +96,24 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   statsCard: {
+    width: '100%',
+  },
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 8,
+    padding: 16,
   },
   statsLabel: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
-    marginBottom: 8,
-    textAlign: 'center',
   },
   statsValue: {
     color: '#FFFFFF',
-    fontSize: 32,
+    fontSize: 14,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   solidCard: {
     width: '100%',
