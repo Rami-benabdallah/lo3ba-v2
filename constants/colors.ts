@@ -1,6 +1,12 @@
 // Primary and secondary colors
 export const COLORS = {
   PRIMARY:         '#F97316', // default
+  PRIMARY_LIGHT:   '#FDBA74', // lighter (orange-300)
+  PRIMARY_SOFT:    '#FFEDD5', // very light (orange-100)
+  PRIMARY_DARK:    '#EA580C', // darker (orange-600)
+  PRIMARY_DEEP:    '#C2410C', // even darker (orange-700)
+  PRIMARY_SHADOW:  '#9A3412', // shadow / border dark (orange-800)
+  PRIMARY_TEXT:    '#7C2D12', // darkest variant (orange-900)
   SECONDARY:         '#8669FD', // default
   SECONDARY_LIGHT:   '#BBA5FF', // lighter
   SECONDARY_SOFT:    '#EDE5FF', // very light
