@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import { mockFacts, Fact } from '../../data/mockFacts';
 import { COLORS } from '../../../constants/colors';
 import Card from '../../../components/Card';
