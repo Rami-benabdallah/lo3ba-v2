@@ -24,7 +24,7 @@ export default function GameLoadingScreen() {
 
   useEffect(() => {
     // Animate progress from 0 to 100 over 5 seconds
-    const duration = 5000; // 5 seconds
+    const duration = 2000; // 5 seconds
     const startTime = Date.now();
 
     const timer = setInterval(() => {
