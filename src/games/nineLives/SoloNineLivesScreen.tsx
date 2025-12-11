@@ -7,6 +7,7 @@ import Card from '../../../components/Card';
 import ProgressBar from '../../../components/ProgressBar';
 import UserAvatarHeader from '../../../components/UserAvatarHeader';
 import PlayButton from '../../../components/PlayButton';
+import FactContainer from './FactContainer';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -310,9 +311,7 @@ export default function SoloNineLivesScreen() {
         <View style={styles.cardContent}>
           <View style={styles.factContent}>
             {/* Liquid card with fact text */}
-            <Card variant="liquidWhite" padding="md" style={styles.factCard}>
-              <Text style={styles.factText}>{currentFact.text}</Text>
-            </Card>
+            <FactContainer factText={currentFact.text} />
 
             {/* Progress bar with countdown */}
             <View style={styles.progressSection}>
@@ -493,13 +492,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
-  factCard: {
-    marginBottom: 12,
-    height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
   pawIndicator: {
     position: 'absolute',
     top: -17,
@@ -507,13 +499,6 @@ const styles = StyleSheet.create({
   },
   pawEmoji: {
     fontSize: 44,
-  },
-  factText: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: '600',
-    textAlign: 'center',
-    lineHeight: 28,
   },
   progressSection: {
     marginBottom: 12,
