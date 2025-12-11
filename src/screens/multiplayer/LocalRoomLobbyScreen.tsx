@@ -3,6 +3,7 @@ import { View, Text, Pressable, ScrollView } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderBar from '../../../components/HeaderBar';
+import RoomQRCode from '../../components/RoomQRCode';
 
 interface Player {
   name: string;
@@ -59,14 +60,9 @@ export default function LocalRoomLobbyScreen() {
           </Text>
         </View>
 
-        {/* QR Code Placeholder */}
-        <View className="bg-white rounded-2xl p-8 mb-8 items-center justify-center shadow-md">
-          <View className="w-64 h-64 bg-gray-100 rounded-xl items-center justify-center border-2 border-dashed border-gray-300">
-            <Ionicons name="qr-code-outline" size={80} color="#9CA3AF" />
-            <Text className="text-gray-500 text-sm mt-4 text-center px-4">
-              QR Code goes here
-            </Text>
-          </View>
+        {/* QR Code */}
+        <View className="mt-6 mb-8 items-center">
+          <RoomQRCode value={room.id} />
         </View>
 
         {/* Players List */}
