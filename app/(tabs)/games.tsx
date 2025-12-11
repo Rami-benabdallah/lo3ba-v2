@@ -24,7 +24,9 @@ export default function GamesScreen() {
     gameDetails,
     openGameDetails,
     closeGameDetails,
-    handlePlayGame,
+    handlePlaySolo,
+    handlePlayOnline,
+    handlePlayLocal,
   } = useGameDetailsSheet();
   
   // Store initial filter values when sheet opens
@@ -183,9 +185,9 @@ export default function GamesScreen() {
         visible={isDetailsOpen}
         game={gameDetails}
         onClose={closeGameDetails}
-        onPlaySolo={handlePlayGame}
-        onPlayOnline={handlePlayGame}
-        onPlayLocal={handlePlayGame}
+        onPlaySolo={handlePlaySolo}
+        onPlayOnline={handlePlayOnline}
+        onPlayLocal={handlePlayLocal}
       />
     </View>
   );

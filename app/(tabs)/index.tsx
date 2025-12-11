@@ -18,7 +18,9 @@ export default function ExploreScreen() {
     gameDetails,
     openGameDetails,
     closeGameDetails,
-    handlePlayGame,
+    handlePlaySolo,
+    handlePlayOnline,
+    handlePlayLocal,
   } = useGameDetailsSheet();
 
   const handleViewAllPress = () => {
@@ -64,9 +66,9 @@ export default function ExploreScreen() {
         visible={isDetailsOpen}
         game={gameDetails}
         onClose={closeGameDetails}
-        onPlaySolo={handlePlayGame}
-        onPlayOnline={handlePlayGame}
-        onPlayLocal={handlePlayGame}
+        onPlaySolo={handlePlaySolo}
+        onPlayOnline={handlePlayOnline}
+        onPlayLocal={handlePlayLocal}
       />
     </View>
   );

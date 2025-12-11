@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Game } from '../../components/RecommendedGames';
 import { getGameDetails, GameDetails } from '../data/mockGames';
+import { useGameHandlers } from '../utils/gameHandlers';
 
 interface UseGameDetailsSheetReturn {
   selectedGame: Game | null;
@@ -8,7 +9,9 @@ interface UseGameDetailsSheetReturn {
   gameDetails: GameDetails | null;
   openGameDetails: (game: Game) => void;
   closeGameDetails: () => void;
-  handlePlayGame: () => void;
+  handlePlaySolo: () => void;
+  handlePlayOnline: () => void;
+  handlePlayLocal: () => void;
 }
 
 /**
@@ -18,6 +21,7 @@ interface UseGameDetailsSheetReturn {
 export function useGameDetailsSheet(): UseGameDetailsSheetReturn {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const { handlePlaySolo: playSolo, handlePlayOnline: playOnline, handlePlayLocal: playLocal } = useGameHandlers();
 
   const openGameDetails = (game: Game) => {
     setSelectedGame(game);
@@ -29,10 +33,28 @@ export function useGameDetailsSheet(): UseGameDetailsSheetReturn {
     setSelectedGame(null);
   };
 
-  const handlePlayGame = () => {
-    setIsDetailsOpen(false);
-    // TODO: navigate to game screen in the future
-    // You can add navigation logic here when ready
+  const handlePlaySolo = () => {
+    if (selectedGame) {
+      setIsDetailsOpen(false);
+      const gameId = selectedGame.gameName.toLowerCase().replace(/\s+/g, '-');
+      playSolo(gameId, selectedGame.gameName);
+    }
+  };
+
+  const handlePlayOnline = () => {
+    if (selectedGame) {
+      setIsDetailsOpen(false);
+      const gameId = selectedGame.gameName.toLowerCase().replace(/\s+/g, '-');
+      playOnline(gameId, selectedGame.gameName);
+    }
+  };
+
+  const handlePlayLocal = () => {
+    if (selectedGame) {
+      setIsDetailsOpen(false);
+      const gameId = selectedGame.gameName.toLowerCase().replace(/\s+/g, '-');
+      playLocal(gameId, selectedGame.gameName);
+    }
   };
 
   const gameDetails = selectedGame ? getGameDetails(selectedGame) : null;
@@ -43,6 +65,8 @@ export function useGameDetailsSheet(): UseGameDetailsSheetReturn {
     gameDetails,
     openGameDetails,
     closeGameDetails,
-    handlePlayGame,
+    handlePlaySolo,
+    handlePlayOnline,
+    handlePlayLocal,
   };
 }
