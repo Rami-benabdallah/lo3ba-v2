@@ -471,12 +471,11 @@ const styles = StyleSheet.create({
   },
   pawIndicator: {
     position: 'absolute',
-    top: 8,
-    right: 8,
-    transform: [{ rotate: '45deg' }],
+    top: -17,
+    right: -8,
   },
   pawEmoji: {
-    fontSize: 24,
+    fontSize: 44,
   },
   factText: {
     color: '#FFFFFF',
