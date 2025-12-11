@@ -207,7 +207,7 @@ export default function SoloNineLivesScreen() {
 
       {/* Main content */}
         {/* Card with solid variant */}
-        <Card variant="liquid" padding="lg" style={styles.mainCard}>
+        <Card variant="liquid" padding="md" style={styles.mainCard}>
           <View style={styles.cardContent}>
             <View style={styles.factContent}>
               {/* Liquid card with fact text */}
@@ -225,75 +225,58 @@ export default function SoloNineLivesScreen() {
                 />
               </View>
 
-              {/* Answer buttons */}
-              {!showResult && (
-                <View style={styles.answerButtonsContainer}>
-                  <TouchableOpacity
+              {/* Answer buttons - always visible */}
+              <View style={styles.answerButtonsContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.answerButton,
+                    selectedAnswer === true && isCorrect && styles.correctOverlay,
+                    selectedAnswer === true && !isCorrect && styles.wrongOverlay,
+                  ]}
+                  onPress={() => handleAnswer(true)}
+                  disabled={selectedAnswer !== null}
+                >
+                  <Text
                     style={[
-                      styles.answerButton,
-                      selectedAnswer === true && isCorrect && styles.correctOverlay,
-                      selectedAnswer === true && !isCorrect && styles.wrongOverlay,
+                      styles.answerButtonText,
+                      selectedAnswer === true && styles.answerButtonTextSelected,
                     ]}
-                    onPress={() => handleAnswer(true)}
-                    disabled={selectedAnswer !== null}
                   >
-                    <Text
-                      style={[
-                        styles.answerButtonText,
-                        selectedAnswer === true && styles.answerButtonTextSelected,
-                      ]}
-                    >
-                      TRUE
-                    </Text>
-                  </TouchableOpacity>
+                    True
+                  </Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
+                <TouchableOpacity
+                  style={[
+                    styles.answerButton,
+                    selectedAnswer === false && isCorrect && styles.correctOverlay,
+                    selectedAnswer === false && !isCorrect && styles.wrongOverlay,
+                  ]}
+                  onPress={() => handleAnswer(false)}
+                  disabled={selectedAnswer !== null}
+                >
+                  <Text
                     style={[
-                      styles.answerButton,
-                      selectedAnswer === false && isCorrect && styles.correctOverlay,
-                      selectedAnswer === false && !isCorrect && styles.wrongOverlay,
+                      styles.answerButtonText,
+                      selectedAnswer === false && styles.answerButtonTextSelected,
                     ]}
-                    onPress={() => handleAnswer(false)}
-                    disabled={selectedAnswer !== null}
                   >
-                    <Text
-                      style={[
-                        styles.answerButtonText,
-                        selectedAnswer === false && styles.answerButtonTextSelected,
-                      ]}
-                    >
-                      FALSE
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+                    False
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
-              {/* Result display */}
-              {showResult && (
-                <View style={styles.resultContainer}>
-                  <View
-                    style={[
-                      styles.resultCard,
-                      isCorrect ? styles.correctCard : styles.wrongCard,
-                    ]}
-                  >
-                    <Text style={styles.resultTitle}>
-                      {isCorrect ? '✅ Correct!' : '❌ Wrong!'}
-                    </Text>
-                    {!isCorrect && (
-                      <View style={styles.explanationContainer}>
-                        <Text style={styles.explanationLabel}>Explanation:</Text>
-                        <Text style={styles.explanationText}>
-                          {currentFact.correctFact}
-                        </Text>
-                      </View>
-                    )}
-                    {isCorrect && (
-                      <Text style={styles.correctMessage}>
-                        You earned +1 paw! 🐾
+              {/* Explanation modal - only show when wrong */}
+              {showResult && !isCorrect && (
+                <View style={styles.explanationModal}>
+                  <Card variant="liquid" padding="md">
+                    <View style={styles.explanationContainer}>
+                      <Text style={styles.explanationLabel}>Explanation:</Text>
+                      <Text style={styles.explanationText}>
+                        {currentFact.correctFact}
                       </Text>
-                    )}
-                  </View>
+                    </View>
+                  </Card>
                 </View>
               )}
             </View>
@@ -379,7 +362,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   factCard: {
-    marginBottom: 24,
+    marginBottom: 12,
   },
   factText: {
     color: '#FFFFFF',
@@ -389,11 +372,11 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   progressSection: {
-    marginBottom: 24,
+    marginBottom: 12,
   },
   answerButtonsContainer: {
     gap: 16,
-    marginBottom: 24,
+    marginBottom: 12,
   },
   answerButton: {
     backgroundColor: '#FFFFFF',
@@ -418,11 +401,13 @@ const styles = StyleSheet.create({
   },
   correctOverlay: {
     borderColor: '#10B981',
-    backgroundColor: 'rgba(16, 185, 129, 0.2)', // green with opacity
+    borderWidth: 3,
+    backgroundColor: 'rgba(16, 185, 129, 0.3)', // green with opacity
   },
   wrongOverlay: {
     borderColor: '#EF4444',
-    backgroundColor: 'rgba(239, 68, 68, 0.2)', // red with opacity
+    borderWidth: 3,
+    backgroundColor: 'rgba(239, 68, 68, 0.3)', // red with opacity
   },
   answerButtonText: {
     color: '#1F2937',
@@ -432,25 +417,13 @@ const styles = StyleSheet.create({
   answerButtonTextSelected: {
     color: '#FFFFFF',
   },
-  resultContainer: {
-    marginBottom: 24,
+  explanationModal: {
+    marginTop: 16,
+    marginBottom: 16,
   },
-  resultCard: {
-    borderRadius: 12,
-    padding: 20,
-    borderWidth: 2,
-  },
-  correctCard: {
-    backgroundColor: '#10B981',
-    borderColor: '#059669',
-  },
-  wrongCard: {
-    backgroundColor: '#EF4444',
-    borderColor: '#DC2626',
-  },
-  resultTitle: {
-    color: '#FFFFFF',
-    fontSize: 24,
+  explanationTitle: {
+    color: '#000000',
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 12,
@@ -459,22 +432,16 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   explanationLabel: {
-    color: '#FFFFFF',
-    fontSize: 14,
+    color: '#000000',
+    fontSize: 12,
     fontWeight: '600',
-    marginBottom: 8,
+    marginBottom: 2,
   },
   explanationText: {
-    color: '#FFFFFF',
-    fontSize: 14,
+    color: '#000000',
+    fontSize: 10,
     lineHeight: 20,
     opacity: 0.95,
-  },
-  correctMessage: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    textAlign: 'center',
-    fontWeight: '600',
   },
   actionButtonsContainer: {
     flexDirection: 'row',
