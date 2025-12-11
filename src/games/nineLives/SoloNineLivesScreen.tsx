@@ -206,9 +206,8 @@ export default function SoloNineLivesScreen() {
       </View>
 
       {/* Main content */}
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
+      <View
+        style={styles.content}
       >
         {/* Card with solid variant */}
         <Card variant="liquid" padding="lg" style={styles.mainCard}>
@@ -320,7 +319,7 @@ export default function SoloNineLivesScreen() {
           </View>
           </View>
         </Card>
-      </ScrollView>
+      </View>
     </View>
   );
 }
