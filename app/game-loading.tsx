@@ -35,15 +35,19 @@ export default function GameLoadingScreen() {
       if (newProgress >= 100) {
         clearInterval(timer);
         // Navigate to game screen after loading completes
-        // TODO: Navigate to actual game screen
         setTimeout(() => {
-          router.back();
+          if (params.mode === 'solo' && params.gameId === '9-lives') {
+            router.replace('/solo-nine-lives');
+          } else {
+            // For other games or modes, navigate back
+            router.back();
+          }
         }, 500);
       }
     }, 16); // ~60fps
 
     return () => clearInterval(timer);
-  }, [router]);
+  }, [router, params.mode, params.gameId]);
 
   return (
     <View style={styles.container}>
