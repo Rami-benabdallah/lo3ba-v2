@@ -17,7 +17,7 @@ export default function LocalRoomLobbyScreen() {
   const params = useLocalSearchParams();
   
   // Parse room data from params
-  let room: { id: string; name: string; answerTime?: number } | null = null;
+  let room: { id: string; name: string; answerTime?: number };
   
   if (params.room) {
     try {
