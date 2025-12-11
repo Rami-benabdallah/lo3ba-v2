@@ -11,6 +11,16 @@ export default function GameLoadingScreen() {
   }>();
   const router = useRouter();
   const [progress, setProgress] = useState(0);
+  const [dots, setDots] = useState(1);
+
+  // Animate dots: 1, 2, 3, 1, 2, 3...
+  useEffect(() => {
+    const dotsTimer = setInterval(() => {
+      setDots((prev) => (prev >= 3 ? 1 : prev + 1));
+    }, 500); // Change every 500ms
+
+    return () => clearInterval(dotsTimer);
+  }, []);
 
   useEffect(() => {
     // Animate progress from 0 to 100 over 5 seconds
@@ -37,7 +47,12 @@ export default function GameLoadingScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.letter}>Loading...</Text>
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}>Loading</Text>
+        <View style={styles.dotsContainer}>
+          <Text style={styles.dots}>{'.'.repeat(dots)}</Text>
+        </View>
+      </View>
       <View style={styles.progressContainer}>
         <ProgressBar value={progress} />
       </View>
@@ -51,11 +66,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  letter: {
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  loadingText: {
     fontSize: 50,
     fontWeight: 'bold',
     color: '#FFFFFF',
-    marginBottom: 40,
+  },
+  dotsContainer: {
+    width: 30, // Fixed width to prevent shifting
+    alignItems: 'flex-start',
+  },
+  dots: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   progressContainer: {
     width: '80%',
