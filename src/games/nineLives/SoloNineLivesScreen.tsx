@@ -205,9 +205,9 @@ export default function SoloNineLivesScreen() {
         </ScrollView>
       </View>
 
-      {/* Main content */}
       {/* Card with solid variant */}
       <Card variant="liquid" padding="md" style={styles.mainCard}>
+        {/* Main content */}
         <View style={styles.cardContent}>
           <View style={styles.factContent}>
             {/* Liquid card with fact text */}
