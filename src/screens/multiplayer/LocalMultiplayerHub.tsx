@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView } from 'react-native';
+import { View, Text, TextInput, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderBar from '../../../components/HeaderBar';
+import Button from '../../../components/Button';
 
 export default function LocalMultiplayerHub() {
   const router = useRouter();
@@ -32,17 +33,16 @@ export default function LocalMultiplayerHub() {
         <View className="flex-1 justify-center items-center">
 
         {/* Create Room Button */}
-        <Pressable
-          onPress={handleCreateRoom}
-          className="w-full bg-orange-500 rounded-2xl py-5 px-6 mb-8 shadow-lg active:opacity-80"
-        >
-          <View className="flex-row items-center justify-center">
-            <Ionicons name="add-circle" size={24} color="#FFFFFF" style={{ marginRight: 8 }} />
-            <Text className="text-white text-lg font-semibold">
-              Create Room
-            </Text>
-          </View>
-        </Pressable>
+        <View className="w-full mb-8">
+          <Button
+            text="Create Room"
+            variant="primary"
+            size="lg"
+            leftIcon={<Ionicons name="add-circle" size={24} color="#FFFFFF" />}
+            onPress={handleCreateRoom}
+            containerStyle={{ width: '100%' }}
+          />
+        </View>
 
         {/* Join Existing Room Section */}
         <View className="w-full">
@@ -61,19 +61,14 @@ export default function LocalMultiplayerHub() {
             />
           </View>
 
-          <Pressable
-            onPress={handleJoinRoom}
+          <Button
+            text="Join Room"
+            variant="primary"
+            size="lg"
             disabled={!roomCode.trim()}
-            className={`w-full rounded-2xl py-4 px-6 shadow-lg ${
-              roomCode.trim() 
-                ? 'bg-orange-500 active:opacity-80' 
-                : 'bg-gray-400 opacity-50'
-            }`}
-          >
-            <Text className="text-white text-lg font-semibold text-center">
-              Join Room
-            </Text>
-          </Pressable>
+            onPress={handleJoinRoom}
+            containerStyle={{ width: '100%' }}
+          />
         </View>
       </View>
       </ScrollView>
