@@ -8,6 +8,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import UserAvatarHeader from '../../../components/UserAvatarHeader';
 import PlayButton from '../../../components/PlayButton';
 import FactContainer from './FactContainer';
+import AnswerButtons from './AnswerButtons';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -325,45 +326,12 @@ export default function SoloNineLivesScreen() {
             </View>
 
             {/* Answer buttons - always visible */}
-            <View style={styles.answerButtonsContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.answerButton,
-                  selectedAnswer === true && isCorrect && styles.correctOverlay,
-                  selectedAnswer === true && !isCorrect && styles.wrongOverlay,
-                ]}
-                onPress={() => handleAnswer(true)}
-                disabled={selectedAnswer !== null}
-              >
-                <Text
-                  style={[
-                    styles.answerButtonText,
-                    selectedAnswer === true && styles.answerButtonTextSelected,
-                  ]}
-                >
-                  True
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.answerButton,
-                  selectedAnswer === false && isCorrect && styles.correctOverlay,
-                  selectedAnswer === false && !isCorrect && styles.wrongOverlay,
-                ]}
-                onPress={() => handleAnswer(false)}
-                disabled={selectedAnswer !== null}
-              >
-                <Text
-                  style={[
-                    styles.answerButtonText,
-                    selectedAnswer === false && styles.answerButtonTextSelected,
-                  ]}
-                >
-                  False
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <AnswerButtons
+              onAnswer={handleAnswer}
+              selectedAnswer={selectedAnswer}
+              isCorrect={isCorrect}
+              showResult={showResult}
+            />
 
             {/* Explanation modal - only show when wrong */}
             {showResult && (
@@ -502,49 +470,6 @@ const styles = StyleSheet.create({
   },
   progressSection: {
     marginBottom: 12,
-  },
-  answerButtonsContainer: {
-    gap: 16,
-    marginBottom: 12,
-  },
-  answerButton: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 2,
-    borderColor: '#9CA3AF',
-    borderRadius: 12,
-    paddingVertical: 20,
-    paddingHorizontal: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 64,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  correctOverlay: {
-    borderColor: '#10B981',
-    borderWidth: 3,
-    backgroundColor: 'rgba(16, 185, 129, 0.3)', // green with opacity
-  },
-  wrongOverlay: {
-    borderColor: '#EF4444',
-    borderWidth: 3,
-    backgroundColor: 'rgba(239, 68, 68, 0.3)', // red with opacity
-  },
-  answerButtonText: {
-    color: '#1F2937',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  answerButtonTextSelected: {
-    color: '#FFFFFF',
   },
   explanationModal: {
     marginTop: 16,
