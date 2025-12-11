@@ -358,7 +358,7 @@ export default function SoloNineLivesScreen() {
 
             <PlayButton
               onPress={handleSurrender}
-              icon="flag-outline"
+              icon="paw-outline"
               label="Paw"
               backgroundColor={COLORS.SECONDARY}
               iconColor="#FFFFFF"
