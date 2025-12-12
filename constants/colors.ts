@@ -42,5 +42,13 @@ export const GRADIENT_COLORS = {
   SECONDARY_LIGHT:    '#b8a7fd', // 3. Original light shade
   SECONDARY_MEDIUM:   '#9a88fa', // 4. Added - medium shade
   SECONDARY:          COLORS.SECONDARY, // 5. Primary secondary color
-  
+} as const;
+
+// Gradient colors based on primary color
+export const PRIMARY_GRADIENT_COLORS = {
+  PRIMARY_LIGHTEST: '#FFFFFF', // White
+  PRIMARY_LIGHTER:  COLORS.PRIMARY_SOFT, // Very light orange (orange-100)
+  PRIMARY_LIGHT:    COLORS.PRIMARY_LIGHT, // Light orange (orange-300)
+  PRIMARY_MEDIUM:   '#FF8C42', // Medium orange transition
+  PRIMARY:          COLORS.PRIMARY, // Primary orange
 } as const;

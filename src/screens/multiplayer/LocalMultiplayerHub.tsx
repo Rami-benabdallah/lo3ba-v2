@@ -88,11 +88,10 @@ export default function LocalMultiplayerHub() {
         <View style={styles.createRoomContainer}>
           <Button
             text="Create Room"
-            variant="primary"
+            variant="radiant"
             size="lg"
             leftIcon={<Ionicons name="add-circle" size={24} color="#FFFFFF" />}
             onPress={handleCreateRoom}
-            containerStyle={{ width: '100%' }}
           />
         </View>
 

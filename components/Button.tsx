@@ -7,11 +7,12 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import { COLORS } from '../constants/colors';
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLORS, PRIMARY_GRADIENT_COLORS } from '../constants/colors';
 
 export interface ButtonProps {
   text?: string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'radiant';
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
   leftIcon?: React.ReactNode;
@@ -42,6 +43,9 @@ export default function Button({
   };
 
   const getBackgroundColor = () => {
+    if (variant === 'radiant') {
+      return 'transparent'; // Gradient will handle the background
+    }
     return variant === 'primary' ? COLORS.PRIMARY : COLORS.SECONDARY;
   };
 
@@ -80,6 +84,44 @@ export default function Button({
 
   const sizeStyles = getSizeStyles();
 
+  const buttonContent = (
+    <View style={styles.content}>
+      {isIconOnly ? (
+        // Icon-only mode: center the icon
+        <View style={styles.iconOnlyContainer}>
+          {icon}
+        </View>
+      ) : (
+        // Text mode: render icons and text
+        <>
+          {leftIcon && (
+            <View style={styles.leftIconContainer}>
+              {leftIcon}
+            </View>
+          )}
+          {text && (
+            <Text
+              style={[
+                styles.text,
+                variant === 'radiant' && styles.textRadiant,
+                {
+                  fontSize: sizeStyles.fontSize,
+                },
+              ]}
+            >
+              {text}
+            </Text>
+          )}
+          {rightIcon && (
+            <View style={styles.rightIconContainer}>
+              {rightIcon}
+            </View>
+          )}
+        </>
+      )}
+    </View>
+  );
+
   return (
     <View style={[styles.container, containerStyle]}>
       <Pressable
@@ -88,50 +130,42 @@ export default function Button({
         style={({ pressed }) => [
           styles.button,
           {
-            backgroundColor: getBackgroundColor(),
             height: sizeStyles.height,
             paddingHorizontal: isIconOnly ? 0 : sizeStyles.paddingHorizontal,
             borderRadius: sizeStyles.borderRadius,
             opacity: disabled ? 0.5 : pressed ? 0.8 : 1,
             width: isIconOnly ? sizeStyles.height : 'auto',
           },
+          variant !== 'radiant' && {
+            backgroundColor: getBackgroundColor(),
+          },
           style,
         ]}
       >
-        <View style={styles.content}>
-          {isIconOnly ? (
-            // Icon-only mode: center the icon
-            <View style={styles.iconOnlyContainer}>
-              {icon}
-            </View>
-          ) : (
-            // Text mode: render icons and text
-            <>
-              {leftIcon && (
-                <View style={styles.leftIconContainer}>
-                  {leftIcon}
-                </View>
-              )}
-              {text && (
-                <Text
-                  style={[
-                    styles.text,
-                    {
-                      fontSize: sizeStyles.fontSize,
-                    },
-                  ]}
-                >
-                  {text}
-                </Text>
-              )}
-              {rightIcon && (
-                <View style={styles.rightIconContainer}>
-                  {rightIcon}
-                </View>
-              )}
-            </>
-          )}
-        </View>
+        {variant === 'radiant' ? (
+          <LinearGradient
+            colors={[
+              PRIMARY_GRADIENT_COLORS.PRIMARY_LIGHTER,
+              PRIMARY_GRADIENT_COLORS.PRIMARY_LIGHT,
+              PRIMARY_GRADIENT_COLORS.PRIMARY_MEDIUM,
+              PRIMARY_GRADIENT_COLORS.PRIMARY,
+            ]}
+            locations={[0, 0.3, 0.6, 0.8, 1]}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 0, y: 0 }}
+            style={[
+              styles.gradient,
+              {
+                height: sizeStyles.height,
+                borderRadius: sizeStyles.borderRadius,
+              },
+            ]}
+          >
+            {buttonContent}
+          </LinearGradient>
+        ) : (
+          buttonContent
+        )}
       </Pressable>
     </View>
   );
@@ -146,6 +180,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+  gradient: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+  },
   content: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -154,6 +194,9 @@ const styles = StyleSheet.create({
   text: {
     color: '#ffffff',
     fontWeight: '600',
+  },
+  textRadiant: {
+    color: COLORS.PRIMARY_TEXT,
   },
   leftIconContainer: {
     marginRight: 8,
