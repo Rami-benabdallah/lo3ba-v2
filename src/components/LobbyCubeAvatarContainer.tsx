@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 20,
   },
   cube: {
     flex: 1,

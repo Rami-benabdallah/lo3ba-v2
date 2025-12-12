@@ -81,12 +81,12 @@ export default function LobbyCubeAvatar({
 const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
-    width: '100%',
+    flex: 1,
+    minWidth: 0,
   },
   container: {
-    width: '100%',
-    maxWidth: 80,
-    aspectRatio: 1,
+    width: 80,
+    height: 80,
     backgroundColor: 'transparent',
     borderRadius: 12,
     overflow: 'hidden',
