@@ -130,6 +130,10 @@ export default function LocalRoomLobbyScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
+
+  const handleStartGame = () => {
+    router.replace('/multiplayer-nine-lives');
+  };
   
   // Parse room data from params
   let room: { id: string; name: string; answerTime?: number };
@@ -217,9 +221,7 @@ export default function LocalRoomLobbyScreen() {
               label="Start Game"
               variant="primary"
               flex1={true}
-              onPress={() => {
-                // Handle start game
-              }}
+              onPress={handleStartGame}
             />
           </View>
         </View>

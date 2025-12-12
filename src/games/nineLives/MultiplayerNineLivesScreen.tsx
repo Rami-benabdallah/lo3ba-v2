@@ -26,7 +26,7 @@ interface AnswerHistory {
   isCorrect: boolean;
 }
 
-export default function SoloNineLivesScreen() {
+export default function MultiplayerNineLivesScreen() {
   const router = useRouter();
   const [lives, setLives] = useState(1);
   const [facts, setFacts] = useState<Fact[]>(shuffleArray(mockFacts));
