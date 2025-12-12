@@ -203,8 +203,8 @@ export default function LocalRoomLobbyScreen() {
         {/* Players Grid: 3 rows x 2 columns */}
         <LobbyCubeAvatarContainer users={mockUsers} />
 
-        {/* Hint Section */}
-        <View style={styles.hintContainer}>
+        {/* Bottom Section */}
+        <View style={styles.bottomSection}>
           <View style={styles.hintContainer}>
             <Text style={styles.hintLabel}>Hint:</Text>
             <Text style={styles.hintText}>Focus better to improve your performance</Text>
