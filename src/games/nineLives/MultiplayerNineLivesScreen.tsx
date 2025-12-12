@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     flexDirection: 'row',
     gap: 12,
-    marginBottom: 16,
+    marginBottom: 10,
     alignItems: 'flex-start',
   },
   leftHalf: {
@@ -420,7 +420,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   mainCard: {
-    marginTop: 16,
   },
   cardContent: {
     display: 'flex',
