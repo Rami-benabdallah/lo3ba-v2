@@ -99,12 +99,14 @@ export default function MultiplayerNineLivesScreen() {
       });
 
       // Sort by lives count (highest first), then by name for consistency
-      return updatedPlayers.sort((a, b) => {
+      const sortedPlayers = updatedPlayers.sort((a, b) => {
         if (b.lives !== a.lives) {
           return b.lives - a.lives; // Sort by lives descending
         }
         return a.name.localeCompare(b.name); // If lives are equal, sort by name
       });
+
+      return sortedPlayers;
     });
   };
 
@@ -163,22 +165,74 @@ export default function MultiplayerNineLivesScreen() {
     };
   }, [currentIndex, showResult]);
 
-  // Check if player won
+  // Check if any player won (current player or other players)
   useEffect(() => {
+    // Check if current player won
     if (lives >= 9) {
       const correctAnswers = answerHistory.filter((answer) => answer.isCorrect).length;
       const totalQuestions = answerHistory.length;
       router.push({
-        pathname: '/solo-nine-lives-win',
+        pathname: '/multiplayer-nine-lives-win' as any,
         params: {
           correctAnswers: correctAnswers.toString(),
           totalQuestions: totalQuestions.toString(),
           userName: 'Alex Johnson',
           userImageUrl: 'https://i.pravatar.cc/150?img=2',
+          isWinner: 'true',
+          allPlayers: JSON.stringify([
+            {
+              name: 'Alex Johnson',
+              imgUrl: 'https://i.pravatar.cc/150?img=2',
+              correctAnswers: correctAnswers,
+              totalQuestions: totalQuestions,
+              lives: lives,
+            },
+            ...otherPlayers.map((p) => ({
+              name: p.name,
+              imgUrl: p.imgUrl || '',
+              correctAnswers: p.answerHistory.filter((a) => a.isCorrect).length,
+              totalQuestions: p.answerHistory.length,
+              lives: p.lives,
+            })),
+          ]),
+        },
+      });
+      return;
+    }
+
+    // Check if any other player won
+    const winner = otherPlayers.find((player) => player.lives >= 9);
+    if (winner) {
+      const correctAnswers = answerHistory.filter((answer) => answer.isCorrect).length;
+      const totalQuestions = answerHistory.length;
+      router.push({
+        pathname: '/multiplayer-nine-lives-win' as any,
+        params: {
+          correctAnswers: correctAnswers.toString(),
+          totalQuestions: totalQuestions.toString(),
+          userName: winner.name,
+          userImageUrl: winner.imgUrl || '',
+          isWinner: 'false',
+          allPlayers: JSON.stringify([
+            {
+              name: 'Alex Johnson',
+              imgUrl: 'https://i.pravatar.cc/150?img=2',
+              correctAnswers: correctAnswers,
+              totalQuestions: totalQuestions,
+              lives: lives,
+            },
+            ...otherPlayers.map((p) => ({
+              name: p.name,
+              imgUrl: p.imgUrl || '',
+              correctAnswers: p.answerHistory.filter((a) => a.isCorrect).length,
+              totalQuestions: p.answerHistory.length,
+              lives: p.lives,
+            })),
+          ]),
         },
       });
     }
-  }, [lives, router, answerHistory]);
+  }, [lives, router, answerHistory, otherPlayers]);
 
   // Deactivate paw if lives drop to 1 or below
   useEffect(() => {
