@@ -46,15 +46,6 @@ export const GRADIENT_COLORS = {
   SECONDARY:          COLORS.SECONDARY, // 5. Primary secondary color
 } as const;
 
-// Gradient colors based on secondary color (consistent naming)
-export const SECONDARY_GRADIENT_COLORS = {
-  SECONDARY_LIGHTEST: '#FFFFFF', // White
-  SECONDARY_LIGHTER:  COLORS.SECONDARY_SOFT, // Very light purple
-  SECONDARY_LIGHT:    COLORS.SECONDARY_LIGHT, // Light purple
-  SECONDARY_MEDIUM:   '#A78BFA', // Medium purple transition
-  SECONDARY:          COLORS.SECONDARY, // Primary purple
-} as const;
-
 // Gradient colors based on primary color
 export const PRIMARY_GRADIENT_COLORS = {
   PRIMARY_LIGHTEST: '#FFFFFF', // White
@@ -62,6 +53,15 @@ export const PRIMARY_GRADIENT_COLORS = {
   PRIMARY_LIGHT:    COLORS.PRIMARY_LIGHT, // Light orange (orange-300)
   PRIMARY_MEDIUM:   '#FF8C42', // Medium orange transition
   PRIMARY:          COLORS.PRIMARY, // Primary orange
+} as const;
+
+// Gradient colors based on secondary color (consistent naming)
+export const SECONDARY_GRADIENT_COLORS = {
+  SECONDARY_LIGHTEST: '#FFFFFF', // White
+  SECONDARY_LIGHTER:  COLORS.SECONDARY_SOFT, // Very light purple
+  SECONDARY_LIGHT:    COLORS.SECONDARY_LIGHT, // Light purple
+  SECONDARY_MEDIUM:   '#A78BFA', // Medium purple transition
+  SECONDARY:          COLORS.SECONDARY, // Primary purple
 } as const;
 
 // Gradient colors based on tertiary color (green)

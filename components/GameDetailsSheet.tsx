@@ -171,7 +171,7 @@ export default function GameDetailsSheet({
               onPress={onPlayLocal}
               icon="phone-portrait"
               label="Multiplayer Local"
-              variant="radiant"
+              variant="primary"
             />
           </View>
         </View>
