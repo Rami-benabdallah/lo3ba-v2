@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -104,7 +104,7 @@ function SingleCircle({
 }
 
 export default function AnimatedGrowingCircle({
-  count = 3,
+  count = 2,
   color = COLORS.SECONDARY_DARK,
   size = 100,
   borderWidth = 1,
@@ -115,15 +115,41 @@ export default function AnimatedGrowingCircle({
   delay = 1000,
   containerStyle,
 }: AnimatedGrowingCircleProps) {
-  // Create shared values for all circles upfront
-  const scales = useMemo(
-    () => Array.from({ length: count }, () => useSharedValue(1)),
-    [count]
-  );
-  const opacities = useMemo(
-    () => Array.from({ length: count }, () => useSharedValue(initialOpacity)),
-    [count, initialOpacity]
-  );
+  // Create shared values at top level - hooks must be called unconditionally
+  // Create a reasonable maximum to handle dynamic count changes
+  // Hooks must be called directly, not inside useMemo or other hooks
+  const MAX_CIRCLES = 10;
+  
+  // Create all hooks at top level - React requires consistent hook calls
+  const scale0 = useSharedValue(1);
+  const scale1 = useSharedValue(1);
+  const scale2 = useSharedValue(1);
+  const scale3 = useSharedValue(1);
+  const scale4 = useSharedValue(1);
+  const scale5 = useSharedValue(1);
+  const scale6 = useSharedValue(1);
+  const scale7 = useSharedValue(1);
+  const scale8 = useSharedValue(1);
+  const scale9 = useSharedValue(1);
+  
+  const opacity0 = useSharedValue(initialOpacity);
+  const opacity1 = useSharedValue(initialOpacity);
+  const opacity2 = useSharedValue(initialOpacity);
+  const opacity3 = useSharedValue(initialOpacity);
+  const opacity4 = useSharedValue(initialOpacity);
+  const opacity5 = useSharedValue(initialOpacity);
+  const opacity6 = useSharedValue(initialOpacity);
+  const opacity7 = useSharedValue(initialOpacity);
+  const opacity8 = useSharedValue(initialOpacity);
+  const opacity9 = useSharedValue(initialOpacity);
+  
+  // Create arrays from the shared values - memoize to keep stable references
+  const allScales = useMemo(() => [scale0, scale1, scale2, scale3, scale4, scale5, scale6, scale7, scale8, scale9], []);
+  const allOpacities = useMemo(() => [opacity0, opacity1, opacity2, opacity3, opacity4, opacity5, opacity6, opacity7, opacity8, opacity9], []);
+  
+  // Get the slices we need - memoize to avoid recreating on every render
+  const scales = useMemo(() => allScales.slice(0, count), [allScales, count]);
+  const opacities = useMemo(() => allOpacities.slice(0, count), [allOpacities, count]);
 
   // Start animations for all circles
   useEffect(() => {
@@ -197,4 +223,3 @@ const styles = StyleSheet.create({
     // All circles start at the exact same point (center of screen)
   },
 });
-
