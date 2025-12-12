@@ -1,15 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated';
 import HeaderBar from '../../../components/HeaderBar';
-import { COLORS } from '@/constants/colors';
+import AnimatedGrowingCircle from '../../../components/AnimatedGrowingCircle';
 
 interface Player {
   name: string;
@@ -121,56 +115,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-  animatedCircleContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: -1,
-    pointerEvents: 'none',
-  },
-  animatedCircle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: COLORS.SECONDARY_DARK,
-  },
 });
 
 export default function LocalRoomLobbyScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
-  
-  // Animated values for the growing circle
-  const scale = useSharedValue(1);
-  const opacity = useSharedValue(0.6);
-
-  // Start animation on mount
-  useEffect(() => {
-    scale.value = withRepeat(
-      withTiming(5, { duration: 3000 }),
-      -1, // infinite repeat
-      false // don't reverse
-    );
-    opacity.value = withRepeat(
-      withTiming(0, { duration: 3000 }),
-      -1, // infinite repeat
-      false // don't reverse
-    );
-  }, []);
-
-  // Animated style for the circle
-  const animatedCircleStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: scale.value }],
-      opacity: opacity.value,
-    };
-  });
   
   // Parse room data from params
   let room: { id: string; name: string; answerTime?: number };
@@ -201,9 +150,7 @@ export default function LocalRoomLobbyScreen() {
   return (
     <View style={styles.container}>
       {/* Animated growing circle in the background */}
-      <View style={styles.animatedCircleContainer}>
-        <Animated.View style={[styles.animatedCircle, animatedCircleStyle]} />
-      </View>
+      <AnimatedGrowingCircle />
 
       <HeaderBar title={room.name} showBack={true} />
 
