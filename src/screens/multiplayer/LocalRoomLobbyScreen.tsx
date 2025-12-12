@@ -1,17 +1,56 @@
-import React from 'react';
-import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderBar from '../../../components/HeaderBar';
 import AnimatedGrowingCircle from '../../../components/AnimatedGrowingCircle';
+import LobbyCubeAvatarContainer from '../../components/LobbyCubeAvatarContainer';
+import PlayButton from '../../../components/PlayButton';
 
-interface Player {
+export interface LobbyUser {
+  id?: string | number;
+  imgUrl?: string;
   name: string;
+  size?: 'sm' | 'md' | 'lg';
+  showBorder?: boolean;
 }
 
-const MOCK_PLAYERS: Player[] = [
-  { name: 'You' },
-  { name: 'Player 2 (waiting…)' },
+export const mockUsers: LobbyUser[] = [
+  {
+    id: 1,
+    imgUrl: 'https://i.pravatar.cc/150?img=11',
+    name: 'Luna Carter',
+    size: 'md',
+    showBorder: true,
+  },
+  {
+    id: 2,
+    imgUrl: 'https://i.pravatar.cc/150?img=22',
+    name: 'Ethan Miles',
+    size: 'sm',
+    showBorder: false,
+  },
+  {
+    id: 3,
+    imgUrl: 'https://i.pravatar.cc/150?img=33',
+    name: 'Ava Rodriguez',
+    size: 'lg',
+    showBorder: true,
+  },
+  {
+    id: 4,
+    imgUrl: 'https://i.pravatar.cc/150?img=44',
+    name: 'Kai Thompson',
+    size: 'md',
+    showBorder: false,
+  },
+  {
+    id: 5,
+    imgUrl: 'https://i.pravatar.cc/150?img=55',
+    name: 'Mia Nguyen',
+    size: 'sm',
+    showBorder: true,
+  },
 ];
 
 const styles = StyleSheet.create({
@@ -23,103 +62,68 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 24,
-    paddingVertical: 32,
+    flexGrow: 1,
   },
-  contentWrapper: {
-    flex: 1,
-  },
-  roomInfoContainer: {
+  badgesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 32,
-  },
-  roomId: {
-    color: '#F97316',
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  qrCodeContainer: {
-    marginTop: 24,
-    marginBottom: 32,
-    alignItems: 'center',
-  },
-  playersSection: {
-    marginBottom: 32,
-  },
-  playersTitle: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
-  },
-  playersList: {
     gap: 12,
+    marginTop: 16,
+    marginBottom: 32,
+    zIndex: 10,
   },
-  playerCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
+  badge: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
-  playerAvatar: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#F97316',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  playerAvatarText: {
+  badgeText: {
     color: '#FFFFFF',
-    fontWeight: '700',
-    fontSize: 18,
-  },
-  playerName: {
-    color: '#111827',
-    fontSize: 16,
-    fontWeight: '500',
-    flex: 1,
-  },
-  startButton: {
-    width: '100%',
-    backgroundColor: '#9CA3AF',
-    borderRadius: 16,
-    paddingVertical: 20,
-    paddingHorizontal: 24,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 8,
-    opacity: 0.5,
-  },
-  startButtonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  startButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '600',
+  },
+  hintContainer: {
+    marginTop: 32,
+    marginBottom: 24,
+    alignItems: 'center',
+  },
+  hintLabel: {
+    color: '#9CA3AF',
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  hintText: {
+    color: '#9CA3AF',
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 24,
   },
 });
 
 export default function LocalRoomLobbyScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
+  const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
   
   // Parse room data from params
   let room: { id: string; name: string; answerTime?: number };
@@ -147,6 +151,27 @@ export default function LocalRoomLobbyScreen() {
     };
   }
 
+  // Countdown timer effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 0) {
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Format time as MM:SS
+  const formatTime = (seconds: number): string => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
   return (
     <View style={styles.container}>
       {/* Animated growing circle in the background */}
@@ -158,55 +183,47 @@ export default function LocalRoomLobbyScreen() {
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
       >
-      <View style={styles.contentWrapper}>
-        {/* Room Info */}
-        <View style={styles.roomInfoContainer}>
-          <Text style={styles.roomId}>
-            {room.id}
-          </Text>
-        </View>
-
-        {/* Players List */}
-        <View style={styles.playersSection}>
-          <Text style={styles.playersTitle}>
-            Players ({MOCK_PLAYERS.length})
-          </Text>
-          
-          <View style={styles.playersList}>
-            {MOCK_PLAYERS.map((player, index) => (
-              <View
-                key={index}
-                style={styles.playerCard}
-              >
-                <View style={styles.playerAvatar}>
-                  <Text style={styles.playerAvatarText}>
-                    {player.name.charAt(0).toUpperCase()}
-                  </Text>
-                </View>
-                <Text style={styles.playerName}>
-                  {player.name}
-                </Text>
-                {index === 0 && (
-                  <Ionicons name="star" size={20} color="#F97316" />
-                )}
-              </View>
-            ))}
+        {/* Badges: Room Number and Countdown */}
+        <View style={styles.badgesContainer}>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{room.id}</Text>
+          </View>
+          <View style={styles.badge}>
+            <Ionicons name="time-outline" size={16} color="#FFFFFF" />
+            <Text style={styles.badgeText}>{formatTime(timeLeft)}</Text>
           </View>
         </View>
 
-        {/* Start Game Button */}
-        <Pressable
-          disabled={true}
-          style={styles.startButton}
-        >
-          <View style={styles.startButtonContent}>
-            <Ionicons name="play" size={24} color="#FFFFFF" style={{ marginRight: 8 }} />
-            <Text style={styles.startButtonText}>
-              Start Game
-            </Text>
-          </View>
-        </Pressable>
-      </View>
+        {/* Players Grid: 3 rows x 2 columns */}
+        <LobbyCubeAvatarContainer users={mockUsers} />
+
+        {/* Hint Section */}
+        <View style={styles.hintContainer}>
+          <Text style={styles.hintLabel}>Hint:</Text>
+          <Text style={styles.hintText}>Focus better to improve your performance</Text>
+        </View>
+
+        {/* Action Buttons */}
+        <View style={styles.buttonsContainer}>
+          <PlayButton
+            icon="play"
+            label="Start Game"
+            variant="primary"
+            flex1={true}
+            onPress={() => {
+              // Handle start game
+            }}
+          />
+          <PlayButton
+            icon="settings"
+            label="Settings"
+            variant="secondary"
+            flex1={true}
+            onPress={() => {
+              // Handle settings
+            }}
+          />
+        </View>
       </ScrollView>
     </View>
   );
