@@ -44,7 +44,7 @@ export default function OtherPlayersCard({ players }: OtherPlayersCardProps) {
               </View>
 
               {/* Answer cubes */}
-              <AnswerCubes answerHistory={player.answerHistory} />
+              <AnswerCubes answerHistory={player.answerHistory} size="sm" />
             </View>
           ))}
         </ScrollView>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   scrollContent: {
-    gap: 16,
+    gap: 4,
     paddingBottom: 8,
   },
   playerRow: {
@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
   },
   pawCounter: {
     flexDirection: 'row',

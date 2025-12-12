@@ -314,7 +314,7 @@ export default function MultiplayerNineLivesScreen() {
           </View>
 
           {/* Answer cubes - scrollable */}
-          <AnswerCubes answerHistory={answerHistory} />
+          <AnswerCubes answerHistory={answerHistory} size="md" />
         </View>
 
         {/* Right half: Other players card */}
@@ -396,7 +396,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
   },
   pawCounter: {
     flexDirection: 'row',

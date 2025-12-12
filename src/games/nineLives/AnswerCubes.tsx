@@ -8,9 +8,24 @@ export interface AnswerHistory {
 
 export interface AnswerCubesProps {
   answerHistory: AnswerHistory[];
+  size?: 'sm' | 'md';
 }
 
-export default function AnswerCubes({ answerHistory }: AnswerCubesProps) {
+const sizeConfig = {
+  sm: {
+    cubeSize: 20,
+    fontSize: 8,
+    marginTop: 4,
+  },
+  md: {
+    cubeSize: 40,
+    fontSize: 16,
+    marginTop: 16,
+  },
+};
+
+export default function AnswerCubes({ answerHistory, size = 'md' }: AnswerCubesProps) {
+  const config = sizeConfig[size];
   const scrollViewRef = useRef<ScrollView>(null);
   const contentWidthRef = useRef(0);
   const scrollViewWidthRef = useRef(0);
@@ -45,7 +60,7 @@ export default function AnswerCubes({ answerHistory }: AnswerCubesProps) {
   }, [answerHistory.length, scrollToEndSmooth]);
 
   return (
-    <View style={styles.section}>
+    <View style={[styles.section, { marginTop: config.marginTop }]}>
       <ScrollView
         ref={scrollViewRef}
         horizontal
@@ -72,10 +87,17 @@ export default function AnswerCubes({ answerHistory }: AnswerCubesProps) {
             key={index}
             style={[
               styles.cube,
+              {
+                width: config.cubeSize,
+                height: config.cubeSize,
+                borderRadius: config.cubeSize / 5,
+              },
               answer.isCorrect ? styles.correctCube : styles.wrongCube,
             ]}
           >
-            <Text style={styles.cubeText}>{answer.questionNumber}</Text>
+            <Text style={[styles.cubeText, { fontSize: config.fontSize }]}>
+              {answer.questionNumber}
+            </Text>
           </View>
         ))}
       </ScrollView>
@@ -85,10 +107,9 @@ export default function AnswerCubes({ answerHistory }: AnswerCubesProps) {
 
 const styles = StyleSheet.create({
   section: {
-    marginTop: 16,
+    // marginTop is set dynamically based on size prop
   },
   container: {
-    height: 48, // or whatever height fits 1 row of cubes
     overflow: 'visible',
   },
   content: {
@@ -97,9 +118,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   cube: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
@@ -114,7 +132,6 @@ const styles = StyleSheet.create({
   },
   cubeText: {
     color: '#FFFFFF',
-    fontSize: 16,
     fontWeight: 'bold',
   },
 });
