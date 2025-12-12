@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export interface AnswerButtonProps {
   label: string;
@@ -18,6 +19,9 @@ export default function AnswerButton({
   isCorrect,
   disabled,
 }: AnswerButtonProps) {
+  // Choose icon based on value (True/False)
+  const iconName = value ? 'checkmark-circle' : 'close-circle';
+  
   return (
     <TouchableOpacity
       style={[
@@ -27,15 +31,31 @@ export default function AnswerButton({
       ]}
       onPress={() => onPress(value)}
       disabled={disabled}
+      activeOpacity={0.7}
     >
-      <Text
-        style={[
-          styles.buttonText,
-          isSelected && styles.buttonTextSelected,
-        ]}
-      >
-        {label}
-      </Text>
+      <View style={styles.content}>
+        <Ionicons
+          name={iconName}
+          size={48}
+          color={
+            isSelected
+              ? '#FFFFFF'
+              : isCorrect && isSelected
+              ? '#10B981'
+              : !isCorrect && isSelected
+              ? '#EF4444'
+              : '#1F2937'
+          }
+        />
+        <Text
+          style={[
+            styles.buttonText,
+            isSelected && styles.buttonTextSelected,
+          ]}
+        >
+          {label}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -46,11 +66,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#9CA3AF',
     borderRadius: 12,
-    paddingVertical: 20,
-    paddingHorizontal: 32,
+    width: 120,
+    height: 120,
+    aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 64,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -61,6 +81,11 @@ const styles = StyleSheet.create({
     elevation: 3,
     position: 'relative',
     overflow: 'hidden',
+  },
+  content: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
   },
   correctOverlay: {
     borderColor: '#10B981',
@@ -74,8 +99,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#1F2937',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
   },
   buttonTextSelected: {
     color: '#FFFFFF',

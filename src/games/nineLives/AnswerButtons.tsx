@@ -39,6 +39,10 @@ export default function AnswerButtons({
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     gap: 16,
     marginBottom: 12,
   },
