@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonsContainer: {
-    width: '60%',
+    width: '30%',
     alignSelf: 'center',
     flexDirection: 'row',
     gap: 12,
@@ -219,15 +219,6 @@ export default function LocalRoomLobbyScreen() {
               flex1={true}
               onPress={() => {
                 // Handle start game
-              }}
-            />
-            <PlayButton
-              icon="settings"
-              label="Settings"
-              variant="secondary"
-              flex1={true}
-              onPress={() => {
-                // Handle settings
               }}
             />
           </View>
