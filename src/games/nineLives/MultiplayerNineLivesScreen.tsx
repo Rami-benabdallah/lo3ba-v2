@@ -230,23 +230,36 @@ export default function MultiplayerNineLivesScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Top Left: User Avatar */}
+      {/* Top section: Split into two halves */}
       <View style={styles.topSection}>
-        <UserAvatarHeader
-          name="Alex Johnson"
-          imgUrl="https://i.pravatar.cc/150?img=2"
-          size="md"
-        />
+        {/* Left half: User info container */}
+        <View style={styles.leftHalf}>
+          {/* User Avatar */}
+          <View style={styles.userInfoHeader}>
+            <UserAvatarHeader
+              name="Alex Johnson"
+              imgUrl="https://i.pravatar.cc/150?img=2"
+              size="xs"
+            />
 
-        {/* Paw counter - right side */}
-        <View style={styles.pawCounter}>
-        <Text style={styles.pawCount}>{lives} x</Text>
-          <Text style={styles.pawIcon}>🐾</Text>
+            {/* Paw counter */}
+            <View style={styles.pawCounter}>
+              <Text style={styles.pawCount}>{lives} x</Text>
+              <Text style={styles.pawIcon}>🐾</Text>
+            </View>
+          </View>
+
+          {/* Answer cubes - scrollable */}
+          <AnswerCubes answerHistory={answerHistory} />
+        </View>
+
+        {/* Right half: Other players card */}
+        <View style={styles.rightHalf}>
+          <Card variant="liquid" padding="sm" style={styles.playersCard}>
+            <Text style={styles.pawCount}>{lives} x</Text>
+          </Card>
         </View>
       </View>
-
-      {/* Answer cubes - scrollable */}
-      <AnswerCubes answerHistory={answerHistory} />
 
       {/* Card with solid variant */}
       <Card variant="liquid" padding="md" style={styles.mainCard}>
@@ -304,21 +317,38 @@ const styles = StyleSheet.create({
   topSection: {
     paddingTop: 60,
     flexDirection: 'row',
+    gap: 12,
+    marginBottom: 16,
+  },
+  leftHalf: {
+    flex: 1,
+    width: '50%',
+  },
+  rightHalf: {
+    flex: 1,
+    width: '50%',
+  },
+  userInfoHeader: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 12,
   },
   pawCounter: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   pawIcon: {
-    fontSize: 24,
+    fontSize: 16,
   },
   pawCount: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: 'bold',
+  },
+  playersCard: {
+    flex: 1,
   },
   content: {
     flexGrow: 1,

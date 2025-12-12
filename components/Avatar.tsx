@@ -6,12 +6,16 @@ export interface AvatarProps {
   id?: string | number;
   imgUrl?: string;
   name: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   showBorder?: boolean;
   href?: string; // default: "/profile"
 }
 
 const sizeConfig = {
+  xs: {
+    size: 24,
+    fontSize: 10,
+  },
   sm: {
     size: 32,
     fontSize: 12,
