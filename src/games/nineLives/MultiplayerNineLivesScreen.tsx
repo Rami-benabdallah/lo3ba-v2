@@ -43,44 +43,62 @@ export default function MultiplayerNineLivesScreen() {
   const questionNumberRef = useRef(1);
   const isPawActiveRef = useRef(false);
 
-  const currentFact = facts[currentIndex];
-
-  // Mock other players data
-  const otherPlayers: OtherPlayer[] = [
+  // Other players state
+  const [otherPlayers, setOtherPlayers] = useState<OtherPlayer[]>([
     {
       id: 1,
       name: 'Luna Carter',
       imgUrl: 'https://i.pravatar.cc/150?img=11',
       lives: 5,
-      answerHistory: [
-        { questionNumber: 1, isCorrect: true },
-        { questionNumber: 2, isCorrect: false },
-        { questionNumber: 3, isCorrect: true },
-      ],
+      answerHistory: [],
     },
     {
       id: 2,
       name: 'Ethan Miles',
       imgUrl: 'https://i.pravatar.cc/150?img=22',
       lives: 3,
-      answerHistory: [
-        { questionNumber: 1, isCorrect: true },
-        { questionNumber: 2, isCorrect: true },
-      ],
+      answerHistory: [],
     },
     {
       id: 3,
       name: 'Ava Rodriguez',
       imgUrl: 'https://i.pravatar.cc/150?img=33',
       lives: 7,
-      answerHistory: [
-        { questionNumber: 1, isCorrect: true },
-        { questionNumber: 2, isCorrect: true },
-        { questionNumber: 3, isCorrect: true },
-        { questionNumber: 4, isCorrect: false },
-      ],
+      answerHistory: [],
     },
-  ];
+  ]);
+
+  const currentFact = facts[currentIndex];
+
+  // Function to randomly update other players when current player answers
+  const updateOtherPlayers = (isCorrect: boolean) => {
+    setOtherPlayers((prevPlayers) =>
+      prevPlayers.map((player) => {
+        // Randomly determine if this player got it correct (60-80% chance)
+        const randomCorrect = Math.random() < (isCorrect ? 0.75 : 0.65);
+        
+        // Update lives based on answer
+        let newLives = player.lives;
+        if (randomCorrect) {
+          // Randomly give 1 or 2 points (70% chance of 1, 30% chance of 2)
+          const pointsToAdd = Math.random() < 0.7 ? 1 : 2;
+          newLives = Math.min(player.lives + pointsToAdd, 9);
+        } else {
+          // Wrong answer - lose 1 point (but not below 0)
+          newLives = Math.max(player.lives - 1, 0);
+        }
+
+        return {
+          ...player,
+          lives: newLives,
+          answerHistory: [
+            ...player.answerHistory,
+            { questionNumber: questionNumberRef.current, isCorrect: randomCorrect },
+          ],
+        };
+      })
+    );
+  };
 
   // Timer effect - 5 seconds countdown
   useEffect(() => {
@@ -121,6 +139,8 @@ export default function MultiplayerNineLivesScreen() {
             ...prev,
             { questionNumber: questionNumberRef.current, isCorrect: false },
           ]);
+          // Update other players randomly
+          updateOtherPlayers(false);
           return 0;
         }
         return newTime;
@@ -193,6 +213,9 @@ export default function MultiplayerNineLivesScreen() {
       { questionNumber: questionNumberRef.current, isCorrect: correct },
     ]);
 
+    // Update other players randomly
+    updateOtherPlayers(correct);
+
     if (correct) {
       // If paw is active, give 2 points, otherwise 1 point
       const pointsToAdd = isPawActive ? 2 : 1;
@@ -245,6 +268,9 @@ export default function MultiplayerNineLivesScreen() {
         ...prev,
         { questionNumber: questionNumberRef.current, isCorrect: false },
       ]);
+
+      // Update other players randomly
+      updateOtherPlayers(false);
     }
   };
 
