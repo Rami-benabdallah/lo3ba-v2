@@ -155,7 +155,7 @@ export default function GameDetailsSheet({
               onPress={onPlaySolo}
               icon="person"
               label="Solo"
-              backgroundColor="#3B82F6"
+              variant="fourth"
             />
 
             {/* Play Multiplayer Online Button */}
@@ -163,7 +163,7 @@ export default function GameDetailsSheet({
               onPress={onPlayOnline}
               icon="people"
               label="Multiplayer Online"
-              backgroundColor="#10B981"
+              variant="tertiary"
             />
 
             {/* Play Multiplayer Local Button */}
@@ -171,7 +171,7 @@ export default function GameDetailsSheet({
               onPress={onPlayLocal}
               icon="phone-portrait"
               label="Multiplayer Local"
-              backgroundColor="#F97316"
+              variant="radiant"
             />
           </View>
         </View>

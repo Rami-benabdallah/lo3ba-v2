@@ -14,6 +14,8 @@ export const COLORS = {
   SECONDARY_DEEP:    '#5433E3', // even darker
   SECONDARY_SHADOW:  '#3A20B5', // strong shadow/border color
   SECONDARY_TEXT:    '#27157A', // darkest variant for text on light purple
+  TERTIARY:          '#10B981', // green
+  FOURTH:            '#3B82F6', // blue
   gray: {
     50: '#FAFAFA',
     100: '#F4F4F5',
