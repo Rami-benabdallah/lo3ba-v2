@@ -10,6 +10,7 @@ import AnswerButtons from './AnswerButtons';
 import FactExplanationModal from './FactExplanationModal';
 import ActionButtons from './ActionButtons';
 import AnswerCubes from './AnswerCubes';
+import OtherPlayersCard, { OtherPlayer } from './OtherPlayersCard';
 
 // Helper function to shuffle array
 function shuffleArray<T>(array: T[]): T[] {
@@ -43,6 +44,43 @@ export default function MultiplayerNineLivesScreen() {
   const isPawActiveRef = useRef(false);
 
   const currentFact = facts[currentIndex];
+
+  // Mock other players data
+  const otherPlayers: OtherPlayer[] = [
+    {
+      id: 1,
+      name: 'Luna Carter',
+      imgUrl: 'https://i.pravatar.cc/150?img=11',
+      lives: 5,
+      answerHistory: [
+        { questionNumber: 1, isCorrect: true },
+        { questionNumber: 2, isCorrect: false },
+        { questionNumber: 3, isCorrect: true },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Ethan Miles',
+      imgUrl: 'https://i.pravatar.cc/150?img=22',
+      lives: 3,
+      answerHistory: [
+        { questionNumber: 1, isCorrect: true },
+        { questionNumber: 2, isCorrect: true },
+      ],
+    },
+    {
+      id: 3,
+      name: 'Ava Rodriguez',
+      imgUrl: 'https://i.pravatar.cc/150?img=33',
+      lives: 7,
+      answerHistory: [
+        { questionNumber: 1, isCorrect: true },
+        { questionNumber: 2, isCorrect: true },
+        { questionNumber: 3, isCorrect: true },
+        { questionNumber: 4, isCorrect: false },
+      ],
+    },
+  ];
 
   // Timer effect - 5 seconds countdown
   useEffect(() => {
@@ -255,9 +293,7 @@ export default function MultiplayerNineLivesScreen() {
 
         {/* Right half: Other players card */}
         <View style={styles.rightHalf}>
-          <Card variant="liquid" padding="sm" style={styles.playersCard}>
-            <Text style={styles.pawCount}>{lives} x</Text>
-          </Card>
+          <OtherPlayersCard players={otherPlayers} />
         </View>
       </View>
 
@@ -319,6 +355,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     marginBottom: 16,
+    alignItems: 'flex-start',
   },
   leftHalf: {
     flex: 1,
@@ -327,6 +364,7 @@ const styles = StyleSheet.create({
   rightHalf: {
     flex: 1,
     width: '50%',
+    alignSelf: 'stretch',
   },
   userInfoHeader: {
     flexDirection: 'row',
