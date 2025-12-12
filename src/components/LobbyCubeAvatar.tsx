@@ -43,38 +43,49 @@ export default function LobbyCubeAvatar({
     : '';
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          borderWidth: showBorder ? 2 : 1,
-          borderColor: showBorder
-            ? 'rgba(255, 255, 255, 0.5)'
-            : 'rgba(255, 255, 255, 0.2)',
-        },
-        style,
-      ]}
-    >
-      {imgUrl ? (
-        <Image
-          source={{ uri: imgUrl }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-      ) : name ? (
-        <View style={styles.initialsContainer}>
-          <Text style={[styles.initials, { fontSize: config.fontSize }]}>
-            {initials}
-          </Text>
-        </View>
-      ) : null}
+    <View style={[styles.wrapper, style]}>
+      <View
+        style={[
+          styles.container,
+          {
+            borderWidth: showBorder ? 2 : 1,
+            borderColor: showBorder
+              ? 'rgba(255, 255, 255, 0.5)'
+              : 'rgba(255, 255, 255, 0.2)',
+          },
+        ]}
+      >
+        {imgUrl ? (
+          <Image
+            source={{ uri: imgUrl }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        ) : name ? (
+          <View style={styles.initialsContainer}>
+            <Text style={[styles.initials, { fontSize: config.fontSize }]}>
+              {initials}
+            </Text>
+          </View>
+        ) : null}
+      </View>
+      {name && (
+        <Text style={styles.nameText} numberOfLines={1}>
+          {name}
+        </Text>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    alignItems: 'center',
+    width: '100%',
+  },
   container: {
     width: '100%',
+    maxWidth: 80,
     aspectRatio: 1,
     backgroundColor: 'transparent',
     borderRadius: 12,
@@ -99,6 +110,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     includeFontPadding: false,
+  },
+  nameText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '500',
+    marginTop: 8,
+    textAlign: 'center',
+    maxWidth: '100%',
   },
 });
 

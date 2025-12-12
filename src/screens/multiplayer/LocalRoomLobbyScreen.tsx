@@ -104,16 +104,18 @@ const styles = StyleSheet.create({
   },
   hintLabel: {
     color: '#9CA3AF',
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 12,
     marginBottom: 4,
   },
   hintText: {
-    color: '#9CA3AF',
+    color: '#ffffff',
     fontSize: 14,
+    fontWeight: '500',
     textAlign: 'center',
   },
   buttonsContainer: {
+    width: '60%',
+    alignSelf: 'center',
     flexDirection: 'row',
     gap: 12,
     marginTop: 24,

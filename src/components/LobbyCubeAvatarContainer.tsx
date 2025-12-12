@@ -42,19 +42,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 32,
   },
   gridContainer: {
     width: '100%',
-    maxWidth: 300,
-    gap: 16,
+    maxWidth: 280,
+    gap: 20,
   },
   row: {
     flexDirection: 'row',
-    gap: 16,
+    alignItems: 'flex-start',
   },
   cube: {
     flex: 1,
+    minWidth: 0,
   },
 });
 
