@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 24,
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   badgesContainer: {
     flexDirection: 'row',
@@ -97,8 +100,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+  bottomSection: {
+    marginBottom: 24,
+  },
   hintContainer: {
-    marginTop: 32,
     marginBottom: 24,
     alignItems: 'center',
   },
@@ -118,7 +123,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexDirection: 'row',
     gap: 12,
-    marginTop: 24,
   },
 });
 
@@ -201,30 +205,32 @@ export default function LocalRoomLobbyScreen() {
 
         {/* Hint Section */}
         <View style={styles.hintContainer}>
-          <Text style={styles.hintLabel}>Hint:</Text>
-          <Text style={styles.hintText}>Focus better to improve your performance</Text>
-        </View>
+          <View style={styles.hintContainer}>
+            <Text style={styles.hintLabel}>Hint:</Text>
+            <Text style={styles.hintText}>Focus better to improve your performance</Text>
+          </View>
 
-        {/* Action Buttons */}
-        <View style={styles.buttonsContainer}>
-          <PlayButton
-            icon="play"
-            label="Start Game"
-            variant="primary"
-            flex1={true}
-            onPress={() => {
-              // Handle start game
-            }}
-          />
-          <PlayButton
-            icon="settings"
-            label="Settings"
-            variant="secondary"
-            flex1={true}
-            onPress={() => {
-              // Handle settings
-            }}
-          />
+          {/* Action Buttons */}
+          <View style={styles.buttonsContainer}>
+            <PlayButton
+              icon="play"
+              label="Start Game"
+              variant="primary"
+              flex1={true}
+              onPress={() => {
+                // Handle start game
+              }}
+            />
+            <PlayButton
+              icon="settings"
+              label="Settings"
+              variant="secondary"
+              flex1={true}
+              onPress={() => {
+                // Handle settings
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
     </View>
