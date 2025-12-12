@@ -75,7 +75,9 @@ export default function PlayButton({
   const disabledStyles: ViewStyle = disabled
     ? {
         opacity: 0.5,
-        backgroundColor: '#9CA3AF', // gray-400
+        backgroundColor: '#9CA3AF',
+        borderColor: COLORS.gray[900],
+        borderWidth: 2,
       }
     : {};
 
