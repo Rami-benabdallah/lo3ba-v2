@@ -49,21 +49,21 @@ export default function MultiplayerNineLivesScreen() {
       id: 1,
       name: 'Luna Carter',
       imgUrl: 'https://i.pravatar.cc/150?img=11',
-      lives: 5,
+      lives: 1,
       answerHistory: [],
     },
     {
       id: 2,
       name: 'Ethan Miles',
       imgUrl: 'https://i.pravatar.cc/150?img=22',
-      lives: 3,
+      lives: 1,
       answerHistory: [],
     },
     {
       id: 3,
       name: 'Ava Rodriguez',
       imgUrl: 'https://i.pravatar.cc/150?img=33',
-      lives: 7,
+      lives: 1,
       answerHistory: [],
     },
   ]);
@@ -72,8 +72,8 @@ export default function MultiplayerNineLivesScreen() {
 
   // Function to randomly update other players when current player answers
   const updateOtherPlayers = (isCorrect: boolean) => {
-    setOtherPlayers((prevPlayers) =>
-      prevPlayers.map((player) => {
+    setOtherPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.map((player) => {
         // Randomly determine if this player got it correct (60-80% chance)
         const randomCorrect = Math.random() < (isCorrect ? 0.75 : 0.65);
         
@@ -96,8 +96,16 @@ export default function MultiplayerNineLivesScreen() {
             { questionNumber: questionNumberRef.current, isCorrect: randomCorrect },
           ],
         };
-      })
-    );
+      });
+
+      // Sort by lives count (highest first), then by name for consistency
+      return updatedPlayers.sort((a, b) => {
+        if (b.lives !== a.lives) {
+          return b.lives - a.lives; // Sort by lives descending
+        }
+        return a.name.localeCompare(b.name); // If lives are equal, sort by name
+      });
+    });
   };
 
   // Timer effect - 5 seconds countdown
