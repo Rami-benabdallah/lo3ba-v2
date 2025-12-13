@@ -60,7 +60,7 @@ export default function AnswerCubes({ answerHistory, size = 'md' }: AnswerCubesP
   }, [answerHistory.length, scrollToEndSmooth]);
 
   return (
-    <View style={[styles.section, { marginTop: config.marginTop }]}>
+    <View style={[styles.section, answerHistory.length > 0 && { marginTop: config.marginTop }]}>
       <ScrollView
         ref={scrollViewRef}
         horizontal

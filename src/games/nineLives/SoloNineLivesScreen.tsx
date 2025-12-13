@@ -245,10 +245,12 @@ export default function SoloNineLivesScreen() {
         </View>
       </View>
 
-      {/* Answer cubes - scrollable */}
-      <AnswerCubes answerHistory={answerHistory} />
+      {/* Answer cubes - scrollable (reserve space from start) */}
+      <View style={styles.answerCubesContainer}>
+        <AnswerCubes answerHistory={answerHistory} />
+      </View>
 
-      {/* Card with solid variant */}
+      {/* Card with liquid variant */}
       <Card variant="liquid" padding="md" style={styles.mainCard}>
         {/* Main content */}
         <View style={styles.cardContent}>
@@ -320,13 +322,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  answerCubesContainer: {
+    height: 64, // Fixed height: marginTop (16) + cube height (40) + some padding (8)
+    justifyContent: 'flex-end', // Align cubes to bottom of reserved space
+    marginBottom: 16,
+  },
   content: {
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingBottom: 40,
   },
   mainCard: {
-    marginTop: 16,
+    marginTop: 0, // No margin since space is already reserved
   },
   cardContent: {
     display: 'flex',
