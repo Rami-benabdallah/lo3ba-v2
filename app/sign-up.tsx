@@ -27,7 +27,7 @@ export default function SignUpScreen() {
   const handleSignUp = () => {
     // TODO: Implement sign up logic
     console.log('Sign up:', { name, email, password, repeatPassword });
-    router.push('/(tabs)/games' as any);
+    router.push('/(tabs)/' as any);
   };
 
   const handleSocialLogin = (provider: 'google' | 'apple' | 'facebook') => {
