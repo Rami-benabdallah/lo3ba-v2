@@ -118,6 +118,42 @@ export default function RootLayout() {
                 },
               }} 
             />
+            <Stack.Screen 
+              name="home" 
+              options={{ 
+                headerShown: false,
+                animation: "default",
+                contentStyle: {
+                  backgroundColor: "transparent",
+                },
+              }} 
+            />
+            <Stack.Screen 
+              name="sign-in" 
+              options={{ 
+                headerShown: false,
+                animation: "slide_from_right",
+                animationDuration: 150,
+                gestureEnabled: true,
+                gestureDirection: "horizontal",
+                contentStyle: {
+                  backgroundColor: "transparent",
+                },
+              }} 
+            />
+            <Stack.Screen 
+              name="sign-up" 
+              options={{ 
+                headerShown: false,
+                animation: "slide_from_right",
+                animationDuration: 150,
+                gestureEnabled: true,
+                gestureDirection: "horizontal",
+                contentStyle: {
+                  backgroundColor: "transparent",
+                },
+              }} 
+            />
           </Stack>
           <StatusBar style="light" />
         </View>
