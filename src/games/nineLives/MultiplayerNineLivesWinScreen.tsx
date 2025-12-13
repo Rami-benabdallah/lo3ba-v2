@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { COLORS } from '../../../constants/colors';
 import Card from '../../../components/Card';
 import Avatar from '../../../components/Avatar';
 import PlayButton from '../../../components/PlayButton';
